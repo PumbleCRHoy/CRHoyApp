@@ -26,7 +26,6 @@ Vue.component("v-title", {
                 }));
             }
         }
-		console.log(this);
         elements.push(this.$slots.default[0].text);
         var attrs = {
             title: this.title,

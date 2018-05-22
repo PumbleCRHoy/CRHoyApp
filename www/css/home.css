@@ -1,0 +1,11 @@
+.noticia-slider .title h2, .noticia-slider .content p{
+	line-height: 1.2em;
+	height: 3.6em;
+	overflow: hidden;
+}
+
+.noticia-visual-a-mediana .title h3{
+	line-height: 1.2em;
+	height: 7.2em;
+	overflow: hidden;
+}

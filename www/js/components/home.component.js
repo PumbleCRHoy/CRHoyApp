@@ -1,13 +1,8 @@
 const _homePage = {
 	template: "#home",
-	props: ["toggleMenu"],
 	mixins: [_homeService], // DEPENDENCIAS DE SERVICIOS
-	components: {
-		_customToolbar
-	},
 	data: function(){
 		return {
-			test: "HOLA",
 			noticias: {
 				slider: [],
 				visualA: [],

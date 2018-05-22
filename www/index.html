@@ -7,58 +7,129 @@
 
 	<link type="text/css" rel="stylesheet" href="libs/onsenUI/css/onsenui.min.css">
 	<link type="text/css" rel="stylesheet" href="libs/onsenUI/css/onsen-css-components.min.css">
+	<!--STYLES-->
+	<link type="text/css" rel="stylesheet" href="css/home.css">
+
 </head>
-<body>
+<body>	
 	<template id="home">
 		<v-ons-page>
-			<custom-toolbar title="Inicio" :action="toggleMenu"></custom-toolbar>
-			<ons-page>
+			<v-ons-toolbar>
+				<div class="left">
+					<v-ons-toolbar-button onclick="_splitter.toggle();">
+						<v-ons-icon icon="ion-navicon, material:md-menu"></v-ons-icon>
+					</v-ons-toolbar-button>
+				</div>
+				<div class="center">Inicio</div>
+			</v-ons-toolbar>
+
+			<ons-row>
 				<ons-col>
-					<v-ons-card v-for="nota in noticias.slider">
-						<img  :src="nota.img | icdn([400,300,95,95])" :alt="nota.title" style="width: 100%">
+					<v-ons-carousel swipeable auto-scroll overscrollable>
+						<v-ons-carousel-item v-for="nota in noticias.slider">
+							<v-ons-card class="noticia-slider">
+								<img  :src="nota.img | icdn([400,300,95,95])" :alt="nota.title" style="width: 100%">
+								<!--<div class="title">{{ nota.title | html }}</div>-->
+								<div class="title">
+									<v-title tag="h2" v-bind:color="nota.categories[0][1]" v-bind:metadata="nota.metadata" v-bind:url="nota.url" colorText="negro">{{ nota.title | html }}</v-title>
+								</div>
+								<div class="content">
+									<p>
+										{{ nota.excerpt | html }}
+									</p>
+								</div>
+							</v-ons-card>
+						</v-ons-carousel-item>
+					</v-ons-carousel>
+				</ons-col>
+			</ons-row><!--SLIDER-->
+
+			<ons-row>
+				<ons-col>
+					<v-ons-list>
+						<v-ons-list-item tappable v-for="nota in noticias.visualB" class="noticia-visual-b">
+						<div class="left">
+							<img class="list-item__thumbnail" :src="nota.img | icdn([300,200,95,95])">
+						</div>
+						<div class="center">
+							<span class="list-item__title">
+								<v-title tag="h3" v-bind:color="nota.categories[0][1]" v-bind:metadata="nota.metadata" v-bind:url="nota.url" colorText="negro">{{ nota.title | html }}</v-title>
+							</span>
+						</div>
+						</v-ons-list-item>
+					</v-ons-list>
+				</ons-col>
+			</ons-row><!--VISUAL B-->
+
+			<ons-row>
+				<ons-col width="100">
+					<v-ons-card class="noticia-visual-a" v-if="noticias.visualA.length > 0">
+						<img  :src="noticias.visualA[0].img | icdn([300,250,95,95])" :alt="noticias.visualA[0].title" style="width: 100%">
 						<!--<div class="title">{{ nota.title | html }}</div>-->
 						<div class="title">
-							<v-title tag="h1" v-bind:color="nota.categories[0][1]" v-bind:metadata="nota.metadata" v-bind:url="nota.url" colorText="negro">{{ nota.title | html }}</v-title>
+							<v-title tag="h2" v-bind:color="noticias.visualA[0].categories[0][1]" v-bind:metadata="noticias.visualA[0].metadata" v-bind:url="noticias.visualA[0].url" colorText="negro">{{ noticias.visualA[0].title | html }}</v-title>
 						</div>
 						<div class="content">
 							<p>
-								{{ nota.excerpt | html }}
+								{{ noticias.visualA[0].excerpt | html }}
 							</p>
 						</div>
 					</v-ons-card>
 				</ons-col>
-			</ons-page>
+				<ons-col width="50" v-for="nota in noticias.visualA.slice(1)">
+					<v-ons-card class="noticia-visual-a-mediana">
+						<img  :src="nota.img | icdn([300,200,95,95])" :alt="nota.title" style="width: 100%">
+						<!--<div class="title">{{ nota.title | html }}</div>-->
+						<div class="title">
+							<v-title tag="h3" v-bind:color="nota.categories[0][1]" v-bind:metadata="nota.metadata" v-bind:url="nota.url" colorText="negro">{{ nota.title | html }}</v-title>
+						</div>
+					</v-ons-card>
+				</ons-col>
+			</ons-row><!--VISUAL A-->
+
+			<ons-row>
+				<ons-col>
+					<v-ons-list>
+						<v-ons-list-item tappable v-for="nota in noticias.visualC">
+							<v-title tag="h3" v-bind:color="nota.categories[0][1]" v-bind:metadata="nota.metadata" v-bind:url="nota.url" colorText="negro">{{ nota.title | html }}</v-title>
+						</v-ons-list-item>
+					</v-ons-list>
+				</ons-col>
+			</ons-row><!--VISUAL C-->
 		</v-ons-page>
 	</template>
 
 	<template id="ultimas">
 		<v-ons-page>
-			<custom-toolbar title="Últimas" :action="toggleMenu"></custom-toolbar>
+			<v-ons-toolbar>
+				<div class="left">
+					<v-ons-toolbar-button  onclick="_splitter.toggle();">
+						<v-ons-icon icon="ion-navicon, material:md-menu"></v-ons-icon>
+					</v-ons-toolbar-button>
+				</div>
+				<div class="center">Últimas</div>
+			</v-ons-toolbar>
 			<p style="text-align: center">Ultimas noticias aquí</p>
 		</v-ons-page>
 	</template>
 
 	<template id="masLeidas">
 		<v-ons-page>
-			<custom-toolbar title="Más Leídas" :action="toggleMenu"></custom-toolbar>
+			<v-ons-toolbar>
+				<div class="left">
+					<v-ons-toolbar-button  onclick="_splitter.toggle();">
+						<v-ons-icon icon="ion-navicon, material:md-menu"></v-ons-icon>
+					</v-ons-toolbar-button>
+				</div>
+				<div class="center">Más leídas</div>
+			</v-ons-toolbar>
 			<p style="text-align: center">Más Leídas aqui</p>
 		</v-ons-page>
 	</template>
 
-	<template id="toolbar">
-		<v-ons-toolbar>
-			<div class="left">
-				<v-ons-toolbar-button @click="action">
-					<v-ons-icon icon="ion-navicon, material:md-menu"></v-ons-icon>
-				</v-ons-toolbar-button>
-			</div>
-			<div class="center">{{ title }}</div>
-		</v-ons-toolbar>
-	</template>
-
 	<div id="app">
 		<v-ons-splitter>
-			<v-ons-splitter-side swipeable width="150px" collapse="" side="left" :open.sync="openSide">
+			<v-ons-splitter-side swipeable width="150px" collapse="" side="left"  id="_splitter">
 				<v-ons-page>
 					<v-ons-list>
 						<v-ons-list-item v-for="page in pages" tappable modifier="chevron" @click="currentPage = page.template; openSide = false">
@@ -69,7 +140,7 @@
 			</v-ons-splitter-side>
 
 			<v-ons-splitter-content>
-				<component :is="currentPage" :toggle-menu="() => openSide = !openSide"></component>
+				<component :is="currentPage"></component>
 			</v-ons-splitter-content>
 		</v-ons-splitter>
 	</div>
@@ -90,7 +161,6 @@
 	<script type="text/javascript"  src="js/directives/title.directive.js"></script>
 
 	<!--COMPONENTS-->
-	<script type="text/javascript"  src="js/components/customToolbar.component.js"></script>
 	<script type="text/javascript"  src="js/components/home.component.js"></script>
 	<script type="text/javascript"  src="js/components/ultimas.component.js"></script>
 	<script type="text/javascript"  src="js/components/masLeidas.component.js"></script>
@@ -114,7 +184,6 @@
 				openSide: false
 			},
 			components: {
-				customToolbar: _customToolbar,
 				home: _homePage,
 				ultimas: _ultimasPage,
 				masLeidas: _masLeidasPage
