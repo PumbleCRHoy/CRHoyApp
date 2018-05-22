@@ -1,0 +1,125 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: content: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+
+	<link type="text/css" rel="stylesheet" href="libs/onsenUI/css/onsenui.min.css">
+	<link type="text/css" rel="stylesheet" href="libs/onsenUI/css/onsen-css-components.min.css">
+</head>
+<body>
+	<template id="home">
+		<v-ons-page>
+			<custom-toolbar title="Inicio" :action="toggleMenu"></custom-toolbar>
+			<ons-page>
+				<ons-col>
+					<v-ons-card v-for="nota in noticias.slider">
+						<img  :src="nota.img | icdn([400,300,95,95])" :alt="nota.title" style="width: 100%">
+						<!--<div class="title">{{ nota.title | html }}</div>-->
+						<div class="title">
+							<v-title tag="h1" v-bind:color="nota.categories[0][1]" v-bind:metadata="nota.metadata" v-bind:url="nota.url" colorText="negro">{{ nota.title | html }}</v-title>
+						</div>
+						<div class="content">
+							<p>
+								{{ nota.excerpt | html }}
+							</p>
+						</div>
+					</v-ons-card>
+				</ons-col>
+			</ons-page>
+		</v-ons-page>
+	</template>
+
+	<template id="ultimas">
+		<v-ons-page>
+			<custom-toolbar title="Últimas" :action="toggleMenu"></custom-toolbar>
+			<p style="text-align: center">Ultimas noticias aquí</p>
+		</v-ons-page>
+	</template>
+
+	<template id="masLeidas">
+		<v-ons-page>
+			<custom-toolbar title="Más Leídas" :action="toggleMenu"></custom-toolbar>
+			<p style="text-align: center">Más Leídas aqui</p>
+		</v-ons-page>
+	</template>
+
+	<template id="toolbar">
+		<v-ons-toolbar>
+			<div class="left">
+				<v-ons-toolbar-button @click="action">
+					<v-ons-icon icon="ion-navicon, material:md-menu"></v-ons-icon>
+				</v-ons-toolbar-button>
+			</div>
+			<div class="center">{{ title }}</div>
+		</v-ons-toolbar>
+	</template>
+
+	<div id="app">
+		<v-ons-splitter>
+			<v-ons-splitter-side swipeable width="150px" collapse="" side="left" :open.sync="openSide">
+				<v-ons-page>
+					<v-ons-list>
+						<v-ons-list-item v-for="page in pages" tappable modifier="chevron" @click="currentPage = page.template; openSide = false">
+							<div class="center">{{ page.title }}</div>
+						</v-ons-list-item>
+					</v-ons-list>
+				</v-ons-page>
+			</v-ons-splitter-side>
+
+			<v-ons-splitter-content>
+				<component :is="currentPage" :toggle-menu="() => openSide = !openSide"></component>
+			</v-ons-splitter-content>
+		</v-ons-splitter>
+	</div>
+
+	<script type="text/javascript" src="libs/vue.min.js"></script>
+	<script type="text/javascript" src="libs/vue-resource.min.js"></script>
+	<script type="text/javascript"  src="libs/onsenUI/js/onsenui.min.js"></script>
+	<script type="text/javascript"  src="libs/vue-onsenui.min.js"></script>
+
+	<!--FILTERS-->
+	<script type="text/javascript"  src="js/filters/html.filter.js"></script>
+	<script type="text/javascript"  src="js/filters/icdn.filter.js"></script>
+
+	<!--SERVICES-->
+	<script type="text/javascript"  src="js/services/home.service.js"></script>
+
+	<!--DIRECTIVES-->
+	<script type="text/javascript"  src="js/directives/title.directive.js"></script>
+
+	<!--COMPONENTS-->
+	<script type="text/javascript"  src="js/components/customToolbar.component.js"></script>
+	<script type="text/javascript"  src="js/components/home.component.js"></script>
+	<script type="text/javascript"  src="js/components/ultimas.component.js"></script>
+	<script type="text/javascript"  src="js/components/masLeidas.component.js"></script>
+
+	<script type="text/javascript">
+		Vue.use(VueResource); // HAY QUE DECIRLE A VUE QUE UTILICE ESTE PLUGIN PARA LOS REQUEST
+		var app = new Vue({
+			el: "#app",
+			data: {
+				currentPage: "home",
+				pages: [{
+					title: "Inicio",
+					template: "home"
+				}, {
+					title: "Últimas",
+					template: "ultimas"
+				}, { 
+					title: "Más Leídas",
+					template: "masLeidas"
+				}],
+				openSide: false
+			},
+			components: {
+				customToolbar: _customToolbar,
+				home: _homePage,
+				ultimas: _ultimasPage,
+				masLeidas: _masLeidasPage
+			}
+		});
+	</script>
+</body>
+</html>
