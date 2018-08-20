@@ -1,0 +1,168 @@
+const _categories = [{
+	cat_title: "Nacionales",
+	cat_id: 14,
+	cat_color: "nacionales",
+	cat_subCategories: [{
+		title: "Clima",
+		id: 548
+	}, {
+		title: "Educación",
+		id: 346
+	}, {
+		title: "Gobierno",
+		id: 359
+	}, {
+		title: "Política",
+		id: 71
+	}, {
+		title: "Salud",
+		id: 34
+	}, {
+		title: "Sucesos",
+		id: 225
+	}, {
+		title: "Transportes",
+		id: 13034
+	}, {
+		title: "Servicios",
+		id: 13823
+	}]
+}, {
+	cat_title: "Deportes",
+	cat_id: 29,
+	cat_color: "deportes",
+	cat_subCategories: [{
+		title: "Fútbol",
+		id: 141
+	}, {
+		title: "Atletismo",
+		id: 204
+	}, {
+		title: "Baloncesto",
+		id: 203
+	}, {
+		title: "Tennis",
+		id: 454
+	}, {
+		title: "Motores",
+		id: 357
+	}, {
+		title: "Natación",
+		id: 356
+	}, {
+		title: "Ciclismo",
+		id: 455
+	}, {
+		title: "Surf",
+		id: 358
+	}, {
+		title: "Voleibol",
+		id: 355
+	}, {
+		title: "Otros Deportes",
+		id: 205
+	}]
+}, {
+	cat_title: "Entretenimiento",
+	cat_id: 176,
+	cat_color: "entretenimiento",
+	cat_subCategories: [{
+		title: "Arte",
+		id: 208
+	}, {
+		title: "Cine",
+		id: 545
+	}, {
+		title: "Cultura",
+		id: 208
+	}, {
+		title: "Curiosidades",
+		id: 13035
+	}, {
+		title: "Farándula",
+		id: 206
+	}, {
+		title: "La Diva",
+		id: 2005
+	}, {
+		title: "Moda",
+		id: 209
+	}]
+}, {
+	cat_title: "Economía",
+	cat_id: 15,
+	cat_color: "economia",
+	cat_subCategories: [{
+		title: "Finanzas",
+		id: 367
+	}, {
+		title: "Negocios",
+		id: 368
+	}]
+}, {
+	cat_title: "Tecnología",
+	cat_id: 21,
+	cat_color: "tecnologia",
+	cat_subCategories: [{
+		title: "Ciencia",
+		id: 266
+	}, {
+		title: "Internet",
+		id: 365
+	}, {
+		title: "Novedades",
+		id: 364
+	}, {
+		title: "Redes Sociales",
+		id: 366
+	}]
+}, {
+	cat_title: "Opinión",
+	cat_id: 486,
+	cat_color: "opinion",
+	cat_subCategories: [{
+		title: "Columnas",
+		id: 7809
+	}, {
+		title: "Los Especialistas",
+		id: 7101
+	}, {
+		title: "El Lector Opina",
+		id: 447
+	}, {
+		title: "Aclaraciones",
+		id: 8262
+	}]
+}, {
+	cat_title: "Mundo",
+	cat_id: 16,
+	cat_color: "mundo",
+	cat_subCategories: [{
+		title: "Economía",
+		id: 216
+	}, {
+		title: "Política",
+		id: 362
+	}, {
+		title: "Sucesos",
+		id: 360
+	}, {
+		title: "Salud",
+		id: 361
+	}, {
+		title: "Deportes",
+		id: 363
+	}]
+}, {
+	cat_title: "Humor",
+	cat_id: 613,
+	cat_color: "humor"
+}, {
+	cat_title: "Ambiente",
+	cat_id: 19,
+	cat_color: "ambiente",
+	cat_subCategories: [{
+		title: "",
+		id: 0
+	}]
+}];

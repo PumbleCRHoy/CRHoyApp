@@ -1,0 +1,24 @@
+.accordion{
+	margin: 8px;
+}
+.accordion .accordion-header, .accordion .accordion-body{
+	padding: 8px 16px;
+}
+.accordion .accordion-header{
+	margin-bottom: 0px;
+}
+ .accordion .accordion-body{
+	 margin-top: 0px;
+	border-width: 1px;
+    border-style: solid;
+ }
+.accordion .accordion-header h3{
+	color: #fff;
+	margin: 0px;
+	width: 85%;
+    display: inline-block;
+	font-weight: bold;
+}
+.accordion .accordion-header button{
+	color: #fff;
+}

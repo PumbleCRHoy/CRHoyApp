@@ -5,7 +5,7 @@ var _homeService = {
             var fecha = new Date();
             var version = fecha.getTime();  // fecha.getFullYear() + fecha.getMonth() + fecha.getDate();
 
-            return this.$http.get("https://www.crhoy.com/site/dist/json/index2.json", {
+            return this.$http.get("https://www.crhoy.com/site/dist/json/new_portada_app.json", {
                 responseType: "json",
                 params: {
                     v: version
