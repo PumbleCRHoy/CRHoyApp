@@ -1,9 +1,10 @@
 const _homeComponent = {
 	template: "#home",
 	mixins: [_homeService], // DEPENDENCIAS DE SERVICIOS
-	data: function(){
+	data: function () {
 		return {
 			state: "initial",
+			loading: true,
 			noticias: {
 				importante: null,
 				transmision: {
@@ -15,9 +16,9 @@ const _homeComponent = {
 				visualB: [],
 				visualC: [],
 				enterese: [],
-				
+
 				tituloTemporal: null,
-    			colorTituloTemporal: null,
+				colorTituloTemporal: null,
 				temporal: [],
 
 				diva: null,
@@ -33,27 +34,30 @@ const _homeComponent = {
 				mundo: [],
 				opinion: [],
 				tecnologia: []
-			}
+			},
+			carouselIndexSlider: 0,
+			carouselIndexEnterese: 0,
+			carouselIndexMultimedia: 0
 		};
 	},
-	mounted: function(){
-        this.homeService().then(function (response) {
-            this.noticias = response.data;
-        }, function (error) {
-            this.errorLoadingPage = true;
-        });
-    },
+	mounted: function () {
+		this.loading = true;
+		this.homeService().then(function (response) {
+			this.noticias = response.data;
+			this.loading = false;
+		}, function (error) {
+			this.errorLoadingPage = true;
+			this.loading = false;
+		});
+	},
 	methods: {
-		refreshHome: function(done){
+		refreshHome: function (done) {
 			this.homeService().then(function (response) {
 				this.noticias = response.data;
 				done();
 			}, function (error) {
 				this.errorLoadingPage = true;
 			});
-		},
-		closeOthersAccordions: function(ev){
-			console.log("aqui", ev);
 		}
 	}
 };

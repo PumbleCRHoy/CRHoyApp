@@ -8,20 +8,16 @@ Vue.component("accordion", {
 	},
 	methods: {
 		toogle: function () {
-			this.$emit("test", "hollis");
 			this.opened = !this.opened;
-		},
-		closeOthersAccordions: function(ev){
-			console.log("aqui es el bueno", ev);
 		}
 	},
-	template: "<div class='accordion'  @test='closeOthersAccordions($event)'>" +
-						"<div :class=' \"accordion-header fondo-\" + color'>" +
+	template: "<div class='accordion'>" +
+						"<div :class=' \"accordion-header fondo-\" + color' @click='toogle()'>" +
 							"<h3><slot name='title'></slot></h3>" +
-							"<button class='button--quiet' v-show='!opened' @click='toogle()'>" +
+							"<button class='button--quiet' v-show='!opened' >" +
 								"<v-ons-icon icon='chevron-down'></v-ons-icon>" +
 							"</button>" +
-							"<button class='button--quiet' v-show='opened'  @click='toogle()'>" +
+							"<button class='button--quiet' v-show='opened'  >" +
 								"<v-ons-icon icon='chevron-up'></v-ons-icon>" +
 							"</button>" +
 						"</div>" +

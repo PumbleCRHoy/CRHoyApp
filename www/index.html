@@ -1,23 +1,25 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: content: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<meta http-equiv="Content-Security-Policy" content="default-src * data: gap: content: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
 
 	<link type="text/css" rel="stylesheet" href="libs/onsenUI/css/onsenui.min.css">
 	<link type="text/css" rel="stylesheet" href="libs/onsenUI/css/onsen-css-components.min.css">
 	<!--GLOBALES-->
+	<link type="text/css" rel="stylesheet" href="css/core.css">
 	<link type="text/css" rel="stylesheet" href="css/fonts.css">
 	<link type="text/css" rel="stylesheet" href="css/colors.css">
 	<!--PAGINAS-->
 	<link type="text/css" rel="stylesheet" href="css/pages/home.css">
 	<link type="text/css" rel="stylesheet" href="css/pages/category.css">
+	<link type="text/css" rel="stylesheet" href="css/pages/especial.css">
 	<!--COMPONENTS CSS-->
 	<link type="text/css" rel="stylesheet" href="css/components/accordion.component.css">
 	<link type="text/css" rel="stylesheet" href="css/components/v-title.component.css">
 </head>
-<body>	
+<body>
 	<template id="home">
 		<v-ons-page>
 			<v-ons-toolbar>
@@ -33,38 +35,53 @@
 				<span v-show="state === 'initial'"> Hale para refrescar </span>
 				<span v-show="state === 'preaction'"> Soltar </span>
 				<span v-show="state === 'action'"> <ons-icon icon="fa-cog" spin></ons-icon> </span>
-			</v-ons-pull-hook>
+			</v-ons-pull-hook><!--HALAR PARA REFRESCAR-->
+
+			<ons-row>
+				<ons-col class="text-center" width="100%" v-show="loading">
+					<v-ons-icon size="2em" spin icon="fa-cog"></v-ons-icon>
+				</ons-col>
+			</ons-row><!--LOADING-->
 
 			<ons-row v-if="noticias.importante">
 				<ons-col>
-					<img  :src="noticias.importante.img | icdn([400,300,95,95])" :alt="noticias.importante.title" style="width: 100%">
+					<img :src="noticias.importante.img | icdn([400,300,95,95])" :alt="noticias.importante.title" style="width: 100%">
 					<div class="title">
-						<v-title tag="h1" v-bind:color="noticias.importante.categories[0][1]" v-bind:metadata="noticias.importante.metadata" v-bind:url="noticias.importante.url" colorText="negro">{{ noticias.importante.title | html }}</v-title>
+						<v-title tag="h1" v-bind:color="noticias.importante.categories[0][1]" v-bind:metadata="noticias.importante.metadata" v-bind:url="noticias.importante.url"
+						 color-text="negro">{{ noticias.importante.title | html }}</v-title>
 					</div>
 				</ons-col>
 			</ons-row><!--IMPORTANTE-->
 
-			<ons-row v-if="noticias.transmision.post_content !== ''">
-				<ons-col v-html="noticias.transmision.post_content"></ons-col>
+			<ons-row v-show="noticias.transmision.post_content !== ''">
+				<ons-col>
+					<div v-html="noticias.transmision.post_content" style="width: 100%;"></div>
+				</ons-col>
 			</ons-row><!--TRANSMISION-->
 
 			<ons-row>
 				<ons-col>
-					<v-ons-carousel swipeable auto-scroll overscrollable>
+					<v-ons-carousel swipeable auto-scroll overscrollable :index.sync="carouselIndexSlider">
 						<v-ons-carousel-item v-for="nota in noticias.slider">
 							<v-ons-card class="noticia-slider">
-								<img  :src="nota.img | icdn([400,300,95,95])" :alt="nota.title" style="width: 100%">
+								<img :src="nota.img | icdn([400,300,95,95])" :alt="nota.title" style="width: 100%">
 								<div class="title">
-									<v-title tag="h2" v-bind:color="nota.categories[0][1]" v-bind:metadata="nota.metadata" v-bind:url="nota.url" colorText="negro">{{ nota.title | html }}</v-title>
+									<v-title tag="h2" v-bind:color="nota.categories[0][1]" v-bind:metadata="nota.metadata" v-bind:url="nota.url" color-text="negro">{{ nota.title | html }}</v-title>
 								</div>
 								<div class="content">
-									<p>
+									<p class="color-negro">
 										{{ nota.excerpt | html }}
 									</p>
 								</div>
 							</v-ons-card>
 						</v-ons-carousel-item>
 					</v-ons-carousel>
+					<div class="text-center margin-bottom-1em">
+						<span :index="dotIndex - 1" v-for="dotIndex in Object.keys(noticias.slider).length" :key="dotIndex" style="cursor: pointer"
+						 @click="carouselIndexSlider = dotIndex - 1" class="color-negro">
+							{{ carouselIndexSlider === dotIndex - 1 ? '\u25CF' : '\u25CB' }}
+						</span>
+					</div>
 				</ons-col>
 			</ons-row><!--SLIDER-->
 
@@ -72,14 +89,14 @@
 				<ons-col>
 					<v-ons-list>
 						<v-ons-list-item tappable v-for="nota in noticias.visualB" class="noticia-visual-b">
-						<div class="left">
-							<img class="list-item__thumbnail" :src="nota.img | icdn([300,200,95,95])">
-						</div>
-						<div class="center">
-							<span class="list-item__title">
-								<v-title tag="h3" v-bind:color="nota.categories[0][1]" v-bind:metadata="nota.metadata" v-bind:url="nota.url" colorText="negro">{{ nota.title | html }}</v-title>
+							<div class="left">
+								<img class="list-item__thumbnail" :src="nota.img | icdn([300,200,95,95])">
+							</div>
+							<div class="center">
+								<span class="list-item__title">
+								<v-title tag="h3" v-bind:color="nota.categories[0][1]" v-bind:metadata="nota.metadata" v-bind:url="nota.url" color-text="negro">{{ nota.title | html }}</v-title>
 							</span>
-						</div>
+							</div>
 						</v-ons-list-item>
 					</v-ons-list>
 				</ons-col>
@@ -88,10 +105,11 @@
 			<ons-row>
 				<ons-col width="100">
 					<v-ons-card class="noticia-visual-a" v-if="noticias.visualA.length > 0">
-						<img  :src="noticias.visualA[0].img | icdn([300,250,95,95])" :alt="noticias.visualA[0].title" style="width: 100%">
+						<img :src="noticias.visualA[0].img | icdn([300,250,95,95])" :alt="noticias.visualA[0].title" style="width: 100%">
 						<!--<div class="title">{{ nota.title | html }}</div>-->
 						<div class="title">
-							<v-title tag="h2" v-bind:color="noticias.visualA[0].categories[0][1]" v-bind:metadata="noticias.visualA[0].metadata" v-bind:url="noticias.visualA[0].url" colorText="negro">{{ noticias.visualA[0].title | html }}</v-title>
+							<v-title tag="h2" v-bind:color="noticias.visualA[0].categories[0][1]" v-bind:metadata="noticias.visualA[0].metadata" v-bind:url="noticias.visualA[0].url"
+							 color-text="negro">{{ noticias.visualA[0].title | html }}</v-title>
 						</div>
 						<div class="content">
 							<p>
@@ -102,10 +120,9 @@
 				</ons-col>
 				<ons-col width="50" v-for="nota in noticias.visualA.slice(1)">
 					<v-ons-card class="noticia-visual-a-mediana">
-						<img  :src="nota.img | icdn([300,200,95,95])" :alt="nota.title" style="width: 100%">
-						<!--<div class="title">{{ nota.title | html }}</div>-->
+						<img :src="nota.img | icdn([300,200,95,95])" :alt="nota.title" style="width: 100%">
 						<div class="title">
-							<v-title tag="h3" v-bind:color="nota.categories[0][1]" v-bind:metadata="nota.metadata" v-bind:url="nota.url" colorText="negro">{{ nota.title | html }}</v-title>
+							<v-title tag="h3" v-bind:color="nota.categories[0][1]" v-bind:metadata="nota.metadata" v-bind:url="nota.url" color-text="negro">{{ nota.title | html }}</v-title>
 						</div>
 					</v-ons-card>
 				</ons-col>
@@ -115,59 +132,67 @@
 				<ons-col>
 					<v-ons-list>
 						<v-ons-list-item tappable v-for="nota in noticias.visualC">
-							<v-title tag="h3" v-bind:color="nota.categories[0][1]" v-bind:metadata="nota.metadata" v-bind:url="nota.url" colorText="negro">{{ nota.title | html }}</v-title>
+							<v-title tag="h3" v-bind:color="nota.categories[0][1]" v-bind:metadata="nota.metadata" v-bind:url="nota.url" color-text="negro">{{ nota.title | html }}</v-title>
 						</v-ons-list-item>
 					</v-ons-list>
 				</ons-col>
 			</ons-row><!--VISUAL C-->
-			
+
 			<ons-row v-show="noticias.enterese.length > 0">
 				<ons-col>
 					<h2 class="title-home">Entérese</h3>
 
-					 <v-ons-carousel swipeable auto-scroll overscrollable>
-						<v-ons-carousel-item v-for="nota in noticias.enterese">
-							<v-ons-card class="noticia-slider">
-								<img  :src="nota.img | icdn([300,225,95,95])" :alt="nota.title" style="width: 100%">
-								<div class="title">
-									<v-title tag="h3" v-bind:color="'negro'" v-bind:metadata="nota.metadata" v-bind:url="nota.url" colorText="negro">{{ nota.title | html }}</v-title>
-								</div>
-								<div class="content">
-									<p>
-										{{ nota.excerpt | html }}
-									</p>
-								</div>
-							</v-ons-card>
-						</v-ons-carousel-item>
-					</v-ons-carousel>
+						<v-ons-carousel swipeable auto-scroll overscrollable :index.sync="carouselIndexEnterese">
+							<v-ons-carousel-item v-for="nota in noticias.enterese">
+								<v-ons-card class="noticia-slider">
+									<img :src="nota.img | icdn([300,225,95,95])" :alt="nota.title" style="width: 100%">
+									<div class="title">
+										<v-title tag="h3" v-bind:color="'negro'" v-bind:metadata="nota.metadata" v-bind:url="nota.url" color-text="negro">{{ nota.title | html }}</v-title>
+									</div>
+									<div class="content">
+										<p class="color-negro">
+											{{ nota.excerpt | html }}
+										</p>
+									</div>
+								</v-ons-card>
+							</v-ons-carousel-item>
+						</v-ons-carousel>
+						<div class="text-center margin-bottom-1em" v-if="noticias.enterese.length > 1">
+							<span :index="dotIndex - 1" v-for="dotIndex in Object.keys(noticias.enterese).length" :key="dotIndex" style="cursor: pointer"
+							 @click="carouselIndexEnterese = dotIndex - 1" class="color-negro">
+							{{ carouselIndexEnterese === dotIndex - 1 ? '\u25CF' : '\u25CB' }}
+						</span>
+						</div>
 				</ons-col>
 			</ons-row><!--ENTERESE-->
-			
+
 			<ons-row v-show="noticias.temporal.length > 0">
 				<ons-col width="100" v-show="noticias.tituloTemporal">
 					<h2 :class="'title-home color-' + noticias.colorTituloTemporal">{{ noticias.tituloTemporal }}</h2>
 				</ons-col>
 				<ons-col width="50" v-for="nota in noticias.temporal">
-					<v-ons-card class="noticia-temporal" >
-						<img  :src="nota.img | icdn([300,200,95,95])" :alt="nota.title" style="width: 100%">
+					<v-ons-card class="noticia-temporal">
+						<img :src="nota.img | icdn([300,200,95,95])" :alt="nota.title" style="width: 100%">
 						<div class="title">
-							<v-title tag="h3" v-bind:color="nota.categories[0][1]" v-bind:metadata="nota.metadata" v-bind:url="nota.url" colorText="negro">{{ nota.title | html }}</v-title>
+							<v-title tag="h3" v-bind:color="nota.categories[0][1]" v-bind:metadata="nota.metadata" v-bind:url="nota.url" color-text="negro">{{ nota.title | html }}</v-title>
 						</div>
 					</v-ons-card>
 				</ons-col>
 			</ons-row><!--NOTICIAS TEMPORALES-->
-			
+
 			<ons-row>
 				<ons-col width="100">
 					<h2 class="title-home">La diva del día</h2>
 					<v-ons-card class="noticia-diva" v-if="noticias.diva">
-						<img  :src="noticias.diva.img | icdn([400,300,95,95])" :alt="noticias.diva.title" style="width: 100%">
+						<img :src="noticias.diva.img | icdn([400,300,95,95])" :alt="noticias.diva.title" style="width: 100%">
 						<div class="title">
-							<v-title tag="h3" v-bind:color="'entretenimiento'" v-bind:metadata="noticias.diva.metadata" v-bind:url="noticias.diva.url" colorText="negro">{{ noticias.diva.title | html }}</v-title>
+							<v-title tag="h3" v-bind:color="'entretenimiento'" v-bind:metadata="noticias.diva.metadata" v-bind:url="noticias.diva.url"
+							 color-text="negro">{{ noticias.diva.title | html }}</v-title>
 						</div>
 					</v-ons-card>
-				</ons-col><!--DIVA-->	
-				
+				</ons-col>
+				<!--DIVA-->
+
 				<ons-col width="100">
 					<h2 class="title-home">La frase del día</h2>
 					<v-ons-list>
@@ -177,73 +202,83 @@
 							</div>
 							<div class="center">
 								<span class="list-item__title">
-									<v-title tag="p" v-bind:color="'frase-del-dia'" v-bind:metadata="noticias.frase_del_dia.metadata" v-bind:url="noticias.frase_del_dia.url" colorText="negro">{{ noticias.frase_del_dia.excerpt | html }}</v-title>
+									<v-title tag="p" v-bind:color="'frase-del-dia'" v-bind:metadata="noticias.frase_del_dia.metadata" v-bind:url="noticias.frase_del_dia.url" color-text="negro">{{ noticias.frase_del_dia.excerpt | html }}</v-title>
 								</span>
 							</div>
 						</v-ons-list-item>
 					</v-ons-list>
-				</ons-col><!--FRASE DEL DIA-->
-				
+				</ons-col>
+				<!--FRASE DEL DIA-->
+
 				<ons-col width="100">
 					<h2 class="title-home">Humor</h2>
 					<v-ons-card class="noticia-humor" v-if="noticias.humor">
-						<img  :src="noticias.humor.img | icdn([400,300,95,95])" :alt="noticias.humor.title" style="width: 100%">
+						<img :src="noticias.humor.img | icdn([400,300,95,95])" :alt="noticias.humor.title" style="width: 100%">
 						<div class="title">
-							<v-title tag="h3" v-bind:color="'humor'" v-bind:metadata="noticias.humor.metadata" v-bind:url="noticias.humor.url" colorText="negro">{{ noticias.humor.title | html }}</v-title>
+							<v-title tag="h3" v-bind:color="'humor'" v-bind:metadata="noticias.humor.metadata" v-bind:url="noticias.humor.url" color-text="negro">{{ noticias.humor.title | html }}</v-title>
 						</div>
 					</v-ons-card>
-				</ons-col><!--HUMOR-->
-				
+				</ons-col>
+				<!--HUMOR-->
+
 				<ons-col width="100">
 					<h2 class="title-home">La foto del día</h2>
 					<v-ons-card class="noticia-foto-del-dia" v-if="noticias.foto_del_dia">
-						<img  :src="noticias.foto_del_dia.img | icdn([400,300,95,95])" :alt="noticias.foto_del_dia.title" style="width: 100%">
+						<img :src="noticias.foto_del_dia.img | icdn([400,300,95,95])" :alt="noticias.foto_del_dia.title" style="width: 100%">
 						<div class="title">
-							<v-title tag="h3" v-bind:color="'foto-del-dia'" v-bind:metadata="noticias.foto_del_dia.metadata" v-bind:url="noticias.foto_del_dia.url" colorText="negro">{{ noticias.foto_del_dia.title | html }}</v-title>
+							<v-title tag="h3" v-bind:color="'foto-del-dia'" v-bind:metadata="noticias.foto_del_dia.metadata" v-bind:url="noticias.foto_del_dia.url"
+							 color-text="negro">{{ noticias.foto_del_dia.title | html }}</v-title>
 						</div>
 					</v-ons-card>
-				</ons-col><!--FOTO DEL DIA-->
+				</ons-col>
+				<!--FOTO DEL DIA-->
 			</ons-row><!--DIVA, FRASE DEL DIA, HUMOR FOTO DEL DIA-->
-			
+
 			<ons-row>
 				<ons-col>
 					<h2 class="title-home">Videos</h2>
-					<v-ons-carousel swipeable auto-scroll overscrollable>
+					<v-ons-carousel swipeable auto-scroll overscrollable :index.sync="carouselIndexMultimedia">
 						<v-ons-carousel-item v-for="nota in noticias.multimedia">
 							<v-ons-card class="noticia-multimedia">
-								<img  :src="nota.img | icdn([300,225,95,95])" :alt="nota.title" style="width: 100%">
+								<img :src="nota.img | icdn([300,225,95,95])" :alt="nota.title" style="width: 100%">
 								<div class="title">
-									<v-title tag="h3" v-bind:color="'negro'" v-bind:metadata="nota.metadata" v-bind:url="nota.url" colorText="negro">{{ nota.title | html }}</v-title>
+									<v-title tag="h3" v-bind:color="'negro'" v-bind:metadata="nota.metadata" v-bind:url="nota.url" color-text="negro">{{ nota.title | html }}</v-title>
 								</div>
 							</v-ons-card>
 						</v-ons-carousel-item>
 					</v-ons-carousel>
+					<div class="text-center margin-bottom-1em" v-if="noticias.multimedia.length > 1">
+						<span :index="dotIndex - 1" v-for="dotIndex in Object.keys(noticias.multimedia).length" :key="dotIndex" style="cursor: pointer"
+						 @click="carouselIndexMultimedia = dotIndex - 1" class="color-negro">
+							{{ carouselIndexMultimedia === dotIndex - 1 ? '\u25CF' : '\u25CB' }}
+						</span>
+					</div>
 				</ons-col>
 			</ons-row><!--MULTIMEDIA-->
-			
+
 			<ons-row>
 				<ons-col>
 					<h2 class="title-home">Más noticias</h2>
-					
+
 					<accordion color="deportes">
 						<span slot="title">Deportes</span>
 						<div slot="content">
 							<v-ons-card class="noticia-secciones" v-for="nota in noticias.deportes">
-								<img  :src="nota.img | icdn([300,225,95,95])" :alt="nota.title" style="width: 100%">
+								<img :src="nota.img | icdn([300,225,95,95])" :alt="nota.title" style="width: 100%">
 								<div class="title">
-									<v-title tag="h4" v-bind:color="'deportes'" v-bind:metadata="nota.metadata" v-bind:url="nota.url" colorText="negro">{{ nota.title | html }}</v-title>
+									<v-title tag="h4" v-bind:color="'deportes'" v-bind:metadata="nota.metadata" v-bind:url="nota.url" color-text="negro">{{ nota.title | html }}</v-title>
 								</div>
 							</v-ons-card>
 						</div>
 					</accordion>
-					
+
 					<accordion color="entretenimiento">
 						<span slot="title">Entretenimiento</span>
 						<div slot="content">
 							<v-ons-card class="noticia-secciones" v-for="nota in noticias.entretenimiento">
-								<img  :src="nota.img | icdn([300,225,95,95])" :alt="nota.title" style="width: 100%">
+								<img :src="nota.img | icdn([300,225,95,95])" :alt="nota.title" style="width: 100%">
 								<div class="title">
-									<v-title tag="h4" v-bind:color="'entretenimiento'" v-bind:metadata="nota.metadata" v-bind:url="nota.url" colorText="negro">{{ nota.title | html }}</v-title>
+									<v-title tag="h4" v-bind:color="'entretenimiento'" v-bind:metadata="nota.metadata" v-bind:url="nota.url" color-text="negro">{{ nota.title | html }}</v-title>
 								</div>
 							</v-ons-card>
 						</div>
@@ -253,9 +288,9 @@
 						<span slot="title">Economía</span>
 						<div slot="content">
 							<v-ons-card class="noticia-secciones" v-for="nota in noticias.economia">
-								<img  :src="nota.img | icdn([300,225,95,95])" :alt="nota.title" style="width: 100%">
+								<img :src="nota.img | icdn([300,225,95,95])" :alt="nota.title" style="width: 100%">
 								<div class="title">
-									<v-title tag="h4" v-bind:color="'economia'" v-bind:metadata="nota.metadata" v-bind:url="nota.url" colorText="negro">{{ nota.title | html }}</v-title>
+									<v-title tag="h4" v-bind:color="'economia'" v-bind:metadata="nota.metadata" v-bind:url="nota.url" color-text="negro">{{ nota.title | html }}</v-title>
 								</div>
 							</v-ons-card>
 						</div>
@@ -265,9 +300,9 @@
 						<span slot="title">Mundo</span>
 						<div slot="content">
 							<v-ons-card class="noticia-secciones" v-for="nota in noticias.mundo">
-								<img  :src="nota.img | icdn([300,225,95,95])" :alt="nota.title" style="width: 100%">
+								<img :src="nota.img | icdn([300,225,95,95])" :alt="nota.title" style="width: 100%">
 								<div class="title">
-									<v-title tag="h4" v-bind:color="'mundo'" v-bind:metadata="nota.metadata" v-bind:url="nota.url" colorText="negro">{{ nota.title | html }}</v-title>
+									<v-title tag="h4" v-bind:color="'mundo'" v-bind:metadata="nota.metadata" v-bind:url="nota.url" color-text="negro">{{ nota.title | html }}</v-title>
 								</div>
 							</v-ons-card>
 						</div>
@@ -277,9 +312,9 @@
 						<span slot="title">Tecnología</span>
 						<div slot="content">
 							<v-ons-card class="noticia-secciones" v-for="nota in noticias.tecnologia">
-								<img  :src="nota.img | icdn([300,225,95,95])" :alt="nota.title" style="width: 100%">
+								<img :src="nota.img | icdn([300,225,95,95])" :alt="nota.title" style="width: 100%">
 								<div class="title">
-									<v-title tag="h4" v-bind:color="'tecnologia'" v-bind:metadata="nota.metadata" v-bind:url="nota.url" colorText="negro">{{ nota.title | html }}</v-title>
+									<v-title tag="h4" v-bind:color="'tecnologia'" v-bind:metadata="nota.metadata" v-bind:url="nota.url" color-text="negro">{{ nota.title | html }}</v-title>
 								</div>
 							</v-ons-card>
 						</div>
@@ -289,9 +324,9 @@
 						<span slot="title">Opinión</span>
 						<div slot="content">
 							<v-ons-card class="noticia-secciones" v-for="nota in noticias.opinion">
-								<img  :src="nota.img | icdn([300,225,95,95])" :alt="nota.title" style="width: 100%">
+								<img :src="nota.img | icdn([300,225,95,95])" :alt="nota.title" style="width: 100%">
 								<div class="title">
-									<v-title tag="h4" v-bind:color="'opinion'" v-bind:metadata="nota.metadata" v-bind:url="nota.url" colorText="negro">{{ nota.title | html }}</v-title>
+									<v-title tag="h4" v-bind:color="'opinion'" v-bind:metadata="nota.metadata" v-bind:url="nota.url" color-text="negro">{{ nota.title | html }}</v-title>
 								</div>
 							</v-ons-card>
 						</div>
@@ -305,13 +340,13 @@
 		<v-ons-page>
 			<v-ons-toolbar>
 				<div class="left">
-					<v-ons-toolbar-button  onclick="_splitter.toggle();">
+					<v-ons-toolbar-button onclick="_splitter.toggle();">
 						<v-ons-icon icon="ion-navicon, material:md-menu"></v-ons-icon>
 					</v-ons-toolbar-button>
 				</div>
 				<div class="center">Últimas</div>
 			</v-ons-toolbar>
-			
+
 			<v-ons-pull-hook :action="refreshNews" @changestate="state = $event.state">
 				<span v-show="state === 'initial'"> Hale para refrescar </span>
 				<span v-show="state === 'preaction'"> Soltar </span>
@@ -321,9 +356,9 @@
 			<ons-row>
 				<ons-col width="100">
 					<v-ons-card class="noticia-ultimas" v-for="nota in noticias">
-						<img  :src="nota.img | icdn([315,200,95,95])" :alt="nota.title" style="width: 100%">
+						<img :src="nota.img | icdn([315,200,95,95])" :alt="nota.title" style="width: 100%">
 						<div class="title">
-							<v-title tag="h3"  v-bind:color="nota.categories[0][1]" v-bind:metadata="nota.metadata" v-bind:url="nota.url" colorText="negro">{{ nota.title | html }}</v-title>
+							<v-title tag="h3" v-bind:color="nota.categories[0][1]" v-bind:metadata="nota.metadata" v-bind:url="nota.url" color-text="negro">{{ nota.title | html }}</v-title>
 						</div>
 						<div class="content">
 							<p>{{ nota.hour.trim() }}</p>
@@ -338,13 +373,13 @@
 		<v-ons-page>
 			<v-ons-toolbar>
 				<div class="left">
-					<v-ons-toolbar-button  onclick="_splitter.toggle();">
+					<v-ons-toolbar-button onclick="_splitter.toggle();">
 						<v-ons-icon icon="ion-navicon, material:md-menu"></v-ons-icon>
 					</v-ons-toolbar-button>
 				</div>
 				<div class="center">Más leídas</div>
 			</v-ons-toolbar>
-			
+
 			<v-ons-pull-hook :action="refreshNews" @changestate="state = $event.state">
 				<span v-show="state === 'initial'"> Hale para refrescar </span>
 				<span v-show="state === 'preaction'"> Soltar </span>
@@ -354,9 +389,9 @@
 			<ons-row>
 				<ons-col width="100">
 					<v-ons-card class="noticia-ultimas" v-for="nota in noticias">
-						<img  :src="nota.img | icdn([315,200,95,95])" :alt="nota.title" style="width: 100%">
+						<img :src="nota.img | icdn([315,200,95,95])" :alt="nota.title" style="width: 100%">
 						<div class="title">
-							<v-title tag="h3"  v-bind:color="nota.categories[0][1]" v-bind:metadata="nota.metadata" v-bind:url="nota.url" colorText="negro">{{ nota.title | html }}</v-title>
+							<v-title tag="h3" v-bind:color="nota.categories[0][1]" v-bind:metadata="nota.metadata" v-bind:url="nota.url" color-text="negro">{{ nota.title | html }}</v-title>
 						</div>
 					</v-ons-card>
 				</ons-col>
@@ -368,13 +403,13 @@
 		<v-ons-page>
 			<v-ons-toolbar :class="'fondo-' +  cat_color">
 				<div class="left">
-					<v-ons-toolbar-button class="color-blanco"  onclick="_splitter.toggle();">
+					<v-ons-toolbar-button class="color-blanco" onclick="_splitter.toggle();">
 						<v-ons-icon icon="ion-navicon, material:md-menu"></v-ons-icon>
 					</v-ons-toolbar-button>
 				</div>
 				<div class="center color-blanco">{{ cat_title }}</div>
 			</v-ons-toolbar>
-			
+
 			<v-ons-pull-hook :action="refreshNews" @changestate="state = $event.state">
 				<span v-show="state === 'initial'"> Hale para refrescar </span>
 				<span v-show="state === 'preaction'"> Soltar </span>
@@ -392,9 +427,9 @@
 			<ons-row>
 				<ons-col width="100">
 					<v-ons-card class="noticia-seccion-grande" v-if="noticias.length > 0">
-						<img  :src="noticias[0].img | icdn([300,250,95,95])" :alt="noticias[0].title" style="width: 100%">
+						<img :src="noticias[0].img | icdn([300,250,95,95])" :alt="noticias[0].title" style="width: 100%">
 						<div class="title">
-							<v-title tag="h2" v-bind:color="cat_color" v-bind:metadata="noticias[0].metadata" v-bind:url="noticias[0].url" colorText="negro">{{ noticias[0].title | html }}</v-title>
+							<v-title tag="h2" v-bind:color="cat_color" v-bind:metadata="noticias[0].metadata" v-bind:url="noticias[0].url" color-text="negro">{{ noticias[0].title | html }}</v-title>
 						</div>
 						<div class="content">
 							<p>
@@ -407,9 +442,43 @@
 			<ons-row>
 				<ons-col width="50" v-for="nota in noticias.slice(1)">
 					<v-ons-card class="noticia-seccion-mediana">
-						<img  :src="nota.img | icdn([300,200,95,95])" :alt="nota.title" style="width: 100%">
+						<img :src="nota.img | icdn([300,200,95,95])" :alt="nota.title" style="width: 100%">
 						<div class="title">
-							<v-title tag="h3" v-bind:color="cat_color" v-bind:metadata="nota.metadata" v-bind:url="nota.url" colorText="negro">{{ nota.title | html }}</v-title>
+							<v-title tag="h3" v-bind:color="cat_color" v-bind:metadata="nota.metadata" v-bind:url="nota.url" color-text="negro">{{ nota.title | html }}</v-title>
+						</div>
+					</v-ons-card>
+				</ons-col>
+			</ons-row>
+
+			<ons-row>
+				<ons-col class="text-center" width="100%" v-show="loading">
+					<v-ons-icon :class="'color-' + cat_color" size="2em" spin icon="fa-cog"></v-ons-icon>
+				</ons-col>
+				<ons-col class="text-center" width="100%">
+					<v-ons-button modifier="large" @click="viewMoreNews()" :class="'ver-mas-boton fondo-' + cat_color">Ver más noticias</v-ons-button>
+				</ons-col>
+			</ons-row>
+		</v-ons-page>
+	</template>
+
+	<template id="especiales">
+		<v-ons-page>
+			<v-ons-toolbar>
+				<div class="left">
+					<v-ons-toolbar-button onclick="_splitter.toggle();">
+						<v-ons-icon icon="ion-navicon, material:md-menu"></v-ons-icon>
+					</v-ons-toolbar-button>
+				</div>
+				<div class="center">Especiales</div>
+			</v-ons-toolbar>
+
+			<ons-row>
+				<ons-col width="100">
+					<v-ons-card class="noticia-especiales" v-for="especial in especiales" @click="navToSpecial(especial)">
+						<img :src="especial.especial_img" :alt="especial.especial_name" style="width: 100%">
+						<div class="title">{{ especial.especial_name }}</div>
+						<div class="content">
+							<p>{{ especial.especial_description }}</p>
 						</div>
 					</v-ons-card>
 				</ons-col>
@@ -417,9 +486,132 @@
 		</v-ons-page>
 	</template>
 
+	<template id="especial">
+		<v-ons-page>
+			<v-ons-toolbar>
+				<div class="left">
+					<v-ons-toolbar-button onclick="_splitter.toggle();">
+						<v-ons-icon icon="ion-navicon, material:md-menu"></v-ons-icon>
+					</v-ons-toolbar-button>
+				</div>
+				<div class="center">{{ especial_name }}</div>
+			</v-ons-toolbar>
+
+			<ons-row v-for="item in especial_body">
+				<ons-col width="100" v-if="item.type === 'img'" class="img-item">
+					<img :src="item.src" alt="item.alt">
+				</ons-col><!--TIPO: IMAGEN-->
+
+				<ons-col width="100" v-else-if="item.type === 'text'" class="text-item">
+					<p class="text-justify">{{ item.body }}</p>
+				</ons-col><!--TIPO: TEXTO-->
+
+				<ons-col width="100" v-else-if="item.type === 'embed'" class="embed-item margin-bottom-1em">
+					<div v-html="item.html"></div>
+				</ons-col><!--TIPO: EMBED-->			
+
+				<ons-col width="100" v-else-if="item.type === 'newstag'" class="newstag-item margin-bottom-1em">
+					<v-ons-carousel swipeable auto-scroll overscrollable  :index.sync="item.index">
+						<v-ons-carousel-item v-for="nota in item.news">
+							<v-ons-card class="noticia-multimedia">
+								<img :src="nota.img | icdn([300,225,95,95])" :alt="nota.title" style="width: 100%">
+								<div class="title">
+									<v-title tag="h4" v-bind:color="'negro'" v-bind:metadata="nota.metadata" v-bind:url="nota.url" color-text="negro">{{ nota.title | html }}</v-title>
+								</div>
+							</v-ons-card>
+						</v-ons-carousel-item>
+					</v-ons-carousel>
+					<div class="text-center" v-show="item.news.length > 0">
+						<span :index="dotIndex - 1" v-for="dotIndex in Object.keys(item.news).length" :key="dotIndex" style="cursor: pointer" @click="item.index = dotIndex - 1">
+							{{ item.index === dotIndex - 1 ? '\u25CF' : '\u25CB' }}
+						</span>
+					</div>
+				</ons-col><!--TIPO: TAG DE NOTICIAS-->
+
+				<ons-col width="100" v-else-if="item.type === 'videosid'" class="videosid-item margin-bottom-1em">
+					<v-ons-carousel fullscreen swipeable auto-scroll overscrollable  :index.sync="item.index">
+						<v-ons-carousel-item v-for="id in item.ids">
+							<div class="video-container">
+								<div class="embed-responsive embed-responsive-16by9">
+									<iframe allowfullscreen webkitallowfullscreen mozallowfullscreen width="640" height="360" :src="'https://fast.player.liquidplatform.com/pApiv2/embed/528d5ddc400d6d180d22d067b8e427b5/' + id"
+									 scrolling="no" frameborder="0" allow="geolocation; microphone; camera; encrypted-media; midi"></iframe>
+								</div>
+							</div>
+						</v-ons-carousel-item>
+					</v-ons-carousel>
+					<div class="text-center" v-show="item.ids.length > 0">
+						<span :index="dotIndex - 1" v-for="dotIndex in Object.keys(item.ids).length" :key="dotIndex" style="cursor: pointer" @click="item.index = dotIndex - 1">
+							{{ item.index === dotIndex - 1 ? '\u25CF' : '\u25CB' }}
+						</span>
+					</div>
+				</ons-col><!--TIPO: IDS DE VIDEOS, VIDEOS UNICOS-->
+
+				<ons-col width="100" v-else-if="item.type === 'videotag'" class="videotag-item  margin-bottom-1em">
+					<v-ons-carousel fullscreen swipeable auto-scroll overscrollable  :index.sync="item.index">
+						<v-ons-carousel-item v-for="video in item.videos">
+							<div class="video-container">
+								<div class="embed-responsive embed-responsive-16by9">
+									<iframe allowfullscreen webkitallowfullscreen mozallowfullscreen width="640" height="360" :src="'https://fast.player.liquidplatform.com/pApiv2/embed/528d5ddc400d6d180d22d067b8e427b5/' + video.id"
+									 scrolling="no" frameborder="0" allow="geolocation; microphone; camera; encrypted-media; midi"></iframe>
+								</div>
+							</div>
+						</v-ons-carousel-item>
+					</v-ons-carousel>
+					<div class="text-center" v-show="item.videos.length > 0">
+						<span :index="dotIndex - 1" v-for="dotIndex in item.videos.length" :key="dotIndex" style="cursor: pointer" @click="item.index = dotIndex - 1">
+							{{ item.index === dotIndex - 1 ? '\u25CF' : '\u25CB' }}
+						</span>
+					</div>
+				</ons-col><!--TIPO: TAG DE VIDEOS-->
+
+				<ons-col width="100" v-else class="fallback-item">
+					<div v-html="item.body"></div>
+				</ons-col><!--TIPO: FALLBACK-->
+			</ons-row>
+			<ons-row v-show="especial_url !== null && especial_url !== ''">
+				<ons-col  class="text-item">
+					<p><b>Puede ver más información <a :href="especial_url" target="_blank">aquí</a></b></p>
+				</ons-col>
+			</ons-row>
+		</v-ons-page>
+	</template>
+
+	<template id="tema">
+		<v-ons-page>
+			<v-ons-toolbar>
+				<div class="left">
+					<v-ons-toolbar-button onclick="_splitter.toggle();">
+						<v-ons-icon icon="ion-navicon, material:md-menu"></v-ons-icon>
+					</v-ons-toolbar-button>
+				</div>
+				<div class="center">{{ etiqueta_name }}</div>
+			</v-ons-toolbar>
+
+			<ons-row>
+				<ons-col width="50" v-for="nota in noticias">
+					<v-ons-card class="noticia-etiqueta">
+						<img :src="nota.img | icdn([300,200,95,95])" :alt="nota.title" style="width: 100%">
+						<div class="title">
+							<v-title tag="h4" color="negro" v-bind:metadata="nota.metadata" v-bind:url="nota.url" color-text="negro">{{ nota.title | html }}</v-title>
+						</div>
+					</v-ons-card>
+				</ons-col>
+			</ons-row>
+
+			<ons-row>
+				<ons-col class="text-center" width="100%" v-show="loading">
+					<v-ons-icon size="2em" spin icon="fa-cog" class="color-negro"></v-ons-icon>
+				</ons-col>
+				<ons-col class="text-center" width="100%">
+					<v-ons-button modifier="large" @click="viewMoreNews()" class="ver-mas-boton color-blanco fondo-negro">Ver más noticias</v-ons-button>
+				</ons-col>
+			</ons-row>
+		</v-ons-page>
+	</template>
+
 	<div id="app">
 		<v-ons-splitter>
-			<v-ons-splitter-side swipeable width="50%" collapse="" side="left"  id="_splitter" :open.sync="openSide">
+			<v-ons-splitter-side swipeable width="50%" collapse="" side="left" id="_splitter" :open.sync="openSide">
 				<v-ons-page>
 					<v-ons-toolbar>
 						<div class="center">Menú</div>
@@ -428,14 +620,18 @@
 						<v-ons-list-item v-for="page in pages" tappable modifier="chevron" @click="router.push(page.route); openSide = false;">
 							<div class="center">{{ page.title }}</div>
 						</v-ons-list-item>
+						<v-ons-list-item  tappable modifier="chevron" @click="test();">
+							<div class="center">Tema</div>
+						</v-ons-list-item>
 						<v-ons-list-header>Categorías</v-ons-list-header>
 						<v-ons-list-item v-for="cat in categories" tappable modifier="chevron" v-on:click="navToCategory(cat)">
 							<div class="center">{{ cat.cat_title }}</div>
 						</v-ons-list-item>
 						<v-ons-list-header>Nuestras redes</v-ons-list-header>
-						<v-ons-list-item v-for="sn in socialNetworks" tappable>
-							<div class="left">
-								<a :href="sn.socialNetwork_url" target="_blank"><ons-icon :icon="sn.socialNetwork_icon"></ons-icon> {{ sn.socialNetwork_name }}</a>
+						<v-ons-list-item v-for="sn in socialNetworks" tappable modifier="chevron">
+							<div class="center">
+								<a :href="sn.socialNetwork_url" target="_blank">
+									<ons-icon :icon="sn.socialNetwork_icon"></ons-icon> {{ sn.socialNetwork_name }}</a>
 							</div>
 						</v-ons-list-item>
 					</v-ons-list>
@@ -453,35 +649,41 @@
 	<script type="text/javascript" src="libs/vue.min.js"></script>
 	<script type="text/javascript" src="libs/vue-resource.min.js"></script>
 	<script type="text/javascript" src="libs/vue-router.min.js"></script>
-	<script type="text/javascript"  src="libs/onsenUI/js/onsenui.min.js"></script>
-	<script type="text/javascript"  src="libs/vue-onsenui.min.js"></script>
+	<script type="text/javascript" src="libs/onsenUI/js/onsenui.min.js"></script>
+	<script type="text/javascript" src="libs/vue-onsenui.min.js"></script>
 
 	<!--DECLARACIONES ESTATICAS-->
-	<script type="text/javascript"  src="js/config/categories.static.js"></script>
-	<script type="text/javascript"  src="js/config/socialNetwork.static.js"></script>
+	<script type="text/javascript" src="js/config/categories.static.js"></script>
+	<script type="text/javascript" src="js/config/socialNetwork.static.js"></script>
 
 	<!--FILTROS-->
-	<script type="text/javascript"  src="js/filters/html.filter.js"></script>
-	<script type="text/javascript"  src="js/filters/icdn.filter.js"></script>
+	<script type="text/javascript" src="js/filters/html.filter.js"></script>
+	<script type="text/javascript" src="js/filters/icdn.filter.js"></script>
 
 	<!--SERVICIOS-->
-	<script type="text/javascript"  src="js/services/home.service.js"></script>
-	<script type="text/javascript"  src="js/services/ultimas.service.js"></script>
-	<script type="text/javascript"  src="js/services/masLeidas.service.js"></script>
-	<script type="text/javascript"  src="js/services/categorias.service.js"></script>
+	<script type="text/javascript" src="js/services/home.service.js"></script>
+	<script type="text/javascript" src="js/services/ultimas.service.js"></script>
+	<script type="text/javascript" src="js/services/masLeidas.service.js"></script>
+	<script type="text/javascript" src="js/services/categorias.service.js"></script>
+	<script type="text/javascript" src="js/services/etiqueta.service.js"></script>
+	<script type="text/javascript" src="js/services/especiales.service.js"></script>
+	<script type="text/javascript" src="js/services/samba.service.js"></script>
 
 	<!--DIRECTIVAS-->
-	<script type="text/javascript"  src="js/directives/title.directive.js"></script>
+	<script type="text/javascript" src="js/directives/title.directive.js"></script>
 
 	<!--COMPONENTES-->
-	<script type="text/javascript"  src="js/components/accordion.component.js"></script>
-	<script type="text/javascript"  src="js/components/home.component.js"></script>
-	<script type="text/javascript"  src="js/components/ultimas.component.js"></script>
-	<script type="text/javascript"  src="js/components/masLeidas.component.js"></script>
-	<script type="text/javascript"  src="js/components/category.component.js"></script>
+	<script type="text/javascript" src="js/components/accordion.component.js"></script>
+	<script type="text/javascript" src="js/components/home.component.js"></script>
+	<script type="text/javascript" src="js/components/ultimas.component.js"></script>
+	<script type="text/javascript" src="js/components/masLeidas.component.js"></script>
+	<script type="text/javascript" src="js/components/category.component.js"></script>
+	<script type="text/javascript" src="js/components/especiales.component.js"></script>
+	<script type="text/javascript" src="js/components/especial.component.js"></script>
+	<script type="text/javascript" src="js/components/tema.component.js"></script>
 
 	<!--ROUTER-->
-	<script type="text/javascript"  src="js/config/routes.router.js"></script>
+	<script type="text/javascript" src="js/config/routes.router.js"></script>
 
 	<!--COMPONENTE INICIAL-->
 	<script type="text/javascript" src="js/components/app.component.js"></script>

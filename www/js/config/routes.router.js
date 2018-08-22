@@ -23,6 +23,20 @@ const _router = new VueRouter({
 		component: _categoryComponent,
 		props: true
 	}, {
+		path:"/especiales",
+		name:"especiales",
+		component: _especialesComponent
+	}, {
+		path:"/especial",
+		name:"especial",
+		component: _especialComponent,
+		props: true
+	}, {
+		path:"/tema",
+		name:"tema",
+		component: _temaComponent,
+		props: true
+	}, {
 		path:"*",
 		name:"404",
 		component: {
@@ -37,13 +51,3 @@ const _router = new VueRouter({
 		}
 	}
 });
-
-/*
-, {
-		path:"/category/:catId/:subCategoryId",
-		name:"subCategory",
-		component: {
-			template: "<div><h4>category id: {{ $route.params.catId }}</h4><h5>sub category: {{ $route.params.subCategoryId }}</h5></div>"
-		}
-	}
-*/

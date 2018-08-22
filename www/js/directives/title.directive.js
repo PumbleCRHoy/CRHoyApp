@@ -35,10 +35,11 @@ Vue.component("v-title", {
         var attrs = {
             title: this.title,
             href: this.url,
-			rel: "noopener"
+			rel: "noopener",
+			class: "v-title"
         };
         if (this.colorText) {
-            attrs.class = "color-" + this.colorText;
+            attrs.class += " color-" + this.colorText;
         }
 
         return createElement(this.tag, [createElement("a", {

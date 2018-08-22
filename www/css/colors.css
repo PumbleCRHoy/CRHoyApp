@@ -1,6 +1,16 @@
 .color-blanco{
 	color: #ffffff !important;
 }
+.fondo-blanco{
+	background-color: #ffffff !important;
+}
+
+.color-negro{
+	color: #333333 !important;
+}
+.fondo-negro{
+	background-color: #333333 !important;
+}
 
 .fondo-deportes{
 	background-color: #034673 !important;

@@ -8,16 +8,16 @@ var app_crhoy = new Vue({
 		openSide: false,
 		pages: [{
 			title: "Inicio",
-			template: "home",
 			route: "/"
 		}, {
 			title: "Últimas",
-			template: "ultimas",
 			route: "/ultimas"
 		}, {
 			title: "Más Leídas",
-			template: "masLeidas",
 			route: "/masLeidas"
+		}, {
+			title: "Especiales",
+			route: "/especiales"
 		}],
 		socialNetworks: _socialNetworks,
 		categories: _categories,
@@ -37,6 +37,16 @@ var app_crhoy = new Vue({
 			this.router.push({
 				name: "category",
 				params: category
+			});
+			this.openSide = false;
+		},
+		test: function(){
+			this.router.push({
+				name: "tema",
+				params: {
+					etiqueta_name: "Donald Trump",
+					etiqueta_slug: "donald-trump"
+				}
 			});
 			this.openSide = false;
 		}

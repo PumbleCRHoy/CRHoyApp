@@ -1,3 +1,4 @@
+// GENERAR LA PORTADA: https://www.crhoy.com/site/generators/no-cache/new_portada_app.php
 var _homeService = {
     methods: {
         homeService: function () {

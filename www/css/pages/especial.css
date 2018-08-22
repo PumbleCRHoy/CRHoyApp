@@ -1,0 +1,29 @@
+/* IMAGENES */
+.img-item img{
+	width: 100%;
+}
+/* TEXTO */
+.text-item p{
+	margin: 1em;
+}
+/* VIDEO IDS */
+.videosid-item, .videotag-item {
+	background-color: #ffffff;
+	padding-bottom: 2em;
+}
+.videosid-item .video-container, .videotag-item .video-container{
+	padding: 1em 1em 0px;
+}
+/* EMBEDS */
+.embed-item{
+	padding-top: 1em;
+    padding-bottom: 1em;
+    background-color: #ffffff;
+}
+
+.newstag-item{
+
+}
+.fallback-item{
+
+}
