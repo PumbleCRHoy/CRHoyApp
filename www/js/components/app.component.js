@@ -40,13 +40,19 @@ var app_crhoy = new Vue({
 			});
 			this.openSide = false;
 		},
-		test: function(){
+		test: function () {
 			this.router.push({
 				name: "tema",
 				params: {
 					etiqueta_name: "Donald Trump",
 					etiqueta_slug: "donald-trump"
 				}
+			});
+			this.openSide = false;
+		},
+		test2: function () {
+			this.router.push({
+				name: "buscador"
 			});
 			this.openSide = false;
 		}

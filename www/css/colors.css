@@ -22,13 +22,13 @@
 	border-color: #034673 !important;
 }
 
-.fondo-nacionales{
+.fondo-nacionales, .fondo-gobierno{
 	background-color: #ed1b24 !important;
 }
-.color-nacionales{
+.color-nacionales, .color-gobierno{
 	color:  #ed1b24 !important;
 }
-.border-nacionales{
+.border-nacionales, .border-gobierno{
 	border-color: #ed1b24 !important;
 }
 
@@ -65,7 +65,7 @@
 .fondo-entretenimiento{
 	background-color: #b82364 !important;
 }
-.color-entretenimiento{
+.color-entretenimiento, .color-cultura{
 	color:  #b82364 !important;
 }
 .border-entretenimiento{
@@ -135,7 +135,7 @@
 .fondo-foto-del-dia{
 	background-color: #80ab5b !important;
 }
-.color-foto-del-dia{
+.color-foto-del-dia, .color-la-foto-del-dia{
 	color:  #80ab5b !important;
 }
 .border-foto-del-dia{

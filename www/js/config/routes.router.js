@@ -37,6 +37,10 @@ const _router = new VueRouter({
 		component: _temaComponent,
 		props: true
 	}, {
+		path:"/buscador",
+		name:"buscador",
+		component: _buscadorComponent
+	}, {
 		path:"*",
 		name:"404",
 		component: {
