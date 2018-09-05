@@ -655,6 +655,42 @@
 		</v-ons-page>
 	</template>
 
+	<template id="boletin">
+		<v-ons-page>
+			<v-ons-toolbar>
+				<div class="left">
+					<v-ons-toolbar-button onclick="_splitter.toggle();">
+						<v-ons-icon icon="ion-navicon, material:md-menu"></v-ons-icon>
+					</v-ons-toolbar-button>
+				</div>
+				<div class="center">Boletín</div>
+			</v-ons-toolbar>
+
+			<ons-row>
+				<ons-col>
+                    
+                    <ons-list>
+                        <ons-list-header>Usted ya esta subscrito a nuestros boletines</ons-list-header>
+                        <v-ons-list-item v-for="sw in switchers">
+                            <div class="center">{{ sw.name }}</div>
+                            <div class="right">
+                                <v-ons-switch v-model="sw.check"></v-ons-switch>
+                            </div>
+                        </v-ons-list-item>
+                    </ons-list>
+                    <form>
+                        <v-ons-list>
+                            <v-ons-list-item>
+                                <v-ons-input placeholder="Email" type="email" float v-model="email" required></v-ons-input>
+                            </v-ons-list-item>
+                        </v-ons-list>
+                        <v-ons-button type="button" modifier="large" @click="subscribe()">Subscribirse</v-ons-button>
+                    </form>
+				</ons-col>
+			</ons-row>
+		</v-ons-page>
+	</template>
+
 	<div id="app">
 		<v-ons-splitter>
 			<v-ons-splitter-side swipeable width="50%" collapse="" side="left" collapse="portrait" open-threshold="0.9" id="_splitter" :open.sync="openSide">
@@ -720,6 +756,7 @@
 	<script type="text/javascript" src="js/services/especiales.service.js"></script>
 	<script type="text/javascript" src="js/services/samba.service.js"></script>
 	<script type="text/javascript" src="js/services/buscador.service.js"></script>
+    <script type="text/javascript" src="js/services/boletin.service.js"></script>
 
 	<!--DIRECTIVAS-->
 	<script type="text/javascript" src="js/directives/title.directive.js"></script>
@@ -734,6 +771,7 @@
 	<script type="text/javascript" src="js/components/especial.component.js"></script>
 	<script type="text/javascript" src="js/components/tema.component.js"></script>
 	<script type="text/javascript" src="js/components/buscador.component.js"></script>
+    <script type="text/javascript" src="js/components/boletin.component.js"></script>
 
 	<!--ROUTER-->
 	<script type="text/javascript" src="js/config/routes.router.js"></script>

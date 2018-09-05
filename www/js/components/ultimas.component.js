@@ -1,11 +1,3 @@
-/*
-	PONERLE UNA CLASE A TODAS LAS NOTICIAS
-	PONERLE UN DATA INDEX A TODAS LAS NOTICIAS
-	OBTENER TODAS LAS NOTICIAS Y FILTRARLA POR LA QUE dataset.index % 10 === 0
-	SOLO PONER ESAS EN EL OBSERVER
-	CUANDO LLEGA UNA DE ESAS NOTICIAS, RENDER = TRUE PARA LAS 10 SIGUIENTES
-*/
-
 const _ultimasComponent = {
 	template: "#ultimas",
 	mixins: [_ultimasService], // DEPENDENCIAS DE SERVICIOS
@@ -57,7 +49,6 @@ const _ultimasComponent = {
 			// SI HAY ELEMENTOS OBSERVADOS, DES-OBSERVARLOS PARA EVITAR MULTIPLES PROCESOS CORRIENDO
 			if (this.io !== null && this.keyPointElements !== null) {
 				if (this.keyPointElements.length > 0) {
-					console.log("des-observando elementos");
 					for (var i = 0; i < this.keyPointElements.length; i++) {
 						this.io.unobserve(this.keyPointElements[i]);
 					}
@@ -71,7 +62,6 @@ const _ultimasComponent = {
 		}
 	},
 	updated: function () {
-		console.log("updated!");
 		if ('IntersectionObserver' in window) {
 			// AHORA QUE EL DOM ESTA ACTUALIZADO,
 			// CREAR EL IntersectionObserver SI NO ESTABA CREADO

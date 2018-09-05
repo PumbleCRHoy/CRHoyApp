@@ -18,7 +18,10 @@ var app_crhoy = new Vue({
 		}, {
 			title: "Especiales",
 			route: "/especiales"
-		}],
+        }/*, {
+			title: "Boletín",
+			route: "/boletin"
+		}*/],
 		socialNetworks: _socialNetworks,
 		categories: _categories,
 		openSide: false
