@@ -6,17 +6,30 @@ const _noticiaComponent = {
         return {
             state: "initial",
             nota: {
-                author: [],
-                category: [],
-                comment_count: 0,
-                guid: "",
                 id: 0,
-                content: "",
+                img: "",
+                pretitle: "",
+                title: "",
+                subtitle1: "",
+                subtitle2: "",
+                guid: "",
+                name: "",
+                date: null,
+                hour: null,
+                author: {
+                    autor_name: "",
+                    autor_slug: "",
+                    autor_id: "",
+                    autor_email: ""
+                },
+                categories: [{
+                    cat_color: "nacionales"
+                }, {}],
                 date: null,
                 modified: null,
-                name: "",
-                title: "",
-                tags: []
+                content: "",
+                tags: [],
+                comments: []
             }
         };
     },
@@ -29,5 +42,17 @@ const _noticiaComponent = {
         });
     },
     methods: {
+        navToAuthor: function (author) {
+            this.$router.push({
+                name: "autor",
+                params: author
+            });
+        },
+        navToTag: function (tag) {
+            this.$router.push({
+                name: "tema",
+                params: tag
+            });
+        }
     }
 };

@@ -1,6 +1,12 @@
 .margin-bottom-1em{
 	margin-bottom: 1em;
 }
+.no-margin-bottom{
+    margin-bottom: 0px !important;
+}
+.no-margin{
+    margin: 0px !important;
+}
 .embed-responsive {
     position: relative;
     display: block;
