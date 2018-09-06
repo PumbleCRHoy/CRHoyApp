@@ -18,7 +18,8 @@ var app_crhoy = new Vue({
 		}, {
 			title: "Especiales",
 			route: "/especiales"
-        }/*, {
+        }
+        /*, {
 			title: "Boletín",
 			route: "/boletin"
 		}*/],
@@ -56,6 +57,18 @@ var app_crhoy = new Vue({
 		test2: function () {
 			this.router.push({
 				name: "buscador"
+			});
+			this.openSide = false;
+		},
+        test3: function () {
+			this.router.push({
+				name: "autor",
+                params: {
+					autor_name: "Juan Granados",
+                    autor_slug: "juan-granados",
+                    autor_email: "juan.granados@crhoy.com",
+                    autor_id: ""
+				}
 			});
 			this.openSide = false;
 		}

@@ -25,11 +25,13 @@
 		<v-ons-page>
 			<v-ons-toolbar>
 				<div class="left">
-					<v-ons-toolbar-button onclick="_splitter.toggle();">
+					<v-ons-toolbar-button onclick="_splitter.toggle();" class="color-nacionales">
 						<v-ons-icon icon="ion-navicon, material:md-menu"></v-ons-icon>
 					</v-ons-toolbar-button>
 				</div>
-				<div class="center">Inicio</div>
+				<div class="center">
+                    <img class="logo-toolbar" src="img/crhoy-logo.png" alt="CRHoy.com">
+                </div>
 			</v-ons-toolbar>
 
 			<v-ons-pull-hook :action="refreshHome" @changestate="state = $event.state">
@@ -48,7 +50,7 @@
 				<ons-col>
 					<img :src="noticias.importante.img | icdn([400,300,95,95])" :alt="noticias.importante.title" style="width: 100%">
 					<div class="title">
-						<v-title tag="h1" v-bind:color="noticias.importante.categories[0][1]" v-bind:metadata="noticias.importante.metadata" v-bind:url="noticias.importante.url"
+						<v-title tag="h1" v-bind:color="noticias.importante.categories[0][1]" v-bind:metadata="noticias.importante.metadata" v-bind:postid="noticias.importante.id"
 						 color-text="negro">{{ noticias.importante.title | html }}</v-title>
 					</div>
 				</ons-col>
@@ -67,7 +69,7 @@
 							<v-ons-card class="noticia-slider">
 								<img :src="nota.img | icdn([315,260,95,95])" :alt="nota.title" style="width: 100%">
 								<div class="title">
-									<v-title tag="h2" v-bind:color="nota.categories[0][1]" v-bind:metadata="nota.metadata" v-bind:url="nota.url" color-text="negro">{{ nota.title | html }}</v-title>
+									<v-title tag="h2" v-bind:color="nota.categories[0][1]" v-bind:metadata="nota.metadata" v-bind:postid="nota.id" color-text="negro">{{ nota.title | html }}</v-title>
 								</div>
 								<div class="content">
 									<p class="color-negro">
@@ -95,7 +97,7 @@
 							</div>
 							<div class="center">
 								<span class="list-item__title">
-								<v-title tag="h3" v-bind:color="nota.categories[0][1]" v-bind:metadata="nota.metadata" v-bind:url="nota.url" color-text="negro">{{ nota.title | html }}</v-title>
+								<v-title tag="h3" v-bind:color="nota.categories[0][1]" v-bind:metadata="nota.metadata" v-bind:postid="nota.id" color-text="negro">{{ nota.title | html }}</v-title>
 							</span>
 							</div>
 						</v-ons-list-item>
@@ -107,9 +109,8 @@
 				<ons-col width="100">
 					<v-ons-card class="noticia-visual-a" v-if="noticias.visualA.length > 0">
 						<img :src="noticias.visualA[0].img | icdn([315,260,95,95])" :alt="noticias.visualA[0].title" style="width: 100%">
-						<!--<div class="title">{{ nota.title | html }}</div>-->
 						<div class="title">
-							<v-title tag="h2" v-bind:color="noticias.visualA[0].categories[0][1]" v-bind:metadata="noticias.visualA[0].metadata" v-bind:url="noticias.visualA[0].url"
+							<v-title tag="h2" v-bind:color="noticias.visualA[0].categories[0][1]" v-bind:metadata="noticias.visualA[0].metadata" v-bind:postid="noticias.visualA[0].id"
 							 color-text="negro">{{ noticias.visualA[0].title | html }}</v-title>
 						</div>
 						<div class="content">
@@ -123,7 +124,7 @@
 					<v-ons-card class="noticia-visual-a-mediana">
 						<img :src="nota.img | icdn([150,100,95,95])" :alt="nota.title" style="width: 100%">
 						<div class="title">
-							<v-title tag="h3" v-bind:color="nota.categories[0][1]" v-bind:metadata="nota.metadata" v-bind:url="nota.url" color-text="negro">{{ nota.title | html }}</v-title>
+							<v-title tag="h3" v-bind:color="nota.categories[0][1]" v-bind:metadata="nota.metadata" v-bind:postid="nota.id" color-text="negro">{{ nota.title | html }}</v-title>
 						</div>
 					</v-ons-card>
 				</ons-col>
@@ -133,7 +134,7 @@
 				<ons-col>
 					<v-ons-list>
 						<v-ons-list-item tappable v-for="nota in noticias.visualC">
-							<v-title tag="h3" v-bind:color="nota.categories[0][1]" v-bind:metadata="nota.metadata" v-bind:url="nota.url" color-text="negro">{{ nota.title | html }}</v-title>
+							<v-title tag="h3" v-bind:color="nota.categories[0][1]" v-bind:metadata="nota.metadata" v-bind:postid="nota.id" color-text="negro">{{ nota.title | html }}</v-title>
 						</v-ons-list-item>
 					</v-ons-list>
 				</ons-col>
@@ -148,7 +149,7 @@
 								<v-ons-card class="noticia-slider">
 									<img :src="nota.img | icdn([315,240,95,95])" :alt="nota.title" style="width: 100%">
 									<div class="title">
-										<v-title tag="h3" v-bind:color="'negro'" v-bind:metadata="nota.metadata" v-bind:url="nota.url" color-text="negro">{{ nota.title | html }}</v-title>
+										<v-title tag="h3" v-bind:color="'negro'" v-bind:metadata="nota.metadata" v-bind:postid="nota.id" color-text="negro">{{ nota.title | html }}</v-title>
 									</div>
 									<div class="content">
 										<p class="color-negro">
@@ -175,78 +176,78 @@
 					<v-ons-card class="noticia-temporal">
 						<img :src="nota.img | icdn([315,240,95,95])" :alt="nota.title" style="width: 100%">
 						<div class="title">
-							<v-title tag="h3" v-bind:color="nota.categories[0][1]" v-bind:metadata="nota.metadata" v-bind:url="nota.url" color-text="negro">{{ nota.title | html }}</v-title>
+							<v-title tag="h3" v-bind:color="nota.categories[0][1]" v-bind:metadata="nota.metadata" v-bind:postid="nota.id" color-text="negro">{{ nota.title | html }}</v-title>
 						</div>
 					</v-ons-card>
 				</ons-col>
 			</ons-row><!--NOTICIAS TEMPORALES-->
 
 			<ons-row>
-				<ons-col width="100">
-					<h2 class="title-home">La diva del día</h2>
+				<ons-col width="100" class="fondo-diva">
+					<h2 class="title-home color-blanco">La diva del día</h2>
 					<v-ons-card class="noticia-diva" v-if="noticias.diva">
 						<img :src="noticias.diva.img | icdn([315,240,95,95])" :alt="noticias.diva.title" style="width: 100%">
 						<div class="title">
-							<v-title tag="h3" v-bind:color="'entretenimiento'" v-bind:metadata="noticias.diva.metadata" v-bind:url="noticias.diva.url"
+							<v-title tag="h3" v-bind:color="'entretenimiento'" v-bind:metadata="noticias.diva.metadata" v-bind:postid="noticias.diva.id"
 							 color-text="negro">{{ noticias.diva.title | html }}</v-title>
 						</div>
 					</v-ons-card>
 				</ons-col><!--DIVA-->
 
-				<ons-col width="100">
-					<h2 class="title-home" v-if="noticias.frase_del_dia">{{ noticias.frase_del_dia.title }}</h2>
-					<v-ons-list>
+				<ons-col width="100" class="fondo-frase-dia">
+					<h2 class="title-home color-blanco" v-if="noticias.frase_del_dia">{{ noticias.frase_del_dia.title }}</h2>
+					<v-ons-list class="fondo-frase-dia">
 						<v-ons-list-item tappable class="noticia-frase-del-dia" v-if="noticias.frase_del_dia">
 							<div class="left">
 								<img class="list-item__thumbnail" :src="noticias.frase_del_dia.img | icdn([100,100,20,95])">
 							</div>
 							<div class="center">
 								<span class="list-item__title">
-									<v-title tag="p" v-bind:color="'frase-del-dia'" v-bind:metadata="noticias.frase_del_dia.metadata" v-bind:url="noticias.frase_del_dia.url" color-text="negro">{{ noticias.frase_del_dia.excerpt | html }}</v-title>
+									<v-title tag="p" v-bind:color="'frase-del-dia'" v-bind:metadata="noticias.frase_del_dia.metadata" v-bind:postid="noticias.frase_del_dia.id" color-text="blanco">{{ noticias.frase_del_dia.excerpt | html }}</v-title>
 								</span>
 							</div>
 						</v-ons-list-item>
 					</v-ons-list>
 				</ons-col><!--FRASE DEL DIA-->
 
-				<ons-col width="100">
-					<h2 class="title-home">Humor</h2>
+				<ons-col width="100" class="fondo-humor">
+					<h2 class="title-home color-blanco">Humor</h2>
 					<v-ons-card class="noticia-humor" v-if="noticias.humor">
 						<img :src="noticias.humor.img | icdn([315,240,95,95])" :alt="noticias.humor.title" style="width: 100%">
 						<div class="title">
-							<v-title tag="h3" v-bind:color="'humor'" v-bind:metadata="noticias.humor.metadata" v-bind:url="noticias.humor.url" color-text="negro">{{ noticias.humor.title | html }}</v-title>
+							<v-title tag="h3" v-bind:color="'humor'" v-bind:metadata="noticias.humor.metadata" v-bind:postid="noticias.humor.id" color-text="negro">{{ noticias.humor.title | html }}</v-title>
 						</div>
 					</v-ons-card>
 				</ons-col><!--HUMOR-->
 
-				<ons-col width="100">
-					<h2 class="title-home">La foto del día</h2>
+				<ons-col width="100" class="fondo-foto-del-dia">
+					<h2 class="title-home color-blanco">La foto del día</h2>
 					<v-ons-card class="noticia-foto-del-dia" v-if="noticias.foto_del_dia">
 						<img :src="noticias.foto_del_dia.img | icdn([315,240,95,95])" :alt="noticias.foto_del_dia.title" style="width: 100%">
 						<div class="title">
-							<v-title tag="h3" v-bind:color="'foto-del-dia'" v-bind:metadata="noticias.foto_del_dia.metadata" v-bind:url="noticias.foto_del_dia.url"
+							<v-title tag="h3" v-bind:color="'foto-del-dia'" v-bind:metadata="noticias.foto_del_dia.metadata" v-bind:postid="noticias.foto_del_dia.id"
 							 color-text="negro">{{ noticias.foto_del_dia.title | html }}</v-title>
 						</div>
 					</v-ons-card>
 				</ons-col><!--FOTO DEL DIA-->
 			</ons-row><!--DIVA, FRASE DEL DIA, HUMOR FOTO DEL DIA-->
 
-			<ons-row>
+			<ons-row class="fondo-negro">
 				<ons-col>
-					<h2 class="title-home">Videos</h2>
+					<h2 class="title-home color-blanco">Videos</h2>
 					<v-ons-carousel swipeable auto-scroll overscrollable :index.sync="carouselIndexMultimedia">
 						<v-ons-carousel-item v-for="nota in noticias.multimedia">
 							<v-ons-card class="noticia-multimedia">
 								<img :src="nota.img | icdn([315,240,95,95])" :alt="nota.title" style="width: 100%">
 								<div class="title">
-									<v-title tag="h3" v-bind:color="'negro'" v-bind:metadata="nota.metadata" v-bind:url="nota.url" color-text="negro">{{ nota.title | html }}</v-title>
+									<v-title tag="h3" v-bind:color="'negro'" v-bind:metadata="nota.metadata" v-bind:postid="nota.id" color-text="negro">{{ nota.title | html }}</v-title>
 								</div>
 							</v-ons-card>
 						</v-ons-carousel-item>
 					</v-ons-carousel>
 					<div class="text-center margin-bottom-1em" v-if="noticias.multimedia.length > 1">
 						<span :index="dotIndex - 1" v-for="dotIndex in Object.keys(noticias.multimedia).length" :key="dotIndex" style="cursor: pointer"
-						 @click="carouselIndexMultimedia = dotIndex - 1" class="color-negro">
+						 @click="carouselIndexMultimedia = dotIndex - 1" class="color-blanco">
 							{{ carouselIndexMultimedia === dotIndex - 1 ? '\u25CF' : '\u25CB' }}
 						</span>
 					</div>
@@ -263,7 +264,7 @@
 							<v-ons-card class="noticia-secciones" v-for="nota in noticias.deportes">
 								<img :src="nota.img | icdn([260,200,95,95])" :alt="nota.title" style="width: 100%">
 								<div class="title">
-									<v-title tag="h4" v-bind:color="'deportes'" v-bind:metadata="nota.metadata" v-bind:url="nota.url" color-text="negro">{{ nota.title | html }}</v-title>
+									<v-title tag="h4" v-bind:color="'deportes'" v-bind:metadata="nota.metadata" v-bind:postid="nota.id" color-text="negro">{{ nota.title | html }}</v-title>
 								</div>
 							</v-ons-card>
 						</div>
@@ -275,7 +276,7 @@
 							<v-ons-card class="noticia-secciones" v-for="nota in noticias.entretenimiento">
 								<img :src="nota.img | icdn([260,200,95,95])" :alt="nota.title" style="width: 100%">
 								<div class="title">
-									<v-title tag="h4" v-bind:color="'entretenimiento'" v-bind:metadata="nota.metadata" v-bind:url="nota.url" color-text="negro">{{ nota.title | html }}</v-title>
+									<v-title tag="h4" v-bind:color="'entretenimiento'" v-bind:metadata="nota.metadata" v-bind:postid="nota.id" color-text="negro">{{ nota.title | html }}</v-title>
 								</div>
 							</v-ons-card>
 						</div>
@@ -287,7 +288,7 @@
 							<v-ons-card class="noticia-secciones" v-for="nota in noticias.economia">
 								<img :src="nota.img | icdn([260,200,95,95])" :alt="nota.title" style="width: 100%">
 								<div class="title">
-									<v-title tag="h4" v-bind:color="'economia'" v-bind:metadata="nota.metadata" v-bind:url="nota.url" color-text="negro">{{ nota.title | html }}</v-title>
+									<v-title tag="h4" v-bind:color="'economia'" v-bind:metadata="nota.metadata" v-bind:postid="nota.id" color-text="negro">{{ nota.title | html }}</v-title>
 								</div>
 							</v-ons-card>
 						</div>
@@ -299,7 +300,7 @@
 							<v-ons-card class="noticia-secciones" v-for="nota in noticias.mundo">
 								<img :src="nota.img | icdn([260,200,95,95])" :alt="nota.title" style="width: 100%">
 								<div class="title">
-									<v-title tag="h4" v-bind:color="'mundo'" v-bind:metadata="nota.metadata" v-bind:url="nota.url" color-text="negro">{{ nota.title | html }}</v-title>
+									<v-title tag="h4" v-bind:color="'mundo'" v-bind:metadata="nota.metadata" v-bind:postid="nota.id" color-text="negro">{{ nota.title | html }}</v-title>
 								</div>
 							</v-ons-card>
 						</div>
@@ -311,7 +312,7 @@
 							<v-ons-card class="noticia-secciones" v-for="nota in noticias.tecnologia">
 								<img :src="nota.img | icdn([260,200,95,95])" :alt="nota.title" style="width: 100%">
 								<div class="title">
-									<v-title tag="h4" v-bind:color="'tecnologia'" v-bind:metadata="nota.metadata" v-bind:url="nota.url" color-text="negro">{{ nota.title | html }}</v-title>
+									<v-title tag="h4" v-bind:color="'tecnologia'" v-bind:metadata="nota.metadata" v-bind:postid="nota.id" color-text="negro">{{ nota.title | html }}</v-title>
 								</div>
 							</v-ons-card>
 						</div>
@@ -323,7 +324,7 @@
 							<v-ons-card class="noticia-secciones" v-for="nota in noticias.opinion">
 								<img :src="nota.img | icdn([260,200,95,95])" :alt="nota.title" style="width: 100%">
 								<div class="title">
-									<v-title tag="h4" v-bind:color="'opinion'" v-bind:metadata="nota.metadata" v-bind:url="nota.url" color-text="negro">{{ nota.title | html }}</v-title>
+									<v-title tag="h4" v-bind:color="'opinion'" v-bind:metadata="nota.metadata" v-bind:postid="nota.id" color-text="negro">{{ nota.title | html }}</v-title>
 								</div>
 							</v-ons-card>
 						</div>
@@ -337,11 +338,11 @@
 		<v-ons-page>
 			<v-ons-toolbar>
 				<div class="left">
-					<v-ons-toolbar-button onclick="_splitter.toggle();">
+					<v-ons-toolbar-button onclick="_splitter.toggle();" class="color-nacionales">
 						<v-ons-icon icon="ion-navicon, material:md-menu"></v-ons-icon>
 					</v-ons-toolbar-button>
 				</div>
-				<div class="center">Últimas</div>
+				<div class="center">Últimas noticias</div>
 			</v-ons-toolbar>
 
 			<ons-row>
@@ -354,7 +355,7 @@
 					<v-ons-card class="noticia-ultimas" v-for="(nota, i) in noticias" :data-index="i">
 						<img v-if="nota.render" :src="nota.img | icdn([315,200,95,95])" :alt="nota.title" style="width: 100%">
 						<div class="title">
-							<v-title tag="h3" v-bind:color="nota.categories[0][1]" v-bind:metadata="nota.metadata" v-bind:url="nota.url" color-text="negro">{{ nota.title | html }}</v-title>
+							<v-title tag="h3" v-bind:color="nota.categories[0][1]" v-bind:metadata="nota.metadata" v-bind:postid="nota.id" color-text="negro">{{ nota.title | html }}</v-title>
 						</div>
 						<div class="content">
 							<p>{{ nota.hour.trim() }}</p>
@@ -374,7 +375,7 @@
 		<v-ons-page>
 			<v-ons-toolbar>
 				<div class="left">
-					<v-ons-toolbar-button onclick="_splitter.toggle();">
+					<v-ons-toolbar-button onclick="_splitter.toggle();" class="color-nacionales">
 						<v-ons-icon icon="ion-navicon, material:md-menu"></v-ons-icon>
 					</v-ons-toolbar-button>
 				</div>
@@ -392,7 +393,7 @@
 					<v-ons-card class="noticia-ultimas" v-for="nota in noticias">
 						<img :src="nota.img | icdn([315,200,95,95])" :alt="nota.title" style="width: 100%">
 						<div class="title">
-							<v-title tag="h3" v-bind:color="nota.categories[0][1]" v-bind:metadata="nota.metadata" v-bind:url="nota.url" color-text="negro">{{ nota.title | html }}</v-title>
+							<v-title tag="h3" v-bind:color="nota.categories[0][1]" v-bind:metadata="nota.metadata" v-bind:postid="nota.id" color-text="negro">{{ nota.title | html }}</v-title>
 						</div>
 					</v-ons-card>
 				</ons-col>
@@ -404,7 +405,7 @@
 		<v-ons-page>
 			<v-ons-toolbar :class="'fondo-' +  cat_color">
 				<div class="left">
-					<v-ons-toolbar-button class="color-blanco" onclick="_splitter.toggle();">
+					<v-ons-toolbar-button onclick="_splitter.toggle();" class="color-blanco">
 						<v-ons-icon icon="ion-navicon, material:md-menu"></v-ons-icon>
 					</v-ons-toolbar-button>
 				</div>
@@ -430,7 +431,7 @@
 					<v-ons-card class="noticia-seccion-grande" v-if="noticias.length > 0">
 						<img :src="noticias[0].img | icdn([315,260,95,95])" :alt="noticias[0].title" style="width: 100%">
 						<div class="title">
-							<v-title tag="h2" v-bind:color="cat_color" v-bind:metadata="noticias[0].metadata" v-bind:url="noticias[0].url" color-text="negro">{{ noticias[0].title | html }}</v-title>
+							<v-title tag="h2" v-bind:color="cat_color" v-bind:metadata="noticias[0].metadata" v-bind:postid="noticias[0].id" color-text="negro">{{ noticias[0].title | html }}</v-title>
 						</div>
 						<div class="content">
 							<p>
@@ -445,7 +446,7 @@
 					<v-ons-card class="noticia-seccion-mediana">
 						<img :src="nota.img | icdn([150,100,95,95])" :alt="nota.title" style="width: 100%">
 						<div class="title">
-							<v-title tag="h3" v-bind:color="cat_color" v-bind:metadata="nota.metadata" v-bind:url="nota.url" color-text="negro">{{ nota.title | html }}</v-title>
+							<v-title tag="h3" v-bind:color="cat_color" v-bind:metadata="nota.metadata" v-bind:postid="nota.id" color-text="negro">{{ nota.title | html }}</v-title>
 						</div>
 					</v-ons-card>
 				</ons-col>
@@ -466,7 +467,7 @@
 		<v-ons-page>
 			<v-ons-toolbar>
 				<div class="left">
-					<v-ons-toolbar-button onclick="_splitter.toggle();">
+					<v-ons-toolbar-button onclick="_splitter.toggle();" class="color-blanco">
 						<v-ons-icon icon="ion-navicon, material:md-menu"></v-ons-icon>
 					</v-ons-toolbar-button>
 				</div>
@@ -491,7 +492,7 @@
 		<v-ons-page>
 			<v-ons-toolbar>
 				<div class="left">
-					<v-ons-toolbar-button onclick="_splitter.toggle();">
+					<v-ons-toolbar-button onclick="_splitter.toggle();" class="color-nacionales">
 						<v-ons-icon icon="ion-navicon, material:md-menu"></v-ons-icon>
 					</v-ons-toolbar-button>
 				</div>
@@ -517,7 +518,7 @@
 							<v-ons-card class="noticia-multimedia">
 								<img :src="nota.img | icdn([300,225,95,95])" :alt="nota.title" style="width: 100%">
 								<div class="title">
-									<v-title tag="h4" v-bind:color="'negro'" v-bind:metadata="nota.metadata" v-bind:url="nota.url" color-text="negro">{{ nota.title | html }}</v-title>
+									<v-title tag="h4" v-bind:color="'negro'" v-bind:metadata="nota.metadata" v-bind:postid="nota.id" color-text="negro">{{ nota.title | html }}</v-title>
 								</div>
 							</v-ons-card>
 						</v-ons-carousel-item>
@@ -581,7 +582,7 @@
 		<v-ons-page>
 			<v-ons-toolbar>
 				<div class="left">
-					<v-ons-toolbar-button onclick="_splitter.toggle();">
+					<v-ons-toolbar-button onclick="_splitter.toggle();"  class="color-nacionales">
 						<v-ons-icon icon="ion-navicon, material:md-menu"></v-ons-icon>
 					</v-ons-toolbar-button>
 				</div>
@@ -593,7 +594,7 @@
 					<v-ons-card class="noticia-etiqueta">
 						<img :src="nota.img | icdn([150,100,50,95])" :alt="nota.title" style="width: 100%">
 						<div class="title">
-							<v-title tag="h4" color="negro" v-bind:metadata="nota.metadata" v-bind:url="nota.url" color-text="negro">{{ nota.title | html }}</v-title>
+							<v-title tag="h4" color="negro" v-bind:metadata="nota.metadata" v-bind:postid="nota.id" color-text="negro">{{ nota.title | html }}</v-title>
 						</div>
 					</v-ons-card>
 				</ons-col>
@@ -614,11 +615,13 @@
 		<v-ons-page>
 			<v-ons-toolbar>
 				<div class="left">
-					<v-ons-toolbar-button onclick="_splitter.toggle();">
+					<v-ons-toolbar-button onclick="_splitter.toggle();"  class="color-nacionales">
 						<v-ons-icon icon="ion-navicon, material:md-menu"></v-ons-icon>
 					</v-ons-toolbar-button>
 				</div>
-				<div class="center">Buscar</div>
+				<div class="center">
+                    <img class="logo-toolbar" src="img/crhoy-logo.png" alt="CRHoy.com">
+                </div>
 			</v-ons-toolbar>
 
 			<ons-row>
@@ -651,7 +654,6 @@
 					<v-ons-button modifier="large" @click="viewMoreNews()" class="ver-mas-boton fondo-negro">Ver más noticias</v-ons-button>
 				</ons-col>
 			</ons-row>
-
 		</v-ons-page>
 	</template>
 
@@ -659,7 +661,7 @@
 		<v-ons-page>
 			<v-ons-toolbar>
 				<div class="left">
-					<v-ons-toolbar-button onclick="_splitter.toggle();">
+					<v-ons-toolbar-button onclick="_splitter.toggle();"  class="color-nacionales">
 						<v-ons-icon icon="ion-navicon, material:md-menu"></v-ons-icon>
 					</v-ons-toolbar-button>
 				</div>
@@ -691,6 +693,66 @@
 		</v-ons-page>
 	</template>
 
+    <template id="autor">
+        <v-ons-page>
+			<v-ons-toolbar>
+				<div class="left">
+					<v-ons-toolbar-button onclick="_splitter.toggle();"  class="color-nacionales">
+						<v-ons-icon icon="ion-navicon, material:md-menu"></v-ons-icon>
+					</v-ons-toolbar-button>
+				</div>
+				<div class="center">{{ autor_name }}</div>
+			</v-ons-toolbar>
+
+			<ons-row>
+				<ons-col width="50" v-for="nota in noticias">
+					<v-ons-card class="noticia-etiqueta">
+						<img :src="nota.img | icdn([150,100,50,95])" :alt="nota.title" style="width: 100%">
+						<div class="title">
+							<v-title tag="h4" color="negro" v-bind:metadata="nota.metadata" v-bind:postid="nota.id" color-text="negro">{{ nota.title | html }}</v-title>
+						</div>
+                        <div class="content">
+							<p>{{ nota.date }}</p>
+						</div>
+					</v-ons-card>
+				</ons-col>
+			</ons-row>
+
+			<ons-row>
+				<ons-col class="text-center" width="100%" v-show="loading">
+					<v-ons-icon size="2em" spin icon="fa-cog" class="color-negro"></v-ons-icon>
+				</ons-col>
+				<ons-col class="text-center" width="100%">
+					<v-ons-button modifier="large" @click="viewMoreNews()" class="ver-mas-boton color-blanco fondo-negro">Ver más noticias</v-ons-button>
+				</ons-col>
+			</ons-row>
+		</v-ons-page>
+    </template>
+
+    <template id="noticia">
+        <v-ons-page>
+			<v-ons-toolbar>
+				<div class="left">
+					<v-ons-toolbar-button onclick="_splitter.toggle();">
+						<v-ons-icon icon="ion-navicon, material:md-menu"></v-ons-icon>
+					</v-ons-toolbar-button>
+				</div>
+				<div class="center">
+                    <img class="logo-toolbar" src="img/crhoy-logo.png" alt="CRHoy.com">
+                </div>
+			</v-ons-toolbar>
+
+            <ons-row>
+                <ons-col>
+                <div class="card">
+                    <h2 class="card__title">{{ nota.title }}</h2>
+                    <div class="card__content" v-html="nota.content"></div>
+                </div>
+                </ons-col>
+            </ons-row>
+        </v-ons-page>
+    </template>
+
 	<div id="app">
 		<v-ons-splitter>
 			<v-ons-splitter-side swipeable width="50%" collapse="" side="left" collapse="portrait" open-threshold="0.9" id="_splitter" :open.sync="openSide">
@@ -707,6 +769,9 @@
 						</v-ons-list-item>
 						<v-ons-list-item  tappable modifier="chevron" @click="test2();">
 							<div class="center">Buscador</div>
+						</v-ons-list-item>
+                        <v-ons-list-item  tappable modifier="chevron" @click="test3();">
+							<div class="center">Autor</div>
 						</v-ons-list-item>
 						<v-ons-list-header>Categorías</v-ons-list-header>
 						<v-ons-list-item v-for="cat in categories" tappable modifier="chevron" v-on:click="navToCategory(cat)">
@@ -757,6 +822,8 @@
 	<script type="text/javascript" src="js/services/samba.service.js"></script>
 	<script type="text/javascript" src="js/services/buscador.service.js"></script>
     <script type="text/javascript" src="js/services/boletin.service.js"></script>
+    <script type="text/javascript" src="js/services/autor.service.js"></script>
+     <script type="text/javascript" src="js/services/noticia.service.js"></script>
 
 	<!--DIRECTIVAS-->
 	<script type="text/javascript" src="js/directives/title.directive.js"></script>
@@ -772,6 +839,8 @@
 	<script type="text/javascript" src="js/components/tema.component.js"></script>
 	<script type="text/javascript" src="js/components/buscador.component.js"></script>
     <script type="text/javascript" src="js/components/boletin.component.js"></script>
+    <script type="text/javascript" src="js/components/autor.component.js"></script>
+    <script type="text/javascript" src="js/components/noticia.component.js"></script>
 
 	<!--ROUTER-->
 	<script type="text/javascript" src="js/config/routes.router.js"></script>

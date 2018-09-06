@@ -25,3 +25,8 @@
 	margin: 1em 0px;
 	display: inline-block;
 }
+
+.logo-toolbar{
+    height: 36px;
+    margin: 4px auto;
+}

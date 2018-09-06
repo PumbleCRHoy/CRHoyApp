@@ -37,6 +37,11 @@ const _router = new VueRouter({
         component: _temaComponent,
         props: true
     }, {
+        path: "/autor",
+        name: "autor",
+        component: _autorComponent,
+        props: true
+    }, {
         path: "/buscador",
         name: "buscador",
         component: _buscadorComponent
@@ -44,6 +49,11 @@ const _router = new VueRouter({
         path: "/boletin",
         name: "boletin",
         component: _boletinComponent
+    }, {
+        path: "/noticia",
+        name: "noticia",
+        component: _noticiaComponent,
+        props: true
     }, {
         path: "*",
         name: "404",
