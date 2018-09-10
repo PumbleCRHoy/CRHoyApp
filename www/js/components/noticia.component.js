@@ -76,23 +76,15 @@ const _noticiaComponent = {
                 self.nota.url
             );
             */
-            alert("plugins");
-            for (let i in window.plugins) {
-                alert(i);
-            }
-            alert("window.plugins.socialsharing");
-            for (let x in window.plugins.socialsharing) {
-                alert(x);
-            }
+
+
             window.plugins.socialsharing.shareViaTwitter(
-                self.nota.title,
+                "aqui va el titulo",
                 self.nota.img,
                 self.nota.url
-            ).then(function (response) {
-                alert(JSON.stringify(response));
-            }, function (error) {
-                alert(JSON.stringify(error));
-            });
+            );
+
+
             /*
             window.plugins.socialsharing.shareViaInstagram(
                 self.nota.title,

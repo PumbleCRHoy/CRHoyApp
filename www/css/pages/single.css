@@ -20,14 +20,19 @@
     overflow: hidden;
 }
 .comentario-comentario{
-    width: 99%;
-    min-width: 99%;
+    width: calc(100% - 6px);
+    min-width: calc(100% - 6px);
     min-height: 75px;
 }
 .comentario-loading{
-        margin: 0.3em auto;
+    margin: 0.3em auto;
 }
 .comentario-boton{
     margin-top: 0.5em;
     margin-bottom: 0.5em;
+}
+.nota-contenido img{
+    width: 100%;
+    max-width: 100%;
+    height: auto;
 }

@@ -22,13 +22,13 @@
 	border-color: #034673 !important;
 }
 
-.fondo-nacionales, .fondo-gobierno{
+.fondo-nacionales, .fondo-gobierno, .fondo-educacion{
 	background-color: #ed1b24 !important;
 }
-.color-nacionales, .color-gobierno{
+.color-nacionales, .color-gobierno, .color-educacion{
 	color:  #ed1b24 !important;
 }
-.border-nacionales, .border-gobierno{
+.border-nacionales, .border-gobierno,  .border-educacion{
 	border-color: #ed1b24 !important;
 }
 
