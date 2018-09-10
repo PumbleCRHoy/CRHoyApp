@@ -745,40 +745,59 @@
 
             <ons-row>
                 <ons-col>
-                <div class="card">
-                    <img :src="nota.img | icdn([315, 200, 95, 95])" :alt="nota.title" style="width: 100%;">
-                    <h6 class="no-margin pre-title">{{ nota.pretitle.trim() }}</h6>
-                    <h1 class="card__title no-margin-bottom">{{ nota.title }}</h1>
-                    <p class="text-capitalize no-margin-bottom author" @click="navToAuthor(nota.author)">Por: <span :class="'notification notification-author fondo-' +  nota.categories[0].cat_color"><small>{{ nota.author.autor_name }}</small></span></p>
-                    <p class="text-capitalize no-margin-bottom">{{ nota.date }} {{ nota.hour }}</p>
-                    <ul class="list list--noborder margin-bottom-1em" v-if="nota.subtitle1 !== '' || nota.subtitle2 !== ''">
-                        <li class="list-item" v-show="nota.subtitle1 !== ''">
-                            <div class="list-item__center">{{ nota.subtitle1 }}</div>
-                        </li>
-                        <li class="list-item" v-show="nota.subtitle2 !== ''">
-                            <div class="list-item__center">{{ nota.subtitle2 }}</div>
-                        </li>
-                    </ul>
+                    <div class="card">
+                        <img :src="nota.img | icdn([315, 200, 95, 95])" :alt="nota.title" style="width: 100%;">
+                        <h6 class="no-margin pre-title">{{ nota.pretitle.trim() }}</h6>
+                        <h1 class="card__title no-margin-bottom">{{ nota.title }}</h1>
+                        <p class="text-capitalize no-margin-bottom author" @click="navToAuthor(nota.author)">Por: <span :class="'notification notification-author fondo-' +  nota.categories[0].cat_color"><small>{{ nota.author.autor_name }}</small></span></p>
+                        <p class="text-capitalize no-margin-bottom">{{ nota.date }} {{ nota.hour }}</p>
+                        <ul class="list list--noborder margin-bottom-1em" v-if="nota.subtitle1 !== '' || nota.subtitle2 !== ''">
+                            <li class="list-item" v-show="nota.subtitle1 !== ''">
+                                <div class="list-item__center">{{ nota.subtitle1 }}</div>
+                            </li>
+                            <li class="list-item" v-show="nota.subtitle2 !== ''">
+                                <div class="list-item__center">{{ nota.subtitle2 }}</div>
+                            </li>
+                        </ul>
 
-                    <div class="card__content" v-html="nota.content"></div>
+                        <div class="card__content" v-html="nota.content"></div>
 
-                    <p class="text-left">
-						<b>Etiquetas: </b><br>
-                        <span  :class="'notification notification-tag fondo-' +  nota.categories[0].cat_color" v-for="tag in nota.tags" @click="navToTag(tag)">{{ tag.etiqueta_name }}</span>
-					</p>
+                        <p class="text-left etiquetas">
+                            <b>Etiquetas: </b><br>
+                            <span  :class="'notification notification-tag fondo-' +  nota.categories[0].cat_color" v-for="tag in nota.tags" @click="navToTag(tag)">{{ tag.etiqueta_name }}</span>
+                        </p>
 
-                    <ul class="list comentarios">
-                        <li class="list-header">Comentarios <span class="notification">{{ nota.comments.length }}</span></li>
-                        <li class="list-item" v-for="comment in nota.comments">
-                            <div class="list-item__center">
-                                <div class="list-item__title">{{ comment.comment_author }} <small>{{ comment.comment_date }}</small></div>
-                                <div class="list-item__subtitle">{{ comment.comment_content }}</div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
+                        <ul class="list comentarios">
+                            <li class="list-header">Comentarios <span class="notification">{{ nota.comments.length }}</span></li>
+                            <li class="list-item" v-for="comment in nota.comments">
+                                <div class="list-item__center">
+                                    <div class="list-item__title">{{ comment.comment_author }} <small>{{ comment.comment_date }}</small></div>
+                                    <div class="list-item__subtitle">{{ comment.comment_content }}</div>
+                                </div>
+                            </li>
+                            <li class="list-header">Dejanos tu comentario</li>
+                             <li class="list-item">
+                                <v-ons-input id="comentario-nombre" placeholder="Nombre" type="text" float v-model="comentario.nombre" required></v-ons-input>
+                            </li>
+                            <li class="list-item">
+                                <v-ons-input id="comentario-correo" placeholder="Correo" type="email" float v-model="comentario.correo" required></v-ons-input>
+                            </li>
+                            <li class="list-item">
+                                <textarea id="comentario-comentario" class="comentario-comentario" v-model="comentario.comentario" placeholder="Comentario" required></textarea>
+                            </li>
+                            <li class="list-item text-center" v-show="comentario.loading">
+                                <v-ons-icon class="comentario-loading" size="2em" spin icon="fa-cog" :class="'color-' + nota.categories[0].cat_color"></v-ons-icon>
+                            </li>
+                            <li class="list-item">
+                                <v-ons-button class="comentario-boton" modifier="large" type="button" @click="saveComment()" :disabled="comentario.loading">Enviar</v-ons-button>
+                            </li>
+                        </ul>
+                    </div>
                 </ons-col>
             </ons-row>
+            <v-ons-fab position="bottom right" @click="share()">
+                <v-ons-icon icon="fa-share-alt"></v-ons-icon>
+            </v-ons-fab>
         </v-ons-page>
     </template>
 
@@ -846,7 +865,8 @@
 	<script type="text/javascript" src="js/services/buscador.service.js"></script>
     <script type="text/javascript" src="js/services/boletin.service.js"></script>
     <script type="text/javascript" src="js/services/autor.service.js"></script>
-     <script type="text/javascript" src="js/services/noticia.service.js"></script>
+    <script type="text/javascript" src="js/services/noticia.service.js"></script>
+    <script type="text/javascript" src="js/services/comentarios.service.js"></script>
 
 	<!--DIRECTIVAS-->
 	<script type="text/javascript" src="js/directives/title.directive.js"></script>
