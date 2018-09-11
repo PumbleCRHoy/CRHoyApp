@@ -44,7 +44,8 @@ Vue.component("v-title", {
                 self.$router.push({
                     name: "noticia",
                     params: {
-                        noticia_id: self.postid
+                        noticia_id: self.postid,
+                        noticia_url: null
                     }
                 });
             }

@@ -7,6 +7,9 @@
   </author>
   <content src="index.html"/>
   <allow-navigation href="*"/>
+  <!--AGREGADO POR CORS-->
+  <allow-navigation href="http://*/*" />
+  <allow-navigation href="https://*/*" />
   <allow-intent href="itms:*"/>
   <allow-intent href="itms-apps:*"/>
   <preference name="loglevel" value="DEBUG"/>

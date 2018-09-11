@@ -760,7 +760,7 @@
                             </li>
                         </ul>
 
-                        <div class="card__content nota-contenido" v-html="nota.content"></div>
+                        <content-component v-if="nota.content !== '' " :content="nota.content" v-on:navtonews="navegar()"></content-component>
 
                         <p class="text-left etiquetas">
                             <b>Etiquetas: </b><br>

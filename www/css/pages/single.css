@@ -2,6 +2,7 @@
     padding: 0.5em;
     line-height: 25%;
     margin-right: 1em;
+    cursor: pointer;
 }
  .notification-tag{
      margin-bottom: 1em;
@@ -31,8 +32,79 @@
     margin-top: 0.5em;
     margin-bottom: 0.5em;
 }
+.nota-contenido{
+    margin: 1em 0px;
+    line-height: 1.3em;
+}
 .nota-contenido img{
     width: 100%;
     max-width: 100%;
     height: auto;
+}
+
+/* === SOBREESCRIBIR ESTILOS DE WP === */
+.size-large{
+    max-width: 100%;
+}
+iframe{
+    width: 100% !important;
+    border: none;
+    margin: 1em 0px;
+}
+
+/* === SHORTCODES === */
+.parallax{
+    background-attachment: fixed;
+    background-size: cover;
+    height: 60vh;
+    background-repeat: no-repeat;
+    margin: 0.5em 0px;
+}
+.testimonio{
+    margin: 0.5em 0px;
+}
+.grid-gallery{
+
+}
+.leer-mas-single{
+    margin: 1em 0px;
+    padding: 0px;
+}
+.leer-mas-single li{
+    padding: 0px;
+    border: solid 1px #EFEFEF;
+    border-radius: 5px;
+}
+.leer-mas-single .left{
+    padding: 0.5em;
+    font-weight: 600;
+}
+.leer-mas-single .center{
+    padding-left: 0.5em;
+}
+.videoFallback{
+    width: 100%;
+    height: auto;
+    min-height: 150px;
+    margin: 1em 0px;
+}
+.carousel-single{
+    margin: 1em 0px;
+}
+.carousel-single img{
+    max-width: 100%;
+}
+.carousel-single .caption{
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    background-color: rgba(0,0,0,0.5);
+    margin: 0px;
+    padding: 1em;
+    color: #fff;
+}
+.figure-caption img{
+    max-width: 100%;
+    width: 100%;
 }
