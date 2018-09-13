@@ -22,13 +22,13 @@
 	border-color: #034673 !important;
 }
 
-.fondo-nacionales, .fondo-gobierno, .fondo-educacion{
+.fondo-nacionales, .fondo-gobierno, .fondo-educacion, .fondo-clima{
 	background-color: #ed1b24 !important;
 }
-.color-nacionales, .color-gobierno, .color-educacion{
+.color-nacionales, .color-gobierno, .color-educacion, .color-clima{
 	color:  #ed1b24 !important;
 }
-.border-nacionales, .border-gobierno,  .border-educacion{
+.border-nacionales, .border-gobierno,  .border-educacion, .border-clima{
 	border-color: #ed1b24 !important;
 }
 
@@ -92,7 +92,7 @@
 	border-color: #59b6b3 !important;
 }
 
-.fondo-humor{
+.fondo-humor, .fondo-caricaturas{
 	background-color: #f24606 !important;
 }
 .color-humor{
@@ -132,7 +132,7 @@
 	border-color: #3b7b25 !important;
 }
 
-.fondo-foto-del-dia{
+.fondo-foto-del-dia, .fondo-la-foto-del-dia{
 	background-color: #80ab5b !important;
 }
 .color-foto-del-dia, .color-la-foto-del-dia{
@@ -142,7 +142,7 @@
 	border-color: #80ab5b !important;
 }
 
-.fondo-frase-dia{
+.fondo-frase-dia, .fondo-la-frase-del-dia{
 	background-color: #E57373 !important;
 }
 .color-frase-dia{

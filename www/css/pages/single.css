@@ -35,6 +35,7 @@
 .nota-contenido{
     margin: 1em 0px;
     line-height: 1.3em;
+    text-align: justify;
 }
 .nota-contenido img{
     width: 100%;
@@ -76,11 +77,12 @@ iframe{
     border-radius: 5px;
 }
 .leer-mas-single .left{
-    padding: 0.5em;
+    padding: 0.7em 0.5em 0.5em;
     font-weight: 600;
 }
 .leer-mas-single .center{
     padding-left: 0.5em;
+    padding-top: 0.2em;
 }
 .videoFallback{
     width: 100%;
@@ -90,6 +92,7 @@ iframe{
 }
 .carousel-single{
     margin: 1em 0px;
+    position: relative;
 }
 .carousel-single img{
     max-width: 100%;
@@ -104,7 +107,26 @@ iframe{
     padding: 1em;
     color: #fff;
 }
+.carousel-single .left-gallery-button, .carousel-single .right-gallery-button{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 25px;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    font-weight: 700;
+}
+.carousel-single .left-gallery-button{
+    left: -8px;
+}
+.carousel-single .right-gallery-button{
+    right: -8px;
+}
 .figure-caption img{
     max-width: 100%;
     width: 100%;
+}
+.audioImgIframe{
+    height: 236px;
 }

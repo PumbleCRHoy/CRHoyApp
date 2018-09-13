@@ -6,7 +6,7 @@
         "cordova-plugin-splashscreen": "5.0.1",
         "cordova-plugin-whitelist": "1.3.3",
         "monaca-plugin-monaca-core": "3.2.0",
-        "monaca-plugin-share": "1.0.0"
+        "cordova-plugin-x-socialsharing": "file:plugins\/cordova-plugin-x-socialsharing"
     },
     "cordova": {
         "plugins": {
@@ -14,7 +14,7 @@
             "cordova-plugin-splashscreen": {},
             "cordova-custom-config": {},
             "monaca-plugin-monaca-core": {},
-            "monaca-plugin-share": {}
+            "cordova-plugin-x-socialsharing": {}
         }
     }
 }

@@ -52,3 +52,9 @@ var app_crhoy = new Vue({
         }
     }
 });
+/*
+document.addEventListener("deviceready", function () {
+   alert("app lista");
+   alert(cordova.InAppBrowser);
+    window.open = cordova.InAppBrowser.open;
+}, false);*/

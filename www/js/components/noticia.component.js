@@ -17,15 +17,50 @@ var contentComponent = {
     name: "contentComponent",
     functional: true,
     template: "#contentDynamic",
-    props: ["content"],
+    props: ["content", "scripts"],
     render: function (h, context) {
         const content = context.props.content;
         const component = content ? {
             "template": content,
+            data: function () {
+                return {
+                    scripts: context.props.scripts
+                };
+            },
             methods: {
                 navleermas: function (url) {
-                    console.log("AQUI DEBEMOS NAVEGAR", decodeURIComponent(url));
+                    /* QUE EL PADRE SE ENCARGUE DE TODO
+                     * YA QUE ROUTING AL MISMO COMPONENTE NO FUNCIONA COMO LO ESPERADO
+                    */
+                    this.$parent.$parent.navLeerMas(url);
+                },
+                prevGalleryItem: function (galleryID) {
+                    document.getElementById(galleryID).prev();
+                },
+                nextGalleryItem: function (galleryID) {
+                    document.getElementById(galleryID).next();
                 }
+            },
+            mounted: function () {
+                this.scripts.forEach(function (s) {
+                    var script = document.createElement("script");
+                    script.src = s;
+                    script.async = true;
+                    script.charset = "utf-8";
+                    script.defer = true;
+                    document.getElementById("nota-contenido").appendChild(script);
+                });
+
+                // EMBED DE TWITTER
+                /*
+                if (this.$el.innerHTML.search("twitter-tweet") !== -1) {
+                    var script = document.createElement("script");
+                    script.src = "https://platform.twitter.com/widgets.js";
+                    script.async = true;
+                    script.charset = "utf-8";
+                    document.getElementById("nota-contenido").appendChild(script);
+                }
+                */
             }
         } : {
                 "template": "<ons-row><ons-col class='text-center' width='100%'><v-ons-icon size='2em' spin icon='fa-cog' class='color-negro'></v-ons-icon></ons-col></ons-row>"
@@ -70,7 +105,8 @@ const _noticiaComponent = {
                 modified: null,
                 content: "",
                 tags: [],
-                comments: []
+                comments: [],
+                scripts: []
             },
             comentario: {
                 nombre: "",
@@ -78,17 +114,33 @@ const _noticiaComponent = {
                 comentario: "",
                 loading: false
             },
-            renderContent: null
+            renderContent: null,
+            loading: true,
+            shareItems: [{
+                name: "Whatsapp",
+                icon: "whatsapp",
+                slug: "whatsapp"
+            }, {
+                name: "Facebook",
+                icon: "fa-facebook-f",
+                slug: "facebook"
+            }, {
+                name: "Twitter",
+                icon: "fa-twitter",
+                slug: "twitter"
+            }, {
+                name: "Google +",
+                icon: "fa-google-plus",
+                slug: "google+"
+            }, {
+                name: "Email",
+                icon: "fa-envelope",
+                slug: "email"
+            }]
         };
     },
     mounted: function () {
-        console.log(this.noticia_id, this.noticia_url);
-        this.noticiaService(this.noticia_id, this.noticia_url).then(function (response) {
-            this.nota = response.data;
-            console.log(this.nota);
-        }, function (error) {
-            console.log(error);
-        });
+        this.getNoticia();
     },
     methods: {
         navToAuthor: function (author) {
@@ -102,35 +154,6 @@ const _noticiaComponent = {
                 name: "tema",
                 params: tag
             });
-        },
-        share: function () {
-            // https://github.com/EddyVerbruggen/SocialSharing-PhoneGap-Plugin
-            // https://github.com/EddyVerbruggen/SocialSharing-PhoneGap-Plugin
-            // https://docs.monaca.io/en/tutorials/social_sharing/
-            var self = this;
-            /*
-            self.nota.title,
-            self.nota.img,
-            self.nota.url
-
-            window.plugins.socialsharing.shareViaFacebook(
-                self.nota.title,
-                self.nota.img,
-                self.nota.url
-            );
-            */
-            window.plugins.socialsharing.shareViaTwitter(
-                "aqui va el titulo",
-                self.nota.img,
-                self.nota.url
-            );
-
-            /*
-            window.plugins.socialsharing.shareViaInstagram(
-                self.nota.title,
-                self.nota.img
-            );
-            */
         },
         saveComment: function () {
             var self = this;
@@ -178,6 +201,95 @@ const _noticiaComponent = {
                     }
                 });
             }
+        },
+        navLeerMas: function (url) {
+            this.noticia_id = null;
+            this.noticia_url = url;
+        },
+        getNoticia: function () {
+            this.loading = true;
+            this.noticiaService(this.noticia_id, this.noticia_url).then(function (response) {
+                if (response.data !== null) {
+                    this.nota = response.data;
+                } else {
+                    // RETORNO VACIO, ES UN ERROR, ASI QUE NOS VAMOS A LA RUTA DE 404
+                    this.$router.push({
+                        name: "indefinido"
+                    });
+                }
+                this.loading = false;
+                // HACER SCROLL HASTA ARRIBA DE LA NOTA Y OCULTAR LA ACTUAL MIENTRAS
+            }, function (error) {
+                this.loading = false;
+                this.$router.push({
+                    name: "indefinido"
+                });
+            });
+        },
+        share: function (slug) {
+            // https://github.com/EddyVerbruggen/SocialSharing-PhoneGap-Plugin
+            // https://www.npmjs.com/package/cordova-plugin-x-socialsharing
+            switch (slug) {
+                case "whatsapp":
+                    popupWindowCenter('whatsapp://send?text=' + this.nota.title, 696, 335);
+                    //popupWindowCenter("https://api.whatsapp.com/send?phone=89568209&text=" + "Mira esta noticia: " + encodeURIComponent(this.nota.title) + " " + encodeURIComponent(this.nota.permalink), 300, 300);
+                    break;
+                case "facebook":
+                    popupWindowCenter("https://www.facebook.com/sharer.php?u=" + this.nota.permalink, 696, 335);
+                    break;
+                case "twitter":
+                    popupWindowCenter("https://twitter.com/intent/tweet?url=" + this.nota.permalink + "&via=crhoycom&related=slidedeck&text=" + encodeURIComponent(this.nota.title), 696, 335);
+                    break;
+                case "google+":
+                    popupWindowCenter("https://plus.google.com/share?url=" + this.nota.permalink, 696, 335);
+                    break;
+                case "email":
+                    popupWindowCenter("mailto:?subject=" + this.nota.title + "&body=" + this.nota.permalink, 696, 335);
+                    break;
+                default:
+                    break;
+            }
+            /*
+            var options = {
+                message: 'share this', // not supported on some apps (Facebook, Instagram)
+                subject: 'the subject', // fi. for email
+                files: ['', ''], // an array of filenames either locally or remotely
+                url: 'https://www.website.com/foo/#bar?a=b',
+                chooserTitle: 'Pick an app',// Android only, you can override the default share sheet title,
+                appPackageName: 'com.crhoy.lite' // Android only, you can provide id of the App you want to share with
+            };
+
+            var onSuccess = function (result) {
+                alert("success");
+                console.log("Share completed? " + result.completed); // On Android apps mostly return false even while it's true
+                console.log("Shared to app: " + result.app); // On Android result.app since plugin version 5.4.0 this is no longer empty. On iOS it's empty when sharing is cancelled (result.completed=false)
+            };
+
+            var onError = function (msg) {
+                alert("error");
+                console.log("Sharing failed with message: " + msg);
+            };
+
+            alert("aqui");
+            alert(window.plugins);
+            alert(window.plugins.socialsharing);
+            window.plugins.socialsharing.shareWithOptions(options, onSuccess, onError);
+            */
+        }
+    },
+    watch: {
+        noticia_id: function (value) {
+            this.getNoticia();
+        },
+        noticia_url: function (value) {
+            this.getNoticia();
+            // https://www.crhoy.com/site/generators/no-cache/new_single_app.php?id=&url=https%253A%252F%252Fwww.crhoy.com%252Feconomia%252Fausencia-de-decisiones-carcomio-patrimonio-de-bancredito%252F
         }
     }
 };
+
+function popupWindowCenter(URL, title, w, h) {
+    var left = (screen.width / 2) - (w / 2);
+    var top = (screen.height / 2) - (h / 2);
+    window.open(URL, title, 'toolbar=no, location=no,directories=no, status=no, menubar=no, scrollbars=no, resizable=no,copyhistory=no, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
+}

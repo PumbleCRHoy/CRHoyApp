@@ -52,13 +52,14 @@ const _router = new VueRouter({
     }, {
         path: "/noticia",
         name: "noticia",
+        alias: "noticias",
         component: _noticiaComponent,
         props: true
     }, {
         path: "*",
-        name: "404",
+        name: "indefinido",
         component: {
-            template: "<h5>Página no encontrada</h5>"
+            template: "#indefinido"
         }
     }],
     scrollBehavior: function (to, from, savedPosition) {

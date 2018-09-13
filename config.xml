@@ -8,8 +8,8 @@
   <content src="index.html"/>
   <allow-navigation href="*"/>
   <!--AGREGADO POR CORS-->
-  <allow-navigation href="http://*/*" />
-  <allow-navigation href="https://*/*" />
+  <allow-navigation href="http://*/*"/>
+  <allow-navigation href="https://*/*"/>
   <allow-intent href="itms:*"/>
   <allow-intent href="itms-apps:*"/>
   <preference name="loglevel" value="DEBUG"/>
@@ -67,7 +67,14 @@
       <array>
         <string>es</string>
       </array>
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+        <string>fb</string>
+    </array>
     </config-file>
+    <feature name="SocialSharing">
+        <param name="ios-package" value="SocialSharing" />
+    </feature>
   </platform>
   <platform name="android">
     <icon src="/res/android/icon/hdpi.png" density="hdpi"/>
@@ -82,6 +89,10 @@
     <splash src="/res/android/screen/splash-port-mdpi.png" density="port-mdpi"/>
     <splash src="/res/android/screen/splash-port-hdpi.png" density="port-hdpi"/>
     <splash src="/res/android/screen/splash-port-xhdpi.png" density="port-xhdpi"/>
+    <feature name="SocialSharing">
+        <param name="android-package" value="nl.xservices.plugins.SocialSharing" />
+    </feature>
+
   </platform>
   <platform name="windows">
     <icon src="/res/winrt/icon/package_logo_winrt.png" target="StoreLogo"/>
@@ -89,6 +100,9 @@
     <icon src="/res/winrt/icon/app_small_logo_winrt.png" target="Square30x30Logo"/>
     <icon src="/res/winrt/icon/app_tile_wide_logo_winrt.png" target="Wide315x150Logo"/>
     <splash src="/res/winrt/screen/app_splash_screen_winrt.png" width="620" height="300"/>
+    <feature name="SocialSharing">
+        <param name="wp-package" value="SocialSharing"/>
+    </feature>
   </platform>
   <platform name="chrome">
     <icon src="/platforms/chrome/icon.png" width="128" height="128"/>
@@ -96,10 +110,11 @@
   <preference name="KeepRunning" value="true"/>
   <preference name="monaca:AndroidIsPackageNameSeparate" value="false"/>
   <preference name="Orientation" value="portrait"/>
-  <preference name="SplashScreenDelay" value="1000"/>
+  <!--<preference name="SplashScreenDelay" value="1000"/>-->
   <preference name="Fullscreen" value="false"/>
   <preference name="ios-XCBuildConfiguration-TARGETED_DEVICE_FAMILY" value="1,2"/>
   <preference name="AutoHideSplashScreen" value="true"/>
+  <preference name="SplashScreenDelay" value="3000"/>
   <preference name="FadeSplashScreen" value="true"/>
   <preference name="ShowSplashScreenSpinner" value="false"/>
   <access origin="*"/>
