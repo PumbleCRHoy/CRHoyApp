@@ -760,7 +760,7 @@
     </template>
 
     <template id="noticia">
-        <v-ons-page>
+        <v-ons-page id="contenido-noticia">
 			<v-ons-toolbar  :class="'fondo-' +  nota.categories[0].cat_color">
 				<div class="left">
 					<v-ons-toolbar-button onclick="_splitter.toggle();" class="color-blanco">
@@ -774,10 +774,14 @@
             <ons-row>
                 <ons-col>
                     <div class="card">
+                        <div id="fb-root"></div>
+
                         <p class='text-center'  v-show="loading">
                             <v-ons-icon size='2em' spin icon='fa-cog' class='color-negro'></v-ons-icon>
-                        </p>
-                        <img v-if="nota.img !== ''" :src="nota.img | icdn([315, 200, 95, 95])" :alt="nota.title" style="width: 100%;">
+                        </p><!--LOADING-->
+                        <div class="img-pre-loading">
+                            <img v-if="nota.img !== ''" :src="nota.img | icdn([315, 200, 95, 95])" :alt="nota.title" style="width: 100%;">
+                        </div>
                         <h6 class="no-margin pre-title">{{ nota.pretitle.trim() }}</h6>
                         <h1 class="card__title no-margin-bottom">{{ nota.title }}</h1>
                         <p class="text-capitalize no-margin-bottom author" @click="navToAuthor(nota.author)">Por: <span :class="'notification notification-author fondo-' +  nota.categories[0].cat_color"><small>{{ nota.author.autor_name }}</small></span></p>
@@ -792,7 +796,7 @@
                         </ul>
 
                         <content-component id="content-component" v-if="nota.content !== '' " :content="nota.content" :scripts="nota.scripts"></content-component>
-                        
+
                         <p class="text-left etiquetas">
                             <b>Etiquetas: </b><br>
                             <span  :class="'notification notification-tag fondo-' +  nota.categories[0].cat_color" v-for="tag in nota.tags" @click="navToTag(tag)">{{ tag.etiqueta_name }}</span>
@@ -807,22 +811,22 @@
                                 </div>
                             </li>
                             <li class="list-header">Dejanos tu comentario</li>
-                             <li class="list-item">
-                                <v-ons-input id="comentario-nombre" placeholder="Nombre" type="text" float v-model="comentario.nombre" required></v-ons-input>
-                            </li>
-                            <li class="list-item">
-                                <v-ons-input id="comentario-correo" placeholder="Correo" type="email" float v-model="comentario.correo" required></v-ons-input>
-                            </li>
-                            <li class="list-item">
+                            <form class="frm-comentarios">
+                                <v-ons-input id="comentario-nombre" placeholder="Nombre" type="text" v-model="comentario.nombre" required></v-ons-input>
+                                <br>
+                                <v-ons-input id="comentario-correo" placeholder="Correo" type="email"  v-model="comentario.correo" required></v-ons-input>
+                                <br>
                                 <textarea id="comentario-comentario" class="comentario-comentario" v-model="comentario.comentario" placeholder="Comentario" required></textarea>
-                            </li>
-                            <li class="list-item text-center" v-show="comentario.loading">
-                                <v-ons-icon class="comentario-loading" size="2em" spin icon="fa-cog" :class="'color-' + nota.categories[0].cat_color"></v-ons-icon>
-                            </li>
-                            <li class="list-item">
-                                <v-ons-button class="comentario-boton" modifier="large" type="button" @click="saveComment()" :disabled="comentario.loading">Enviar</v-ons-button>
-                            </li>
+                                <br>
+                                <p class="text-center" v-show="comentario.loading">
+                                    <v-ons-icon class="comentario-loading" size="2em" spin icon="fa-cog" :class="'color-' + nota.categories[0].cat_color"></v-ons-icon>
+                                </p>
+                                <v-ons-button class="comentario-boton" modifier="large" type="button" @click="saveComment()" :disabled="comentario.loading || loading">Enviar</v-ons-button>
+                            </form>
                         </ul>
+                        <div class="facebook" v-if="nota.permalink !==''">
+                            <div class="fb-comments" :data-href="nota.permalink"  data-width="100%"  data-numposts="5" data-mobile="true"></div><!--COMENTARIOS-->
+                        </div>
                     </div>
                 </ons-col>
             </ons-row>
@@ -872,7 +876,7 @@
 						<v-ons-list-item v-for="page in pages" tappable modifier="chevron" @click="$router.push(page.route); openSide = false;">
 							<div class="center">{{ page.title }}</div>
 						</v-ons-list-item>
-						<v-ons-list-item  tappable modifier="chevron" @click="test2();">
+						<v-ons-list-item  tappable modifier="chevron" @click="navToSearch();">
 							<div class="center">Buscador</div>
 						</v-ons-list-item>
 						<v-ons-list-header>Categorías</v-ons-list-header>
@@ -880,10 +884,11 @@
 							<div class="center">{{ cat.cat_title }}</div>
 						</v-ons-list-item>
 						<v-ons-list-header>Nuestras redes</v-ons-list-header>
-						<v-ons-list-item v-for="sn in socialNetworks" tappable modifier="chevron">
+						<v-ons-list-item class="nav-to-socials" v-for="sn in socialNetworks" tappable modifier="chevron">
 							<div class="center">
 								<a :href="sn.socialNetwork_url" target="_blank">
-									<ons-icon :icon="sn.socialNetwork_icon"></ons-icon> {{ sn.socialNetwork_name }}</a>
+									<ons-icon :icon="sn.socialNetwork_icon"></ons-icon> {{ sn.socialNetwork_name }}
+                                </a>
 							</div>
 						</v-ons-list-item>
 					</v-ons-list>
@@ -892,13 +897,16 @@
 
 			<v-ons-splitter-content>
 				<!--<component :is="currentPage"></component>-->
+                <!--<p>{{ currentUrl.hash }}</p>-->
                 <router-view></router-view>
 			</v-ons-splitter-content>
 		</v-ons-splitter>
 	</div>
 
+     <!--LOADER DE CORDOVA-->
+    <script type="text/javascript" src="components/loader.js"></script>
     <!--PLUGINS-->
-    <!--<script type="text/javascript" src="js/SocialSharing.js"></script>-->
+    <script type="text/javascript" src="js/SocialSharing.js"></script>
 
 	<!--LIBS-->
 	<script type="text/javascript" src="libs/vue.min.js"></script>
@@ -953,8 +961,5 @@
 
 	<!--COMPONENTE INICIAL-->
 	<script type="text/javascript" src="js/components/app.component.js"></script>
-
-    <!--LOADER DE CORDOVA-->
-    <script type="text/javascript" src="components/loader.js"></script>
 </body>
 </html>

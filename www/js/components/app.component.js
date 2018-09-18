@@ -25,36 +25,45 @@ var app_crhoy = new Vue({
 		}*/],
         socialNetworks: _socialNetworks,
         categories: _categories,
-        openSide: false
+        openSide: false,
+        deviceReady: false
     },
     computed: {
-        router: function () {
-            return this.$router;
+        currentUrl: function () {
+            return window.location;
         }
     },
     router: _router,
     created: function () {
-        this.router.replace("/");
+        this.$router.replace("/");
     },
     methods: {
         navToCategory: function (category) {
-            this.router.push({
+            /*
+            console.log(category);
+            this.$router.push({
+                path: "/category/" + category.cat_id + "/" + category.cat_title + "/" + category.cat_color,
+                params: {
+                    cat_subCategories: category.cat_subCategories
+                }
+            });
+            this.openSide = false;
+            */
+            this.$router.push({
                 name: "category",
                 params: category
             });
             this.openSide = false;
         },
-        test2: function () {
-            this.router.push({
+        navToSearch: function () {
+            this.$router.push({
                 name: "buscador"
             });
             this.openSide = false;
         }
     }
 });
-/*
+
 document.addEventListener("deviceready", function () {
-   alert("app lista");
-   alert(cordova.InAppBrowser);
-    window.open = cordova.InAppBrowser.open;
-}, false);*/
+    app_crhoy.deviceReady = true;
+}, false);

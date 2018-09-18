@@ -36,3 +36,8 @@
     height: 36px;
     margin: 4px auto;
 }
+
+.nav-to-socials a{
+    color: #333;
+    text-decoration: none;
+}

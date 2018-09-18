@@ -18,6 +18,11 @@ const _router = new VueRouter({
         name: "masLeidas",
         component: _masLeidasComponent
     }, {
+        /*path: "/category/:cat_id/:cat_title/:cat_color",
+        name: "category",
+        component: _categoryComponent,
+        props: true*/
+
         path: "/category/:cat_id",
         name: "category",
         component: _categoryComponent,
@@ -61,12 +66,5 @@ const _router = new VueRouter({
         component: {
             template: "#indefinido"
         }
-    }],
-    scrollBehavior: function (to, from, savedPosition) {
-        if (savedPosition) {
-            return savedPosition;
-        } else {
-            return { x: 0, y: 0 };
-        }
-    }
+    }]
 });

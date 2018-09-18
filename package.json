@@ -6,7 +6,7 @@
         "cordova-plugin-splashscreen": "5.0.1",
         "cordova-plugin-whitelist": "1.3.3",
         "monaca-plugin-monaca-core": "3.2.0",
-        "cordova-plugin-x-socialsharing": "file:plugins\/cordova-plugin-x-socialsharing"
+        "cordova-plugin-x-socialsharing": "git+https://github.com/EddyVerbruggen/SocialSharing-PhoneGap-Plugin"
     },
     "cordova": {
         "plugins": {
@@ -16,5 +16,13 @@
             "monaca-plugin-monaca-core": {},
             "cordova-plugin-x-socialsharing": {}
         }
+    },
+    "scripts": {
+        "monaca:preview": "npm run dev",
+        "dev": "browser-sync start -s www/ --watch --port 8080 --ui-port 8081"
+    },
+    "devDependencies": {
+        "browser-sync": "^2.24.5",
+        "cordova": "^7.1.0"
     }
 }

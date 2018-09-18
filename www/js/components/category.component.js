@@ -17,6 +17,10 @@ const _categoryComponent = {
 		};
 	},
 	mounted: function () {
+        //console.log("this", this)
+        //console.log("this.route", this.$route);
+
+
 		this.getNews();
 	},
 	watch: {

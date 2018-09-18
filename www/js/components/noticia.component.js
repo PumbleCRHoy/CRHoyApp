@@ -42,25 +42,26 @@ var contentComponent = {
                 }
             },
             mounted: function () {
+                console.log("MOUNTED!!!");
+                /*
+                    0: "https://connect.facebook.net/es_US/sdk.js#xfbml=1&version=v2.5&appId=623501091049135"
+                    1: "https://www.instagram.com/embed.js"
+                    2: "https://platform.twitter.com/widgets.js"
+                    3: "https://assets.pinterest.com/js/pinit.js"
+                */
+                var d = new Date();
                 this.scripts.forEach(function (s) {
+                    var url = url = new URL(s);
+                    url.searchParams.append("v_crhoy", d.getTime());
+
                     var script = document.createElement("script");
-                    script.src = s;
-                    script.async = true;
+                    script.src = s.search("connect.facebook.net") !== -1 ? s + "&v_crhoy = " + d.getTime() : url.href;
+                    script.type = "text/javascript";
+                    //script.async = true;
                     script.charset = "utf-8";
-                    script.defer = true;
+                    //script.defer = true;
                     document.getElementById("nota-contenido").appendChild(script);
                 });
-
-                // EMBED DE TWITTER
-                /*
-                if (this.$el.innerHTML.search("twitter-tweet") !== -1) {
-                    var script = document.createElement("script");
-                    script.src = "https://platform.twitter.com/widgets.js";
-                    script.async = true;
-                    script.charset = "utf-8";
-                    document.getElementById("nota-contenido").appendChild(script);
-                }
-                */
             }
         } : {
                 "template": "<ons-row><ons-col class='text-center' width='100%'><v-ons-icon size='2em' spin icon='fa-cog' class='color-negro'></v-ons-icon></ons-col></ons-row>"
@@ -101,7 +102,6 @@ const _noticiaComponent = {
                 categories: [{
                     cat_color: "nacionales"
                 }, {}],
-                date: null,
                 modified: null,
                 content: "",
                 tags: [],
@@ -114,7 +114,6 @@ const _noticiaComponent = {
                 comentario: "",
                 loading: false
             },
-            renderContent: null,
             loading: true,
             shareItems: [{
                 name: "Whatsapp",
@@ -128,14 +127,26 @@ const _noticiaComponent = {
                 name: "Twitter",
                 icon: "fa-twitter",
                 slug: "twitter"
-            }, {
+            }, /*{
                 name: "Google +",
                 icon: "fa-google-plus",
                 slug: "google+"
+            }, */{
+                name: "Instagram",
+                icon: "fa-instagram",
+                slug: "instagram"
             }, {
                 name: "Email",
                 icon: "fa-envelope",
                 slug: "email"
+            }, {
+                name: "SMS",
+                icon: "fa-comments",
+                slug: "sms"
+            }, {
+                name: "Otros",
+                icon: "fa-share-square",
+                slug: "all"
             }]
         };
     },
@@ -143,6 +154,41 @@ const _noticiaComponent = {
         this.getNoticia();
     },
     methods: {
+        resetData: function () {
+            this.nota = {
+                id: 0,
+                img: "",
+                permalink: "",
+                pretitle: "",
+                title: "",
+                subtitle1: "",
+                subtitle2: "",
+                guid: "",
+                name: "",
+                date: null,
+                hour: null,
+                author: {
+                    autor_name: "",
+                    autor_slug: "",
+                    autor_id: "",
+                    autor_email: ""
+                },
+                categories: [{
+                    cat_color: "nacionales"
+                }, {}],
+                modified: null,
+                content: "",
+                tags: [],
+                comments: [],
+                scripts: []
+            };
+            this.comentario = {
+                nombre: "",
+                correo: "",
+                comentario: "",
+                loading: false
+            };
+        },
         navToAuthor: function (author) {
             this.$router.push({
                 name: "autor",
@@ -207,6 +253,8 @@ const _noticiaComponent = {
             this.noticia_url = url;
         },
         getNoticia: function () {
+            this.resetData();
+            document.getElementById("contenido-noticia").scrollTop = 0;
             this.loading = true;
             this.noticiaService(this.noticia_id, this.noticia_url).then(function (response) {
                 if (response.data !== null) {
@@ -228,53 +276,66 @@ const _noticiaComponent = {
         },
         share: function (slug) {
             // https://github.com/EddyVerbruggen/SocialSharing-PhoneGap-Plugin
-            // https://www.npmjs.com/package/cordova-plugin-x-socialsharing
             switch (slug) {
                 case "whatsapp":
-                    popupWindowCenter('whatsapp://send?text=' + this.nota.title, 696, 335);
+                    //popupWindowCenter('whatsapp://send?text=' + this.nota.title, 696, 335);
                     //popupWindowCenter("https://api.whatsapp.com/send?phone=89568209&text=" + "Mira esta noticia: " + encodeURIComponent(this.nota.title) + " " + encodeURIComponent(this.nota.permalink), 300, 300);
+                    // https://github.com/EddyVerbruggen/SocialSharing-PhoneGap-Plugin#whatsapp
+                    window.plugins.socialsharing.shareViaWhatsApp(this.nota.title, this.nota.img, this.nota.permalink, function () {
+                    }, function (errormsg) {
+                        self.$ons.notification.alert("Ocurrió un error al compartir la noticia en Whatsapp", {
+                            title: "CRHoy"
+                        });
+                    });
                     break;
                 case "facebook":
-                    popupWindowCenter("https://www.facebook.com/sharer.php?u=" + this.nota.permalink, 696, 335);
+                    // https://github.com/EddyVerbruggen/SocialSharing-PhoneGap-Plugin#facebook
+                    window.plugins.socialsharing.shareViaFacebook(this.nota.title, null, this.nota.permalink, function () {
+                    }, function (errormsg) {
+                        popupWindowCenter("https://www.facebook.com/sharer.php?u=" + this.nota.permalink, 696, 335);
+                    });
                     break;
                 case "twitter":
-                    popupWindowCenter("https://twitter.com/intent/tweet?url=" + this.nota.permalink + "&via=crhoycom&related=slidedeck&text=" + encodeURIComponent(this.nota.title), 696, 335);
+                    // https://github.com/EddyVerbruggen/SocialSharing-PhoneGap-Plugin#twitter
+                    //  unlike most apps Twitter doesn't like it when you use an array to pass multiple files as the second param
+                    window.plugins.socialsharing.shareViaTwitter(this.nota.title + " " + this.nota.permalink + " @crhoycom ‏");
+                    // window.plugins.socialsharing.shareViaTwitter('Message and link via Twitter', null /* img */, 'http://www.x-services.nl');
+                    // popupWindowCenter("https://twitter.com/intent/tweet?url=" + this.nota.permalink + "&via=crhoycom&related=slidedeck&text=" + encodeURIComponent(this.nota.title), 696, 335);
                     break;
                 case "google+":
                     popupWindowCenter("https://plus.google.com/share?url=" + this.nota.permalink, 696, 335);
                     break;
                 case "email":
-                    popupWindowCenter("mailto:?subject=" + this.nota.title + "&body=" + this.nota.permalink, 696, 335);
+                    // https://github.com/EddyVerbruggen/SocialSharing-PhoneGap-Plugin#email
+                    ///
+                    window.plugins.socialsharing.shareViaEmail(
+                        this.nota.title, "Mira esta noticia", [], [], null, null, function () { }, function () {
+                            popupWindowCenter("mailto:?subject=" + this.nota.title + "&body=" + this.nota.permalink, 696, 335);
+                        });
+                    break;
+                case "instagram":
+                    // https://github.com/EddyVerbruggen/SocialSharing-PhoneGap-Plugin#instagram
+                    window.plugins.socialsharing.shareViaInstagram(this.nota.title, this.nota.img, function () {
+                    }, function (errormsg) {
+                        self.$ons.notification.alert("Ocurrió un error al compartir la noticia en Instagram", {
+                            title: "CRHoy"
+                        });
+                    });
+                    break;
+                case "sms":
+                    // Want to share a prefilled SMS text?
+                    window.plugins.socialsharing.shareViaSMS(this.nota.title + " " + this.nota.permalink, null /* see the note below */, function (msg) {
+                    }, function (msg) {
+                        self.$ons.notification.alert("Ocurrió un error al compartir la noticia por SMS", {
+                            title: "CRHoy"
+                        });
+                    });
                     break;
                 default:
+                    // https://github.com/EddyVerbruggen/SocialSharing-PhoneGap-Plugin#you-can-still-use-the-older-share-method-as-well
+                    window.plugins.socialsharing.share(this.nota.title, "Mira esta noticia", this.nota.img, this.nota.permalink);
                     break;
             }
-            /*
-            var options = {
-                message: 'share this', // not supported on some apps (Facebook, Instagram)
-                subject: 'the subject', // fi. for email
-                files: ['', ''], // an array of filenames either locally or remotely
-                url: 'https://www.website.com/foo/#bar?a=b',
-                chooserTitle: 'Pick an app',// Android only, you can override the default share sheet title,
-                appPackageName: 'com.crhoy.lite' // Android only, you can provide id of the App you want to share with
-            };
-
-            var onSuccess = function (result) {
-                alert("success");
-                console.log("Share completed? " + result.completed); // On Android apps mostly return false even while it's true
-                console.log("Shared to app: " + result.app); // On Android result.app since plugin version 5.4.0 this is no longer empty. On iOS it's empty when sharing is cancelled (result.completed=false)
-            };
-
-            var onError = function (msg) {
-                alert("error");
-                console.log("Sharing failed with message: " + msg);
-            };
-
-            alert("aqui");
-            alert(window.plugins);
-            alert(window.plugins.socialsharing);
-            window.plugins.socialsharing.shareWithOptions(options, onSuccess, onError);
-            */
         }
     },
     watch: {
