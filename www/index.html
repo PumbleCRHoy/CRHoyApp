@@ -16,7 +16,7 @@
 	<link type="text/css" rel="stylesheet" href="css/pages/category.css">
 	<link type="text/css" rel="stylesheet" href="css/pages/especial.css">
 	<link type="text/css" rel="stylesheet" href="css/pages/ultimas.css">
-    <link type="text/css" rel="stylesheet" href="css/pages/single.css">
+	<link type="text/css" rel="stylesheet" href="css/pages/single.css">
 	<!--COMPONENTS CSS-->
 	<link type="text/css" rel="stylesheet" href="css/components/accordion.component.css">
 	<link type="text/css" rel="stylesheet" href="css/components/v-title.component.css">
@@ -31,21 +31,23 @@
 					</v-ons-toolbar-button>
 				</div>
 				<div class="center">
-                    <img class="logo-toolbar" src="img/crhoy-logo.png" alt="CRHoy.com">
-                </div>
+					<img class="logo-toolbar" src="img/crhoy-logo.png" alt="CRHoy.com">
+				</div>
 			</v-ons-toolbar>
 
 			<v-ons-pull-hook :action="refreshHome" @changestate="state = $event.state">
 				<span v-show="state === 'initial'"> Hale para refrescar </span>
 				<span v-show="state === 'preaction'"> Soltar </span>
 				<span v-show="state === 'action'"> <ons-icon icon="fa-cog" spin></ons-icon> </span>
-			</v-ons-pull-hook><!--HALAR PARA REFRESCAR-->
+			</v-ons-pull-hook>
+			<!--HALAR PARA REFRESCAR-->
 
 			<ons-row>
 				<ons-col class="text-center" width="100%" v-show="loading">
 					<v-ons-icon size="2em" spin icon="fa-cog"></v-ons-icon>
 				</ons-col>
-			</ons-row><!--LOADING-->
+			</ons-row>
+			<!--LOADING-->
 
 			<ons-row v-if="noticias.importante">
 				<ons-col>
@@ -55,17 +57,19 @@
 						 color-text="negro">{{ noticias.importante.title | html }}</v-title>
 					</div>
 				</ons-col>
-			</ons-row><!--IMPORTANTE-->
+			</ons-row>
+			<!--IMPORTANTE-->
 
 			<ons-row v-show="noticias.transmision.post_content !== ''">
 				<ons-col>
 					<div v-html="noticias.transmision.post_content" style="width: 100%;"></div>
 				</ons-col>
-			</ons-row><!--TRANSMISION-->
+			</ons-row>
+			<!--TRANSMISION-->
 
 			<ons-row>
 				<ons-col>
-					<v-ons-carousel swipeable auto-scroll overscrollable :index.sync="carouselIndexSlider">
+					<v-ons-carousel swipeable auto-scroll overscrollable :index.sync="carouselIndexSlider" auto-scroll-ratio="0.5">
 						<v-ons-carousel-item v-for="nota in noticias.slider">
 							<v-ons-card class="noticia-slider">
 								<img :src="nota.img | icdn([315,260,95,95])" :alt="nota.title" style="width: 100%">
@@ -76,7 +80,7 @@
 									<p class="color-negro">
 										{{ nota.excerpt | html }}
 									</p>
-                                    <p  class="color-negro no-margin-bottom"><small>{{ nota.date }}{{ nota.hour }}</small></p>
+									<p class="color-negro no-margin-bottom"><small>{{ nota.date }}{{ nota.hour }}</small></p>
 								</div>
 							</v-ons-card>
 						</v-ons-carousel-item>
@@ -88,7 +92,8 @@
 						</span>
 					</div>
 				</ons-col>
-			</ons-row><!--SLIDER-->
+			</ons-row>
+			<!--SLIDER-->
 
 			<ons-row>
 				<ons-col>
@@ -106,7 +111,8 @@
 						</v-ons-list-item>
 					</v-ons-list>
 				</ons-col>
-			</ons-row><!--VISUAL B-->
+			</ons-row>
+			<!--VISUAL B-->
 
 			<ons-row>
 				<ons-col width="100">
@@ -120,7 +126,7 @@
 							<p>
 								{{ noticias.visualA[0].excerpt | html }}
 							</p>
-                            <p  class="color-negro no-margin-bottom"><small>{{ noticias.visualA[0].date }}{{ noticias.visualA[0].hour }}</small></p>
+							<p class="color-negro no-margin-bottom"><small>{{ noticias.visualA[0].date }}{{ noticias.visualA[0].hour }}</small></p>
 						</div>
 					</v-ons-card>
 				</ons-col>
@@ -130,23 +136,25 @@
 						<div class="title">
 							<v-title tag="h3" v-bind:color="nota.categories[0][1]" v-bind:metadata="nota.metadata" v-bind:postid="nota.id" color-text="negro">{{ nota.title | html }}</v-title>
 						</div>
-                        <div class="content no-margin">
-                            <p  class="color-negro no-margin"><small>{{ nota.date }}{{ nota.hour }}</small></p>
-                        </div>
+						<div class="content no-margin">
+							<p class="color-negro no-margin"><small>{{ nota.date }}{{ nota.hour }}</small></p>
+						</div>
 					</v-ons-card>
 				</ons-col>
-			</ons-row><!--VISUAL A-->
+			</ons-row>
+			<!--VISUAL A-->
 
 			<ons-row>
 				<ons-col>
 					<v-ons-list>
 						<v-ons-list-item tappable v-for="nota in noticias.visualC">
 							<v-title tag="h3" v-bind:color="nota.categories[0][1]" v-bind:metadata="nota.metadata" v-bind:postid="nota.id" color-text="negro">{{ nota.title | html }}</v-title>
-                            <p  class="color-negro no-margin"><small>{{ nota.date }}{{ nota.hour }}</small></p>
+							<p class="color-negro no-margin"><small>{{ nota.date }}{{ nota.hour }}</small></p>
 						</v-ons-list-item>
 					</v-ons-list>
 				</ons-col>
-			</ons-row><!--VISUAL C-->
+			</ons-row>
+			<!--VISUAL C-->
 
 			<ons-row>
 				<ons-col>
@@ -163,7 +171,7 @@
 										<p class="color-negro">
 											{{ nota.excerpt | html }}
 										</p>
-                                        <p  class="color-negro no-margin-bottom"><small>{{ nota.date }}{{ nota.hour }}</small></p>
+										<p class="color-negro no-margin-bottom"><small>{{ nota.date }}{{ nota.hour }}</small></p>
 									</div>
 								</v-ons-card>
 							</v-ons-carousel-item>
@@ -175,7 +183,8 @@
 						</span>
 						</div>
 				</ons-col>
-			</ons-row><!--ENTERESE-->
+			</ons-row>
+			<!--ENTERESE-->
 
 			<ons-row v-show="noticias.temporal.length > 0">
 				<ons-col width="100" v-show="noticias.tituloTemporal">
@@ -186,11 +195,12 @@
 						<img :src="nota.img | icdn([315,240,95,95])" :alt="nota.title" style="width: 100%">
 						<div class="title">
 							<v-title tag="h3" v-bind:color="nota.categories[0][1]" v-bind:metadata="nota.metadata" v-bind:postid="nota.id" color-text="negro">{{ nota.title | html }}</v-title>
-                            <p  class="color-negro no-margin-bottom"><small>{{ nota.date }}{{ nota.hour }}</small></p>
+							<p class="color-negro no-margin-bottom"><small>{{ nota.date }}{{ nota.hour }}</small></p>
 						</div>
 					</v-ons-card>
 				</ons-col>
-			</ons-row><!--NOTICIAS TEMPORALES-->
+			</ons-row>
+			<!--NOTICIAS TEMPORALES-->
 
 			<ons-row>
 				<ons-col width="100" class="fondo-diva">
@@ -198,10 +208,12 @@
 					<v-ons-card class="noticia-diva" v-if="noticias.diva">
 						<img :src="noticias.diva.img | icdn([315,240,95,95])" :alt="noticias.diva.title" style="width: 100%">
 						<div class="title">
-							<v-title tag="h3" v-bind:color="'entretenimiento'" v-bind:metadata="noticias.diva.metadata" v-bind:postid="noticias.diva.id" color-text="negro">{{ noticias.diva.title | html }}</v-title>
+							<v-title tag="h3" v-bind:color="'entretenimiento'" v-bind:metadata="noticias.diva.metadata" v-bind:postid="noticias.diva.id"
+							 color-text="negro">{{ noticias.diva.title | html }}</v-title>
 						</div>
 					</v-ons-card>
-				</ons-col><!--DIVA-->
+				</ons-col>
+				<!--DIVA-->
 
 				<ons-col width="100" class="fondo-frase-dia">
 					<h2 class="title-home color-blanco" v-if="noticias.frase_del_dia">{{ noticias.frase_del_dia.title }}</h2>
@@ -217,7 +229,8 @@
 							</div>
 						</v-ons-list-item>
 					</v-ons-list>
-				</ons-col><!--FRASE DEL DIA-->
+				</ons-col>
+				<!--FRASE DEL DIA-->
 
 				<ons-col width="100" class="fondo-humor">
 					<h2 class="title-home color-blanco">Humor</h2>
@@ -227,18 +240,22 @@
 							<v-title tag="h3" v-bind:color="'humor'" v-bind:metadata="noticias.humor.metadata" v-bind:postid="noticias.humor.id" color-text="negro">{{ noticias.humor.title | html }}</v-title>
 						</div>
 					</v-ons-card>
-				</ons-col><!--HUMOR-->
+				</ons-col>
+				<!--HUMOR-->
 
 				<ons-col width="100" class="fondo-foto-del-dia">
 					<h2 class="title-home color-blanco">La foto del día</h2>
 					<v-ons-card class="noticia-foto-del-dia" v-if="noticias.foto_del_dia">
 						<img :src="noticias.foto_del_dia.img | icdn([315,240,95,95])" :alt="noticias.foto_del_dia.title" style="width: 100%">
 						<div class="title">
-							<v-title tag="h3" v-bind:color="'foto-del-dia'" v-bind:metadata="noticias.foto_del_dia.metadata" v-bind:postid="noticias.foto_del_dia.id" color-text="negro">{{ noticias.foto_del_dia.title | html }}</v-title>
+							<v-title tag="h3" v-bind:color="'foto-del-dia'" v-bind:metadata="noticias.foto_del_dia.metadata" v-bind:postid="noticias.foto_del_dia.id"
+							 color-text="negro">{{ noticias.foto_del_dia.title | html }}</v-title>
 						</div>
 					</v-ons-card>
-				</ons-col><!--FOTO DEL DIA-->
-			</ons-row><!--DIVA, FRASE DEL DIA, HUMOR FOTO DEL DIA-->
+				</ons-col>
+				<!--FOTO DEL DIA-->
+			</ons-row>
+			<!--DIVA, FRASE DEL DIA, HUMOR FOTO DEL DIA-->
 
 			<ons-row class="fondo-negro">
 				<ons-col>
@@ -260,7 +277,8 @@
 						</span>
 					</div>
 				</ons-col>
-			</ons-row><!--MULTIMEDIA-->
+			</ons-row>
+			<!--MULTIMEDIA-->
 
 			<ons-row>
 				<ons-col>
@@ -274,9 +292,9 @@
 								<div class="title">
 									<v-title tag="h4" v-bind:color="'deportes'" v-bind:metadata="nota.metadata" v-bind:postid="nota.id" color-text="negro">{{ nota.title | html }}</v-title>
 								</div>
-                                <div class="content no-margin">
-                                    <p  class="color-negro no-margin"><small>{{ nota.date }}{{ nota.hour }}</small></p>
-                                </div>
+								<div class="content no-margin">
+									<p class="color-negro no-margin"><small>{{ nota.date }}{{ nota.hour }}</small></p>
+								</div>
 							</v-ons-card>
 						</div>
 					</accordion>
@@ -289,9 +307,9 @@
 								<div class="title">
 									<v-title tag="h4" v-bind:color="'entretenimiento'" v-bind:metadata="nota.metadata" v-bind:postid="nota.id" color-text="negro">{{ nota.title | html }}</v-title>
 								</div>
-                                <div class="content no-margin">
-                                    <p  class="color-negro no-margin"><small>{{ nota.date }}{{ nota.hour }}</small></p>
-                                </div>
+								<div class="content no-margin">
+									<p class="color-negro no-margin"><small>{{ nota.date }}{{ nota.hour }}</small></p>
+								</div>
 							</v-ons-card>
 						</div>
 					</accordion>
@@ -304,9 +322,9 @@
 								<div class="title">
 									<v-title tag="h4" v-bind:color="'economia'" v-bind:metadata="nota.metadata" v-bind:postid="nota.id" color-text="negro">{{ nota.title | html }}</v-title>
 								</div>
-                               <div class="content no-margin">
-                                    <p  class="color-negro no-margin"><small>{{ nota.date }}{{ nota.hour }}</small></p>
-                                </div>
+								<div class="content no-margin">
+									<p class="color-negro no-margin"><small>{{ nota.date }}{{ nota.hour }}</small></p>
+								</div>
 							</v-ons-card>
 						</div>
 					</accordion>
@@ -319,9 +337,9 @@
 								<div class="title">
 									<v-title tag="h4" v-bind:color="'mundo'" v-bind:metadata="nota.metadata" v-bind:postid="nota.id" color-text="negro">{{ nota.title | html }}</v-title>
 								</div>
-                                <div class="content no-margin">
-                                    <p  class="color-negro no-margin"><small>{{ nota.date }}{{ nota.hour }}</small></p>
-                                </div>
+								<div class="content no-margin">
+									<p class="color-negro no-margin"><small>{{ nota.date }}{{ nota.hour }}</small></p>
+								</div>
 							</v-ons-card>
 						</div>
 					</accordion>
@@ -334,9 +352,9 @@
 								<div class="title">
 									<v-title tag="h4" v-bind:color="'tecnologia'" v-bind:metadata="nota.metadata" v-bind:postid="nota.id" color-text="negro">{{ nota.title | html }}</v-title>
 								</div>
-                                <div class="content no-margin">
-                                    <p  class="color-negro no-margin"><small>{{ nota.date }}{{ nota.hour }}</small></p>
-                                </div>
+								<div class="content no-margin">
+									<p class="color-negro no-margin"><small>{{ nota.date }}{{ nota.hour }}</small></p>
+								</div>
 							</v-ons-card>
 						</div>
 					</accordion>
@@ -349,14 +367,15 @@
 								<div class="title">
 									<v-title tag="h4" v-bind:color="'opinion'" v-bind:metadata="nota.metadata" v-bind:postid="nota.id" color-text="negro">{{ nota.title | html }}</v-title>
 								</div>
-                                <div class="content no-margin">
-                                    <p  class="color-negro no-margin"><small>{{ nota.date }}{{ nota.hour }}</small></p>
-                                </div>
+								<div class="content no-margin">
+									<p class="color-negro no-margin"><small>{{ nota.date }}{{ nota.hour }}</small></p>
+								</div>
 							</v-ons-card>
 						</div>
 					</accordion>
 				</ons-col>
-			</ons-row><!--SECCIONES-->
+			</ons-row>
+			<!--SECCIONES-->
 		</v-ons-page>
 	</template>
 
@@ -370,11 +389,12 @@
 				</div>
 				<div class="center">Últimas noticias</div>
 			</v-ons-toolbar>
+			<v-ios-back-button></v-ios-back-button>
 
 			<ons-row>
 				<ons-col width="100">
 					<vuejs-datepicker placeholder="dd/mm/yyyy" calendar-button-icon="fa fa-calendar" calendar-button="true" id="calendarInput"
-					 v-model="datePickerConfig.model" :format="datePickerConfig.format"  :language="datePickerConfig.langConfig"  wrapper-class="calendar-ultimas"
+					 v-model="datePickerConfig.model" :format="datePickerConfig.format" :language="datePickerConfig.langConfig" wrapper-class="calendar-ultimas"
 					 :disabled-dates="datePickerConfig.disabledDates" :highlighted="datePickerConfig.highlighted" @input="selectedDate"></vuejs-datepicker>
 				</ons-col>
 				<ons-col width="100">
@@ -393,7 +413,8 @@
 				<ons-col class="text-center" width="100%" v-show="loading">
 					<v-ons-icon size="2em" spin icon="fa-cog"></v-ons-icon>
 				</ons-col>
-			</ons-row><!--LOADING-->
+			</ons-row>
+			<!--LOADING-->
 		</v-ons-page>
 	</template>
 
@@ -414,6 +435,7 @@
 				<span v-show="state === 'action'"> <ons-icon icon="fa-cog" spin></ons-icon> </span>
 			</v-ons-pull-hook>
 
+            <v-ios-back-button></v-ios-back-button>
 			<ons-row>
 				<ons-col width="100">
 					<v-ons-card class="noticia-ultimas" v-for="nota in noticias">
@@ -429,13 +451,13 @@
 
 	<template id="category">
 		<v-ons-page>
-			<v-ons-toolbar :class="'fondo-' +  cat_color">
+			<v-ons-toolbar :class="'fondo-' +  $route.params.cat_color">
 				<div class="left">
 					<v-ons-toolbar-button onclick="_splitter.toggle();" class="color-blanco">
 						<v-ons-icon icon="ion-navicon, material:md-menu"></v-ons-icon>
 					</v-ons-toolbar-button>
 				</div>
-				<div class="center color-blanco">{{ cat_title }}</div>
+				<div class="center color-blanco">{{ $route.params.cat_title }}</div>
 			</v-ons-toolbar>
 
 			<v-ons-pull-hook :action="refreshNews" @changestate="state = $event.state">
@@ -444,26 +466,30 @@
 				<span v-show="state === 'action'"> <ons-icon icon="fa-cog" spin></ons-icon> </span>
 			</v-ons-pull-hook>
 
+            <v-ios-back-button></v-ios-back-button>
 			<ons-row>
 				<ons-col width="100">
 					<p class="text-center">
-						<span :class="'notification subCategory color-blanco fondo-' + cat_color" v-for="subCategory in cat_subCategories" @click="navToSubCategory(subCategory)">{{ subCategory.title }}</span>
+						<span :class="'notification subCategory color-blanco fondo-' + $route.params.cat_color" v-for="subCategory in cat_subCategories"
+						 @click="navToSubCategory(subCategory)">{{ subCategory.title }}</span>
 					</p>
 				</ons-col>
-			</ons-row><!--SUB CATEGORIAS-->
+			</ons-row>
+			<!--SUB CATEGORIAS-->
 
 			<ons-row>
 				<ons-col width="100">
 					<v-ons-card class="noticia-seccion-grande" v-if="noticias.length > 0">
 						<img :src="noticias[0].img | icdn([315,260,95,95])" :alt="noticias[0].title" style="width: 100%">
 						<div class="title">
-							<v-title tag="h2" v-bind:color="cat_color" v-bind:metadata="noticias[0].metadata" v-bind:postid="noticias[0].id" color-text="negro">{{ noticias[0].title | html }}</v-title>
+							<v-title tag="h2" v-bind:color="$route.params.cat_color" v-bind:metadata="noticias[0].metadata" v-bind:postid="noticias[0].id"
+							 color-text="negro">{{ noticias[0].title | html }}</v-title>
 						</div>
 						<div class="content">
 							<p>
 								{{ noticias[0].excerpt | html }}
 							</p>
-                            <p  class="color-negro no-margin"><small>{{ noticias[0].date }}{{ noticias[0].hour }}</small></p>
+							<p class="color-negro no-margin"><small>{{ noticias[0].date }}{{ noticias[0].hour }}</small></p>
 						</div>
 					</v-ons-card>
 				</ons-col>
@@ -473,21 +499,21 @@
 					<v-ons-card class="noticia-seccion-mediana">
 						<img :src="nota.img | icdn([150,100,95,95])" :alt="nota.title" style="width: 100%">
 						<div class="title">
-							<v-title tag="h3" v-bind:color="cat_color" v-bind:metadata="nota.metadata" v-bind:postid="nota.id" color-text="negro">{{ nota.title | html }}</v-title>
+							<v-title tag="h3" v-bind:color="$route.params.cat_color" v-bind:metadata="nota.metadata" v-bind:postid="nota.id" color-text="negro">{{ nota.title | html }}</v-title>
 						</div>
-                        <div class="content no-margin">
-                            <p  class="color-negro no-margin"><small>{{ nota.date }}{{ nota.hour }}</small></p>
-                        </div>
+						<div class="content no-margin">
+							<p class="color-negro no-margin"><small>{{ nota.date }}{{ nota.hour }}</small></p>
+						</div>
 					</v-ons-card>
 				</ons-col>
 			</ons-row>
 
 			<ons-row>
 				<ons-col class="text-center" width="100%" v-show="loading">
-					<v-ons-icon :class="'color-' + cat_color" size="2em" spin icon="fa-cog"></v-ons-icon>
+					<v-ons-icon :class="'color-' + $route.params.cat_color" size="2em" spin icon="fa-cog"></v-ons-icon>
 				</ons-col>
 				<ons-col class="text-center" width="100%">
-					<v-ons-button modifier="large" @click="viewMoreNews()" :class="'ver-mas-boton fondo-' + cat_color">Ver más noticias</v-ons-button>
+					<v-ons-button modifier="large" @click="viewMoreNews()" :class="'ver-mas-boton fondo-' + $route.params.cat_color">Ver más noticias</v-ons-button>
 				</ons-col>
 			</ons-row>
 		</v-ons-page>
@@ -503,6 +529,7 @@
 				</div>
 				<div class="center">Especiales</div>
 			</v-ons-toolbar>
+            <v-ios-back-button></v-ios-back-button>
 
 			<ons-row>
 				<ons-col width="100">
@@ -526,24 +553,28 @@
 						<v-ons-icon icon="ion-navicon, material:md-menu"></v-ons-icon>
 					</v-ons-toolbar-button>
 				</div>
-				<div class="center">{{ especial_name }}</div>
+				<div class="center">{{ $route.params.especial_name }}</div>
 			</v-ons-toolbar>
+            <v-ios-back-button></v-ios-back-button>
 
-			<ons-row v-for="item in especial_body">
+			<ons-row v-for="item in $route.params.especial_body">
 				<ons-col width="100" v-if="item.type === 'img'" class="img-item">
 					<img :src="item.src" alt="item.alt">
-				</ons-col><!--TIPO: IMAGEN-->
+				</ons-col>
+				<!--TIPO: IMAGEN-->
 
 				<ons-col width="100" v-else-if="item.type === 'text'" class="text-item">
 					<p class="text-justify">{{ item.body }}</p>
-				</ons-col><!--TIPO: TEXTO-->
+				</ons-col>
+				<!--TIPO: TEXTO-->
 
 				<ons-col width="100" v-else-if="item.type === 'embed'" class="embed-item margin-bottom-1em">
 					<div v-html="item.html"></div>
-				</ons-col><!--TIPO: EMBED-->			
+				</ons-col>
+				<!--TIPO: EMBED-->
 
 				<ons-col width="100" v-else-if="item.type === 'newstag'" class="newstag-item margin-bottom-1em">
-					<v-ons-carousel swipeable auto-scroll overscrollable  :index.sync="item.index">
+					<v-ons-carousel swipeable auto-scroll overscrollable :index.sync="item.index">
 						<v-ons-carousel-item v-for="nota in item.news">
 							<v-ons-card class="noticia-multimedia">
 								<img :src="nota.img | icdn([300,225,95,95])" :alt="nota.title" style="width: 100%">
@@ -558,10 +589,11 @@
 							{{ item.index === dotIndex - 1 ? '\u25CF' : '\u25CB' }}
 						</span>
 					</div>
-				</ons-col><!--TIPO: TAG DE NOTICIAS-->
+				</ons-col>
+				<!--TIPO: TAG DE NOTICIAS-->
 
 				<ons-col width="100" v-else-if="item.type === 'videosid'" class="videosid-item margin-bottom-1em">
-					<v-ons-carousel fullscreen swipeable auto-scroll overscrollable  :index.sync="item.index">
+					<v-ons-carousel fullscreen swipeable auto-scroll overscrollable :index.sync="item.index">
 						<v-ons-carousel-item v-for="id in item.ids">
 							<div class="video-container">
 								<div class="embed-responsive embed-responsive-16by9">
@@ -576,10 +608,11 @@
 							{{ item.index === dotIndex - 1 ? '\u25CF' : '\u25CB' }}
 						</span>
 					</div>
-				</ons-col><!--TIPO: IDS DE VIDEOS, VIDEOS UNICOS-->
+				</ons-col>
+				<!--TIPO: IDS DE VIDEOS, VIDEOS UNICOS-->
 
 				<ons-col width="100" v-else-if="item.type === 'videotag'" class="videotag-item  margin-bottom-1em">
-					<v-ons-carousel fullscreen swipeable auto-scroll overscrollable  :index.sync="item.index">
+					<v-ons-carousel fullscreen swipeable auto-scroll overscrollable :index.sync="item.index">
 						<v-ons-carousel-item v-for="video in item.videos">
 							<div class="video-container">
 								<div class="embed-responsive embed-responsive-16by9">
@@ -594,15 +627,17 @@
 							{{ item.index === dotIndex - 1 ? '\u25CF' : '\u25CB' }}
 						</span>
 					</div>
-				</ons-col><!--TIPO: TAG DE VIDEOS-->
+				</ons-col>
+				<!--TIPO: TAG DE VIDEOS-->
 
 				<ons-col width="100" v-else class="fallback-item">
 					<div v-html="item.body"></div>
-				</ons-col><!--TIPO: FALLBACK-->
+				</ons-col>
+				<!--TIPO: FALLBACK-->
 			</ons-row>
-			<ons-row v-show="especial_url !== null && especial_url !== ''">
-				<ons-col  class="text-item">
-					<p><b>Puede ver más información <a :href="especial_url" target="_blank">aquí</a></b></p>
+			<ons-row v-show="$route.params.especial_url !== null && $route.params.especial_url !== ''">
+				<ons-col class="text-item">
+					<p><b>Puede ver más información <a :href="$route.params.especial_url" target="_blank">aquí</a></b></p>
 				</ons-col>
 			</ons-row>
 		</v-ons-page>
@@ -612,12 +647,13 @@
 		<v-ons-page>
 			<v-ons-toolbar>
 				<div class="left">
-					<v-ons-toolbar-button onclick="_splitter.toggle();"  class="color-nacionales">
+					<v-ons-toolbar-button onclick="_splitter.toggle();" class="color-nacionales">
 						<v-ons-icon icon="ion-navicon, material:md-menu"></v-ons-icon>
 					</v-ons-toolbar-button>
 				</div>
-				<div class="center" style="{ textTransform: etiquetaNameUndefined }">{{ etiqueta_name }}</div>
+				<div class="center" style="{ textTransform: etiquetaNameUndefined }">{{ $route.params.etiqueta_name }}</div>
 			</v-ons-toolbar>
+            <v-ios-back-button></v-ios-back-button>
 
 			<ons-row>
 				<ons-col width="50" v-for="nota in noticias">
@@ -645,14 +681,15 @@
 		<v-ons-page>
 			<v-ons-toolbar>
 				<div class="left">
-					<v-ons-toolbar-button onclick="_splitter.toggle();"  class="color-nacionales">
+					<v-ons-toolbar-button onclick="_splitter.toggle();" class="color-nacionales">
 						<v-ons-icon icon="ion-navicon, material:md-menu"></v-ons-icon>
 					</v-ons-toolbar-button>
 				</div>
 				<div class="center">
-                    <img class="logo-toolbar" src="img/crhoy-logo.png" alt="CRHoy.com">
-                </div>
+					<img class="logo-toolbar" src="img/crhoy-logo.png" alt="CRHoy.com">
+				</div>
 			</v-ons-toolbar>
+            <v-ios-back-button></v-ios-back-button>
 
 			<ons-row>
 				<ons-col>
@@ -691,48 +728,50 @@
 		<v-ons-page>
 			<v-ons-toolbar>
 				<div class="left">
-					<v-ons-toolbar-button onclick="_splitter.toggle();"  class="color-nacionales">
+					<v-ons-toolbar-button onclick="_splitter.toggle();" class="color-nacionales">
 						<v-ons-icon icon="ion-navicon, material:md-menu"></v-ons-icon>
 					</v-ons-toolbar-button>
 				</div>
 				<div class="center">Boletín</div>
 			</v-ons-toolbar>
+            <v-ios-back-button></v-ios-back-button>
 
 			<ons-row>
 				<ons-col>
-                    
-                    <ons-list>
-                        <ons-list-header>Usted ya esta subscrito a nuestros boletines</ons-list-header>
-                        <v-ons-list-item v-for="sw in switchers">
-                            <div class="center">{{ sw.name }}</div>
-                            <div class="right">
-                                <v-ons-switch v-model="sw.check"></v-ons-switch>
-                            </div>
-                        </v-ons-list-item>
-                    </ons-list>
-                    <form>
-                        <v-ons-list>
-                            <v-ons-list-item>
-                                <v-ons-input placeholder="Email" type="email" float v-model="email" required></v-ons-input>
-                            </v-ons-list-item>
-                        </v-ons-list>
-                        <v-ons-button type="button" modifier="large" @click="subscribe()">Subscribirse</v-ons-button>
-                    </form>
+
+					<ons-list>
+						<ons-list-header>Usted ya esta subscrito a nuestros boletines</ons-list-header>
+						<v-ons-list-item v-for="sw in switchers">
+							<div class="center">{{ sw.name }}</div>
+							<div class="right">
+								<v-ons-switch v-model="sw.check"></v-ons-switch>
+							</div>
+						</v-ons-list-item>
+					</ons-list>
+					<form>
+						<v-ons-list>
+							<v-ons-list-item>
+								<v-ons-input placeholder="Email" type="email" float v-model="email" required></v-ons-input>
+							</v-ons-list-item>
+						</v-ons-list>
+						<v-ons-button type="button" modifier="large" @click="subscribe()">Subscribirse</v-ons-button>
+					</form>
 				</ons-col>
 			</ons-row>
 		</v-ons-page>
 	</template>
 
-    <template id="autor">
-        <v-ons-page>
+	<template id="autor">
+		<v-ons-page>
 			<v-ons-toolbar>
 				<div class="left">
-					<v-ons-toolbar-button onclick="_splitter.toggle();"  class="color-nacionales">
+					<v-ons-toolbar-button onclick="_splitter.toggle();" class="color-nacionales">
 						<v-ons-icon icon="ion-navicon, material:md-menu"></v-ons-icon>
 					</v-ons-toolbar-button>
 				</div>
-				<div class="center">{{ autor_name }}</div>
+				<div class="center">{{ $route.params.autor_name }}</div>
 			</v-ons-toolbar>
+            <v-ios-back-button></v-ios-back-button>
 
 			<ons-row>
 				<ons-col width="50" v-for="nota in noticias">
@@ -741,7 +780,7 @@
 						<div class="title">
 							<v-title tag="h4" color="negro" v-bind:metadata="nota.metadata" v-bind:postid="nota.id" color-text="negro">{{ nota.title | html }}</v-title>
 						</div>
-                        <div class="content">
+						<div class="content">
 							<p>{{ nota.date }}</p>
 						</div>
 					</v-ons-card>
@@ -757,117 +796,128 @@
 				</ons-col>
 			</ons-row>
 		</v-ons-page>
-    </template>
+	</template>
 
-    <template id="noticia">
-        <v-ons-page id="contenido-noticia">
-			<v-ons-toolbar  :class="'fondo-' +  nota.categories[0].cat_color">
+	<template id="noticia">
+		<v-ons-page id="contenido-noticia">
+			<v-ons-toolbar :class="'fondo-' +  nota.categories[0].cat_color">
 				<div class="left">
 					<v-ons-toolbar-button onclick="_splitter.toggle();" class="color-blanco">
 						<v-ons-icon icon="ion-navicon, material:md-menu"></v-ons-icon>
 					</v-ons-toolbar-button>
 				</div>
 				<div class="center">
-                    <img class="logo-toolbar" src="img/crhoy-logo-blanco.png" alt="CRHoy.com">
-                </div>
+					<img class="logo-toolbar" src="img/crhoy-logo-blanco.png" alt="CRHoy.com">
+				</div>
 			</v-ons-toolbar>
-            <ons-row>
-                <ons-col>
-                    <div class="card">
-                        <div id="fb-root"></div>
+            <v-ios-back-button></v-ios-back-button>
 
-                        <p class='text-center'  v-show="loading">
-                            <v-ons-icon size='2em' spin icon='fa-cog' class='color-negro'></v-ons-icon>
-                        </p><!--LOADING-->
-                        <div class="img-pre-loading">
-                            <img v-if="nota.img !== ''" :src="nota.img | icdn([315, 200, 95, 95])" :alt="nota.title" style="width: 100%;">
-                        </div>
-                        <h6 class="no-margin pre-title">{{ nota.pretitle.trim() }}</h6>
-                        <h1 class="card__title no-margin-bottom">{{ nota.title }}</h1>
-                        <p class="text-capitalize no-margin-bottom author" @click="navToAuthor(nota.author)">Por: <span :class="'notification notification-author fondo-' +  nota.categories[0].cat_color"><small>{{ nota.author.autor_name }}</small></span></p>
-                        <p class="text-capitalize no-margin-bottom">{{ nota.date }} {{ nota.hour }}</p>
-                        <ul class="list list--noborder margin-bottom-1em" v-if="nota.subtitle1 !== '' || nota.subtitle2 !== ''">
-                            <li class="list-item" v-show="nota.subtitle1 !== ''">
-                                <div class="list-item__center">{{ nota.subtitle1 }}</div>
-                            </li>
-                            <li class="list-item" v-show="nota.subtitle2 !== ''">
-                                <div class="list-item__center">{{ nota.subtitle2 }}</div>
-                            </li>
-                        </ul>
+			<ons-row>
+				<ons-col>
+					<div class="card">
+						<div id="fb-root"></div>
 
-                        <content-component id="content-component" v-if="nota.content !== '' " :content="nota.content" :scripts="nota.scripts"></content-component>
+						<p class='text-center' v-show="loading">
+							<v-ons-icon size='2em' spin icon='fa-cog' class='color-negro'></v-ons-icon>
+						</p>
+						<!--LOADING-->
+						<div class="img-pre-loading">
+							<img v-if="nota.img !== ''" :src="nota.img | icdn([315, 200, 95, 95])" :alt="nota.title" style="width: 100%;">
+						</div>
+						<h6 class="no-margin pre-title">{{ nota.pretitle.trim() }}</h6>
+						<h1 class="card__title no-margin-bottom">{{ nota.title }}</h1>
+						<p class="no-margin-bottom author" @click="navToAuthor(nota.author)">
+							Por: <span :class="'notification notification-author fondo-' +  nota.categories[0].cat_color"><small>{{ nota.author.autor_name }}</small></span>
+							<small>{{ nota.date }} {{ nota.hour }}</small>
+						</p>
+						<ul class="list list--noborder margin-bottom-1em" v-if="nota.subtitle1 !== '' || nota.subtitle2 !== ''">
+							<li class="list-item" v-show="nota.subtitle1 !== ''">
+								<div class="list-item__center">{{ nota.subtitle1 }}</div>
+							</li>
+							<li class="list-item" v-show="nota.subtitle2 !== ''">
+								<div class="list-item__center">{{ nota.subtitle2 }}</div>
+							</li>
+						</ul>
 
-                        <p class="text-left etiquetas">
-                            <b>Etiquetas: </b><br>
-                            <span  :class="'notification notification-tag fondo-' +  nota.categories[0].cat_color" v-for="tag in nota.tags" @click="navToTag(tag)">{{ tag.etiqueta_name }}</span>
-                        </p>
+						<content-component id="content-component" v-if="nota.content !== '' " :content="nota.content" :scripts="nota.scripts"></content-component>
 
-                        <ul class="list comentarios">
-                            <li class="list-header">Comentarios <span class="notification">{{ nota.comments.length }}</span></li>
-                            <li class="list-item" v-for="comment in nota.comments">
-                                <div class="list-item__center">
-                                    <div class="list-item__title">{{ comment.comment_author }} <small>{{ comment.comment_date }}</small></div>
-                                    <div class="list-item__subtitle">{{ comment.comment_content }}</div>
-                                </div>
-                            </li>
-                            <li class="list-header">Dejanos tu comentario</li>
-                            <form class="frm-comentarios">
-                                <v-ons-input id="comentario-nombre" placeholder="Nombre" type="text" v-model="comentario.nombre" required></v-ons-input>
-                                <br>
-                                <v-ons-input id="comentario-correo" placeholder="Correo" type="email"  v-model="comentario.correo" required></v-ons-input>
-                                <br>
-                                <textarea id="comentario-comentario" class="comentario-comentario" v-model="comentario.comentario" placeholder="Comentario" required></textarea>
-                                <br>
-                                <p class="text-center" v-show="comentario.loading">
-                                    <v-ons-icon class="comentario-loading" size="2em" spin icon="fa-cog" :class="'color-' + nota.categories[0].cat_color"></v-ons-icon>
-                                </p>
-                                <v-ons-button class="comentario-boton" modifier="large" type="button" @click="saveComment()" :disabled="comentario.loading || loading">Enviar</v-ons-button>
-                            </form>
-                        </ul>
-                        <div class="facebook" v-if="nota.permalink !==''">
-                            <div class="fb-comments" :data-href="nota.permalink"  data-width="100%"  data-numposts="5" data-mobile="true"></div><!--COMENTARIOS-->
-                        </div>
-                    </div>
-                </ons-col>
-            </ons-row>
+						<p class="text-left etiquetas">
+							<b>Etiquetas: </b><br>
+							<span :class="'notification notification-tag fondo-' +  nota.categories[0].cat_color" v-for="tag in nota.tags" @click="navToTag(tag)">{{ tag.etiqueta_name }}</span>
+						</p>
 
-            <v-ons-speed-dial position="bottom right" direction="up">
-                <v-ons-fab :class="'fondo-' +  nota.categories[0].cat_color">
-                    <v-ons-icon icon="fa-share-alt" class="color-blanco"></v-ons-icon>
-                </v-ons-fab>
+						<ul class="list comentarios">
+							<li class="list-header">Comentarios <span class="notification">{{ nota.comments.length }}</span></li>
+							<li class="list-item" v-for="comment in nota.comments">
+								<div class="list-item__center">
+									<div class="list-item__title">{{ comment.comment_author }} <small>{{ comment.comment_date }}</small></div>
+									<div class="list-item__subtitle">{{ comment.comment_content }}</div>
+								</div>
+							</li>
+							<li class="list-header">Dejanos tu comentario</li>
+							<form class="frm-comentarios">
+								<v-ons-input id="comentario-nombre" placeholder="Nombre" type="text" v-model="comentario.nombre" required></v-ons-input>
+								<br>
+								<v-ons-input id="comentario-correo" placeholder="Correo" type="email" v-model="comentario.correo" required></v-ons-input>
+								<br>
+								<textarea id="comentario-comentario" class="comentario-comentario" v-model="comentario.comentario" placeholder="Comentario"
+								 required></textarea>
+								<br>
+								<p class="text-center" v-show="comentario.loading">
+									<v-ons-icon class="comentario-loading" size="2em" spin icon="fa-cog" :class="'color-' + nota.categories[0].cat_color"></v-ons-icon>
+								</p>
+								<v-ons-button class="comentario-boton" modifier="large" type="button" @click="saveComment()" :disabled="comentario.loading || loading">Enviar</v-ons-button>
+							</form>
+						</ul>
+						<div class="facebook" v-if="nota.permalink !==''">
+							<div class="fb-comments" :data-href="nota.permalink" data-width="100%" data-numposts="5" data-mobile="true"></div>
+							<!--COMENTARIOS-->
+						</div>
+					</div>
+				</ons-col>
+			</ons-row>
 
-                <v-ons-speed-dial-item v-for="item in shareItems" :class="'fondo-' +  nota.categories[0].cat_color" @click="share(item.slug)" :title="'Compartir con' + item.name">
-                    <v-ons-icon :icon="item.icon" class="color-blanco"></v-ons-icon>
-                </v-ons-speed-dial-item>
-            </v-ons-speed-dial>
-        </v-ons-page>
-    </template>
+			<v-ons-speed-dial position="bottom right" direction="up">
+				<v-ons-fab :class="'fondo-' +  nota.categories[0].cat_color">
+					<v-ons-icon icon="fa-share-alt" class="color-blanco"></v-ons-icon>
+				</v-ons-fab>
 
-    <template id="indefinido">
-        <v-ons-page>
-			<v-ons-toolbar  class="fondo-nacionales">
+				<v-ons-speed-dial-item v-for="item in shareItems" :class="'fondo-' +  nota.categories[0].cat_color" @click="share(item.slug)"
+				 :title="'Compartir con' + item.name">
+					<v-ons-icon :icon="item.icon" class="color-blanco"></v-ons-icon>
+				</v-ons-speed-dial-item>
+			</v-ons-speed-dial>
+		</v-ons-page>
+	</template>
+
+	<template id="indefinido">
+		<v-ons-page>
+			<v-ons-toolbar class="fondo-nacionales">
 				<div class="left">
 					<v-ons-toolbar-button onclick="_splitter.toggle();" class="color-blanco">
 						<v-ons-icon icon="ion-navicon, material:md-menu"></v-ons-icon>
 					</v-ons-toolbar-button>
 				</div>
 				<div class="center">
-                    <img class="logo-toolbar" src="img/crhoy-logo-blanco.png" alt="CRHoy.com">
-                </div>
+					<img class="logo-toolbar" src="img/crhoy-logo-blanco.png" alt="CRHoy.com">
+				</div>
 			</v-ons-toolbar>
-            <ons-row>
-                <ons-col>
-                    <div class="card">
-                        <h5 class="text-center">Página no encontrada</h5>
-                    </div>
-                </ons-col>
-            </ons-row>
-        </v-ons-page>
-    </template>
+            <v-ios-back-button></v-ios-back-button>
+
+			<ons-row>
+				<ons-col>
+					<div class="card">
+						<h5 class="text-center">Página no encontrada</h5>
+					</div>
+				</ons-col>
+			</ons-row>
+		</v-ons-page>
+	</template>
 
 	<div id="app">
 		<v-ons-splitter>
-			<v-ons-splitter-side swipeable width="50%" collapse="" side="left" collapse="portrait" open-threshold="0.9" id="_splitter" :open.sync="openSide">
+			<v-ons-splitter-side swipeable id="_splitter" width="50%" collapse="" side="left" collapse="portrait" open-threshold="0.9"
+			 :open.sync="openSide">
 				<v-ons-page>
 					<v-ons-toolbar class="fondo-nacionales">
 						<div class="center color-blanco">Menú</div>
@@ -876,8 +926,11 @@
 						<v-ons-list-item v-for="page in pages" tappable modifier="chevron" @click="$router.push(page.route); openSide = false;">
 							<div class="center">{{ page.title }}</div>
 						</v-ons-list-item>
-						<v-ons-list-item  tappable modifier="chevron" @click="navToSearch();">
+						<v-ons-list-item tappable modifier="chevron" @click="navToSearch();">
 							<div class="center">Buscador</div>
+						</v-ons-list-item>
+                        <v-ons-list-item tappable modifier="chevron" @click="$router.push('/noticia/677512/null');">
+							<div class="center">Noticia de prueba</div>
 						</v-ons-list-item>
 						<v-ons-list-header>Categorías</v-ons-list-header>
 						<v-ons-list-item v-for="cat in categories" tappable modifier="chevron" v-on:click="navToCategory(cat)">
@@ -888,7 +941,7 @@
 							<div class="center">
 								<a :href="sn.socialNetwork_url" target="_blank">
 									<ons-icon :icon="sn.socialNetwork_icon"></ons-icon> {{ sn.socialNetwork_name }}
-                                </a>
+								</a>
 							</div>
 						</v-ons-list-item>
 					</v-ons-list>
@@ -896,17 +949,15 @@
 			</v-ons-splitter-side>
 
 			<v-ons-splitter-content>
-				<!--<component :is="currentPage"></component>-->
-                <!--<p>{{ currentUrl.hash }}</p>-->
-                <router-view></router-view>
+				<router-view></router-view>
 			</v-ons-splitter-content>
 		</v-ons-splitter>
 	</div>
 
-     <!--LOADER DE CORDOVA-->
-    <script type="text/javascript" src="components/loader.js"></script>
-    <!--PLUGINS-->
-    <script type="text/javascript" src="js/SocialSharing.js"></script>
+	<!--LOADER DE CORDOVA-->
+	<script type="text/javascript" src="components/loader.js"></script>
+	<!--PLUGINS-->
+	<script type="text/javascript" src="js/SocialSharing.js"></script>
 
 	<!--LIBS-->
 	<script type="text/javascript" src="libs/vue.min.js"></script>
@@ -934,16 +985,19 @@
 	<script type="text/javascript" src="js/services/especiales.service.js"></script>
 	<script type="text/javascript" src="js/services/samba.service.js"></script>
 	<script type="text/javascript" src="js/services/buscador.service.js"></script>
-    <script type="text/javascript" src="js/services/boletin.service.js"></script>
-    <script type="text/javascript" src="js/services/autor.service.js"></script>
-    <script type="text/javascript" src="js/services/noticia.service.js"></script>
-    <script type="text/javascript" src="js/services/comentarios.service.js"></script>
+	<script type="text/javascript" src="js/services/boletin.service.js"></script>
+	<script type="text/javascript" src="js/services/autor.service.js"></script>
+	<script type="text/javascript" src="js/services/noticia.service.js"></script>
+	<script type="text/javascript" src="js/services/comentarios.service.js"></script>
 
 	<!--DIRECTIVAS-->
 	<script type="text/javascript" src="js/directives/title.directive.js"></script>
+    <script type="text/javascript" src="js/directives/iosBackButton.directive.js"></script>
+    <script type="text/javascript" src="js/directives/tabset.directive.js"></script>
+    <script type="text/javascript" src="js/directives/accordion.directive.js"></script>
 
 	<!--COMPONENTES-->
-	<script type="text/javascript" src="js/components/accordion.component.js"></script>
+	<!--<script type="text/javascript" src="js/components/accordion.component.js"></script>-->
 	<script type="text/javascript" src="js/components/home.component.js"></script>
 	<script type="text/javascript" src="js/components/ultimas.component.js"></script>
 	<script type="text/javascript" src="js/components/masLeidas.component.js"></script>
@@ -952,9 +1006,9 @@
 	<script type="text/javascript" src="js/components/especial.component.js"></script>
 	<script type="text/javascript" src="js/components/tema.component.js"></script>
 	<script type="text/javascript" src="js/components/buscador.component.js"></script>
-    <script type="text/javascript" src="js/components/boletin.component.js"></script>
-    <script type="text/javascript" src="js/components/autor.component.js"></script>
-    <script type="text/javascript" src="js/components/noticia.component.js"></script>
+	<script type="text/javascript" src="js/components/boletin.component.js"></script>
+	<script type="text/javascript" src="js/components/autor.component.js"></script>
+	<script type="text/javascript" src="js/components/noticia.component.js"></script>
 
 	<!--ROUTER-->
 	<script type="text/javascript" src="js/config/routes.router.js"></script>
@@ -962,4 +1016,5 @@
 	<!--COMPONENTE INICIAL-->
 	<script type="text/javascript" src="js/components/app.component.js"></script>
 </body>
+
 </html>

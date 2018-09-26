@@ -1,16 +1,11 @@
 .accordion{
 	margin: 8px;
 }
-.accordion .accordion-header, .accordion .accordion-body{
-	padding: 8px 16px;
-}
 .accordion .accordion-header{
-	margin-bottom: 0px;
+	padding: 8px 16px 0px;
 }
- .accordion .accordion-body{
-	 margin-top: 0px;
-	border-width: 1px;
-    border-style: solid;
+.accordion .accordion-body ons-card{
+    margin: 8px 0px 0px;
  }
 .accordion .accordion-header h3{
 	color: #fff;

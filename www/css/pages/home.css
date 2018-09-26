@@ -7,10 +7,22 @@
 	line-height: 1.2em;
 	overflow: hidden;
 }
+.noticia-slider .title h2, .noticia-slider .content p{
+	line-height: 1.2em;
+	overflow: hidden;
+}
+ .noticia-slider .content p:first-child{
+    height: 3.4em;
+ }
 
 .noticia-visual-a-mediana .title h3{
 	line-height: 1.2em;
 	height: 8.4em;
 	overflow: hidden;
     margin-bottom: 0px;
+}
+.noticia-multimedia h3{
+    margin-bottom: 0px;
+    height: 3.3em;
+    overflow: hidden;
 }

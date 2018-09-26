@@ -21,10 +21,15 @@ var contentComponent = {
     render: function (h, context) {
         const content = context.props.content;
         const component = content ? {
-            "template": content,
+            template: content,
             data: function () {
                 return {
-                    scripts: context.props.scripts
+                    scripts: context.props.scripts,
+                    modal: {
+                        src: "",
+                        caption: null,
+                        visible: false
+                    }
                 };
             },
             methods: {
@@ -39,10 +44,14 @@ var contentComponent = {
                 },
                 nextGalleryItem: function (galleryID) {
                     document.getElementById(galleryID).next();
+                },
+                openModal: function (src, caption) {
+                    this.modal.src = src;
+                    this.modal.caption = caption;
+                    this.modal.visible = true;
                 }
             },
             mounted: function () {
-                console.log("MOUNTED!!!");
                 /*
                     0: "https://connect.facebook.net/es_US/sdk.js#xfbml=1&version=v2.5&appId=623501091049135"
                     1: "https://www.instagram.com/embed.js"
@@ -60,8 +69,22 @@ var contentComponent = {
                     //script.async = true;
                     script.charset = "utf-8";
                     //script.defer = true;
-                    document.getElementById("nota-contenido").appendChild(script);
+                    var nota_contenido = document.getElementById("nota-contenido");
+                    if (nota_contenido) {
+                        nota_contenido.appendChild(script);
+                    }
                 });
+
+                // AQUI MANEJAMOS LA MODAL, LA MISMA VIENE DESDE EL SERVIDOR, PERO AQUI LE ASIGNAMOS A LA IMAGEN EL EVENTO
+                var imgs = this.$el.querySelectorAll(" p>img"); // ".carousel-single img, .figure-caption > a, .figure-caption > img, p img"
+                var self = this;
+                for (var i = 0; i < imgs.length; i++) {
+                    imgs.item(i).addEventListener("click", function (e) {
+                        e.preventDefault(); // Cancel the native event
+                        e.stopPropagation();// Don't bubble/capture the event
+                        self.openModal(this.src, this.alt);
+                    }, false);
+                }
             }
         } : {
                 "template": "<ons-row><ons-col class='text-center' width='100%'><v-ons-icon size='2em' spin icon='fa-cog' class='color-negro'></v-ons-icon></ons-col></ons-row>"
@@ -74,7 +97,7 @@ const _noticiaComponent = {
     name: "noticiaComponent",
     template: "#noticia",
     mixins: [_noticiaService, _comentariosService], // DEPENDENCIAS DE SERVICIOS
-    props: ["noticia_id", "noticia_url"],
+    // props: ["noticia_id", "noticia_url"],
     components: {
         "content-component": contentComponent
     },
@@ -249,14 +272,34 @@ const _noticiaComponent = {
             }
         },
         navLeerMas: function (url) {
-            this.noticia_id = null;
-            this.noticia_url = url;
+            if (url.indexOf("www.crhoy.com") !== -1) {
+                this.$router.push({
+                    name: "noticia",
+                    params: {
+                        noticia_id: "null",
+                        noticia_url: url
+                    }
+                });
+            } else {
+                window.open(decodeURIComponent(url), "_blank");
+            }
         },
         getNoticia: function () {
+            // VALIDACION DE LOS PARAMETROS PARA EVITAR ERRORES
+            if (this.$route.params.noticia_url === "null") {
+                this.$route.params.noticia_url = null;
+            }
+            if (this.$route.params.noticia_id === "null") {
+                this.$route.params.noticia_id = null;
+            }
+
             this.resetData();
-            document.getElementById("contenido-noticia").scrollTop = 0;
+            var contenido_noticia = document.getElementById("contenido-noticia");
+            if (contenido_noticia) {
+                contenido_noticia.scrollTop = 0;
+            }
             this.loading = true;
-            this.noticiaService(this.noticia_id, this.noticia_url).then(function (response) {
+            this.noticiaService(this.$route.params.noticia_id, this.$route.params.noticia_url).then(function (response) {
                 if (response.data !== null) {
                     this.nota = response.data;
                 } else {
@@ -339,12 +382,8 @@ const _noticiaComponent = {
         }
     },
     watch: {
-        noticia_id: function (value) {
+        "$route": function (value) {
             this.getNoticia();
-        },
-        noticia_url: function (value) {
-            this.getNoticia();
-            // https://www.crhoy.com/site/generators/no-cache/new_single_app.php?id=&url=https%253A%252F%252Fwww.crhoy.com%252Feconomia%252Fausencia-de-decisiones-carcomio-patrimonio-de-bancredito%252F
         }
     }
 };

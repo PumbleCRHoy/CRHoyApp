@@ -1,7 +1,7 @@
 const _temaComponent = {
     template: "#tema",
     mixins: [_etiquetaService], // DEPENDENCIAS DE SERVICIOS
-    props: ["etiqueta_name", "etiqueta_slug"], //ENVIAMOS COMO PROPIEDADES LOS DATOS DEL TEMA QUE QUEREMOS
+    // props: ["etiqueta_name", "etiqueta_slug"], //ENVIAMOS COMO PROPIEDADES LOS DATOS DEL TEMA QUE QUEREMOS
     data: function () {
         return {
             loading: true,
@@ -15,8 +15,8 @@ const _temaComponent = {
         };
     },
     mounted: function () {
-        if (this.etiqueta_name === null || this.etiqueta_name === "") {
-            this.etiqueta_name = this.etiqueta_slug.replace("-", " ");
+        if (this.$route.params.etiqueta_name === null || this.$route.params.etiqueta_name === "") {
+            this.$route.params.etiqueta_name = this.$route.params.etiqueta_slug.replace("-", " ");
             this.etiquetaNameUndefined = "capitalize";
         }
         this.getNews();
@@ -24,7 +24,7 @@ const _temaComponent = {
     methods: {
         getNews: function () {
             this.loading = true;
-            this.etiquetaService(this.etiqueta_slug, this.cant, this.text, this.current, this.date, this.metadata).then(function (response) {
+            this.etiquetaService(this.$route.params.etiqueta_slug, this.cant, this.text, this.current, this.date, this.metadata).then(function (response) {
                 this.noticias = this.noticias.concat(response.data.noticiasEtiqueta);
                 this.loading = false;
             }, function (error) {

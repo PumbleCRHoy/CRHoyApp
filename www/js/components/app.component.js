@@ -29,8 +29,8 @@ var app_crhoy = new Vue({
         deviceReady: false
     },
     computed: {
-        currentUrl: function () {
-            return window.location;
+        _isIOS: function () {
+            return this.$ons.platform.isIPhone() || this.$ons.platform.isIPhoneX() || this.$ons.platform.isIPad() || this.$ons.platform.isIOS7above() || this.$ons.platform.isIOSSafari() || this.$ons.platform.isSafari() || this.$ons.platform.isIOS();
         }
     },
     router: _router,
@@ -39,16 +39,6 @@ var app_crhoy = new Vue({
     },
     methods: {
         navToCategory: function (category) {
-            /*
-            console.log(category);
-            this.$router.push({
-                path: "/category/" + category.cat_id + "/" + category.cat_title + "/" + category.cat_color,
-                params: {
-                    cat_subCategories: category.cat_subCategories
-                }
-            });
-            this.openSide = false;
-            */
             this.$router.push({
                 name: "category",
                 params: category
@@ -60,10 +50,48 @@ var app_crhoy = new Vue({
                 name: "buscador"
             });
             this.openSide = false;
+        },
+        back: function (ev) {
+            // this.currentUrl.hash !== "#/"
+            switch (this.$route.name) {
+                case "home":
+                    // https://onsen.io/v2/api/vue/$ons.notification.html#method-confirm
+                    this.$ons.notification.confirm("¿Quiére salir del app?", {
+                        buttonLabels: ["Cancelar", "Ok"],
+                        title: "CRHoy"
+                    }).then(function (response) {
+                        if (response == 1) {
+                            // https://stackoverflow.com/questions/12297525/exit-from-app-when-click-button-in-android-phonegap
+                            navigator.app.exitApp();
+                        }
+                    });
+                    break;
+                case "indefinido":
+                    this.$router.go(-2);
+                    break;
+                default:
+                    window.history.back();
+                    break;
+            }
         }
+    },
+    mounted: function () {
+        var self = this;
+        this.$ons.ready(function () {
+            self.deviceReady = true;
+            // https://onsen.io/v2/api/vue/$ons.html#method-setDefaultDeviceBackButtonListener
+            self.$ons.setDefaultDeviceBackButtonListener(self.back);
+            /*
+            https://cordova.apache.org/docs/en/latest/reference/cordova-plugin-device/index.html
+            console.log(device.cordova);
+            console.log(device.model);
+            console.log(device.platform);
+            console.log(device.uuid);
+            console.log(device.version);
+            console.log(device.manufacturer);
+            console.log(device.isVirtual);
+            console.log(device.serial);
+            */
+        });
     }
 });
-
-document.addEventListener("deviceready", function () {
-    app_crhoy.deviceReady = true;
-}, false);

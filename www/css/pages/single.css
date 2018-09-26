@@ -35,7 +35,6 @@
 .nota-contenido{
     margin: 1em 0px;
     line-height: 1.3em;
-    text-align: justify;
 }
 .nota-contenido img{
     width: 100%;
@@ -46,6 +45,7 @@
     width: 100%;
     height: 200px;
     background-image: url(../../img/placeholder-loading.jpg);
+    margin-bottom: 0.3em;
 }
 .frm-comentarios{
     width: 100%;
@@ -60,15 +60,131 @@
     min-width: calc(100% - 6px);
     margin: 0.5em 0px 0px;
 }
+#nota-contenido p:empty {
+    display: none;
+}
+
+/* === MODAL === */
+.modal{
+    background-color: rgba(0,0,0,.75);
+}
+.modal img{
+    max-width: 100%;
+}
+.modal p{
+    padding: 1em;
+}
 
 /* === SOBREESCRIBIR ESTILOS DE WP === */
 .size-large{
     max-width: 100%;
 }
-iframe{
+.nota-contenido iframe{
     width: 100% !important;
     border: none;
     margin: 1em 0px;
+}
+.imgWithText{
+    min-height: 400px;
+    position: relative;
+    background-size: cover;
+}
+.imgWithText .caption{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: center;
+    width: 80%;
+    display: block;
+    margin: 0 10%;
+
+}
+.imgWithText .caption h4{
+    color: #ffffff;
+    font-size: 1.5em;
+    font-weight: 500;
+    text-shadow: -1px 0 #555, 0 1px #555, 1px 0 #555, 0 -1px #555;
+}
+
+/* === BOTONES === */
+/* LA IDEA ES SUSTITUIR LOS DE BOOSTRAP POR LOS DE ONSEN
+ * OBVIAMENTE POR LOS QUE MAS SE PARECEN,
+ * EN EL FUTURO, CON SASS DEBEMOS INCLUIR LOS ESTILOS DE .button
+ * AQUI YA QUE COPIAR Y PEGAR EL CODIGO NO ES LO IDEAL.
+ */
+.btn{
+    position: relative;
+    display: inline-block;
+    box-sizing: border-box;
+    background-clip: padding-box;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    color: inherit;
+    background: transparent;
+    border: none;
+    line-height: normal;
+    font-family: -apple-system, 'Helvetica Neue', 'Helvetica', 'Arial', 'Lucida Grande', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-weight: 400;
+    cursor: default;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    height: auto;
+    text-decoration: none;
+    padding: 4px 10px;
+    font-size: 17px;
+    line-height: 32px;
+    letter-spacing: 0;
+    color: white;
+    vertical-align: middle;
+    background-color: #0076ff;
+    border: 0 solid currentColor;
+    border-radius: 3px;
+    transition: none;
+}
+.btn-default{
+    background-color: transparent;
+    color: #333333;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+}
+.btn-primary{
+    background-color: #0076ff;
+}
+.btn-success{
+    background-color: #5cb85c;
+    border: 1px solid #4cae4c;
+}
+.btn-info{
+    border-radius: 3px;
+    transition: none;
+    border: none;
+    background-color: #25a6d9;
+    color: white;
+}
+.btn-warning{
+    background-color: #f0ad4e;
+    border: 1px solid #eea236;
+}
+.btn-danger{
+    background-color: #d9534f;
+    border: 1px solid #d43f3a;
+}
+.btn-link{
+    transition: none;
+    background: transparent;
+    border: 1px solid transparent;
+    box-shadow: none;
+    background: transparent;
+    color: #0076ff;
+    border: none;
+
 }
 
 /* === SHORTCODES === */
@@ -117,7 +233,7 @@ iframe{
 }
 .carousel-single .caption{
     position: absolute;
-    bottom: 0px;
+    bottom: 6px;
     left: 0px;
     right: 0px;
     background-color: rgba(0,0,0,0.5);
@@ -134,12 +250,14 @@ iframe{
     height: 40px;
     text-align: center;
     font-weight: 700;
+    font-size: 1.5em;
+    line-height: 1.5em;
 }
 .carousel-single .left-gallery-button{
-    left: -8px;
+    left: -16px;
 }
 .carousel-single .right-gallery-button{
-    right: -8px;
+    right: -16px;
 }
 .figure-caption{
     margin: 1em;
@@ -150,4 +268,61 @@ iframe{
 }
 .audioImgIframe{
     height: 236px;
+}
+.history-gallery .history{
+    padding: 1em;
+    margin-top: -7px;
+}
+.tabset .segment{
+    width: 100%;
+}
+.tabset .segment .segment__button{
+    background-color: #444;
+    border: 1px solid #444;
+    color: #aaa;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+.tabset .segment :checked+.segment__button{
+    color: #fff;
+}
+.tabset .tabset-content .tabset-item{
+    padding: 1em 0.5em;
+    border: solid 1px #444;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+.accordion-single{
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+}
+.accordion-single .accordion-body{
+    padding: 1em 0.5em;
+    margin-top: 0px;
+    border-width: 1px;
+    border-style: solid;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+.accordion-single .accordion-body p{
+    margin-top: 0px;
+}
+.contextualBox{
+    padding: 1em 0.5em;
+}
+.bg-primary{
+    color: #fff;
+    background-color: #337ab7;
+}
+.bg-success{
+    background-color: #dff0d8;
+}
+.bg-info{
+    background-color: #d9edf7;
+}
+.bg-warning{
+    background-color: #fcf8e3;
+}
+.bg-danger{
+    background-color: #f2dede;
 }

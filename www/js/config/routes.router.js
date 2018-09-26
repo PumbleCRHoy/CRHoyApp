@@ -18,12 +18,7 @@ const _router = new VueRouter({
         name: "masLeidas",
         component: _masLeidasComponent
     }, {
-        /*path: "/category/:cat_id/:cat_title/:cat_color",
-        name: "category",
-        component: _categoryComponent,
-        props: true*/
-
-        path: "/category/:cat_id",
+        path: "/category/:cat_id/:cat_title/:cat_color",
         name: "category",
         component: _categoryComponent,
         props: true
@@ -32,20 +27,17 @@ const _router = new VueRouter({
         name: "especiales",
         component: _especialesComponent
     }, {
-        path: "/especial",
+        path: "/especial/:especial_name/:especial_description/:especial_img/:especial_body/:especial_url",
         name: "especial",
-        component: _especialComponent,
-        props: true
+        component: _especialComponent
     }, {
-        path: "/tema",
+        path: "/tema/:etiqueta_name/:etiqueta_slug",
         name: "tema",
-        component: _temaComponent,
-        props: true
+        component: _temaComponent
     }, {
-        path: "/autor",
+        path: "/autor/:autor_name/:autor_slug/:autor_id/:autor_email",
         name: "autor",
-        component: _autorComponent,
-        props: true
+        component: _autorComponent
     }, {
         path: "/buscador",
         name: "buscador",
@@ -55,11 +47,10 @@ const _router = new VueRouter({
         name: "boletin",
         component: _boletinComponent
     }, {
-        path: "/noticia",
+        path: "/noticia/:noticia_id/:noticia_url",
         name: "noticia",
         alias: "noticias",
-        component: _noticiaComponent,
-        props: true
+        component: _noticiaComponent
     }, {
         path: "*",
         name: "indefinido",

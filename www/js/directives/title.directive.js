@@ -33,31 +33,30 @@ Vue.component("v-title", {
         }
         elements.push(this.$slots.default[0].text);
         var attrs = {
-            title: this.title,
-            rel: "noopener",
             class: "v-title"
         };
-        var self = this;
-        var on = {
-            click: function (ev) {
-                ev.preventDefault();
-                self.$router.push({
-                    name: "noticia",
-                    params: {
-                        noticia_id: self.postid,
-                        noticia_url: null
-                    }
-                });
-            }
-        };
-
         if (this.colorText) {
             attrs.class += " color-" + this.colorText;
         }
 
+        var self = this;
+        var on = {
+            click: function (ev) {
+                ev.preventDefault();
+                self.$router.push("/noticia/" + self.postid + "/null");
+            }
+        };
+
+
+        /*
         return createElement(this.tag, [createElement("a", {
             attrs: attrs,
             on: on
         }, elements)]);
+        */
+        return createElement(this.tag, {
+            attrs: attrs,
+            on: on
+        }, elements);
     }
 });
