@@ -92,6 +92,7 @@
     <feature name="SocialSharing">
       <param name="android-package" value="nl.xservices.plugins.SocialSharing"/>
     </feature>
+    <resource-file src="google-services.json" target="app/google-services.json"/>
   </platform>
   <platform name="windows">
     <icon src="/res/winrt/icon/package_logo_winrt.png" target="StoreLogo"/>

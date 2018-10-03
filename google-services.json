@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "290658770822",
+    "firebase_url": "https://crhoy-lite.firebaseio.com",
+    "project_id": "crhoy-lite",
+    "storage_bucket": "crhoy-lite.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:290658770822:android:13011dbb4dab62be",
+        "android_client_info": {
+          "package_name": "com.crhoy.lite"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "290658770822-ple4oo1qpgva178orv6lpiqtcnjv43ph.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBXgioQrseCyW9XuKLubzCVqHaqzP9Nk4I"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
